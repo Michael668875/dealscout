@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% import "macros.html" as macro %}
+
+{% block title %} Best Deals | BrickDrops{% endblock %}
+
+{% block meta_description %}
+    legosets selling below average
+{% endblock %}
+
+{% block content %}
+
+    <div class="d-none d-md-block">
+        {{ macro.best_deals_table(sets, currency) }}
+    </div>
+
+    <div class="d-block d-md-none">
+        {{ cards.deal_cards(sets, currency) }}
+    </div>
+
+    {{ helpers.render_pagination(listings) }}
+
+
+{% endblock %}

@@ -1,0 +1,635 @@
+
+{% import "macro_helpers.html" as helpers %}
+{% import  "macro_cards.html" as cards %}
+{% set nav_country = country if country is defined and country else 'us' %}
+
+{% macro country_select(country, country_flags) %}
+  {% set nav_country = country if country else 'us' %}
+<!-- Country Dropdown -->
+      <div class="dropdown">
+        <button class="btn btn-sm dropdown-toggle country-btn" type="button" id="countryDropdown"
+                data-bs-toggle="dropdown" aria-expanded="false">
+          {{ country_flags.get(nav_country) }}
+          {{ nav_country.upper() }}
+        </button>
+
+        <ul class="dropdown-menu" aria-labelledby="countryDropdown">
+          {% for code, flag in country_flags.items() %}
+            <li>
+              <a class="dropdown-item" href="{{ switch_country_url(code) }}">
+                {{ flag }} {{ code.upper() }}
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+{% endmacro %}
+
+
+{% macro navigation(country, country_flags) %}
+<nav class="navbar navbar-expand-lg navbar-custom px-4 py-3">
+          <div class="container-fluid d-flex align-items-center">
+            <span class="navbar-brand fw-bold fs-4 text-danger">
+              <a class="brand-logo" href="{{ url_for('main.listings', country=g.country) }}">
+              BrickDrops
+              </a>
+            </span>
+            <div class="ms-3">{{ country_select(country, country_flags) }}</div>
+            <div class="ms-3">{{ search_bar() }}</div>
+
+            <div class="ms-auto">
+              <a class="menu-link btn btn-light mx-0" href="{{ url_for('main.listings', country=country) }}">Home</a>
+              <a class="menu-link btn btn-light mx-0" href="{{ url_for('main.overview', country=country) }}">Overview</a>
+              <a class="menu-link btn btn-light mx-0" href="{{ url_for('main.best_deals', country=country) }}">Best Deals</a>
+              <a class="menu-link btn btn-light mx-0" href="{{ url_for('main.price_drops', country=country) }}">Price Drops</a>
+              <a class="menu-link btn btn-light mx-0" href="{{ url_for('main.models', country=country) }}">Available Sets</a>
+            </div>
+          </div>
+        </nav>
+{% endmacro %}
+
+{% macro search_bar() %}
+
+<div class="search-wrap ms-auto">
+  <form
+    class="d-flex"
+    method="get"
+    action="{{ url_for('main.search', country=nav_country.lower()) }}"
+  >
+    <input
+      class="form-control me-2"
+      type="search"
+      name="q"
+      placeholder="Search LEGO sets"
+      aria-label="Search LEGO sets"
+      required
+    >
+    <button
+      class="btn btn-outline-danger flex-shrink-0"
+      type="submit"
+    >
+      Search
+    </button>
+  </form>
+</div>
+
+{% endmacro %}
+
+{% macro hero() %}
+<div class="hero-card mb-4">
+            <div class="row align-items-center">
+              <div class="col-lg-7">
+                <div class="badge-pill mb-3">
+                  TOP LEGO DEALS DAILY
+                </div>
+
+                <h1 class="display-4 fw-bold mb-3">
+                  Find your next LEGO set.
+                </h1>
+
+                <p class="fs-5 mb-4">
+                  Browse thousands of listings with pricing insights and collector trends.
+                </p>
+
+                <a href="{{ url_for('main.models', country=g.country ) }}">
+                <button class="btn btn-dark btn-lg">
+                  Browse Sets
+                </button>
+              </a>
+              </div>
+
+              <div class="col-lg-5 mt-4 mt-lg-0">
+                <img class="img-fluid rounded-4"
+                  src="{{ url_for('static', filename='img/lego_bricks.jpg') }}">
+              </div>
+            </div>
+          </div>
+{% endmacro %}
+
+{% macro specials(active_listings, top_theme, top_theme_id, best_deals_count) %}
+
+  <div class="row g-4 mb-4">
+
+  <div class="col-md-4">
+    <a class="specials" href="{{ url_for('main.overview', country=g.country) }}">
+    <div class="stat-card shadow-sm p-4">
+      <div class="text-secondary mb-2">Active Listings</div>
+      <div class="display-6 fw-bold">
+        {{ "{:,}".format(active_listings) }}
+      </div>
+    </div>
+  </a>
+  </div>
+
+  <div class="col-md-4">
+    {% if top_theme_id %}
+    <a class="specials" href="{{ url_for('main.theme_sets', country=g.country, theme_id=top_theme_id) }}">
+    {% endif %}
+    <div class="stat-card shadow-sm p-4">
+      <div class="text-secondary mb-2">Top Theme</div>
+      <div class="display-6 fw-bold text-truncate fit-text">
+        {{ top_theme }}
+      </div>
+    </div>
+    {%  if top_theme_id %}
+    </a>
+    {% endif %}
+  </div>
+
+  <div class="col-md-4">
+    <a class="specials" href="{{ url_for('main.best_deals', country=g.country) }}">
+    <div class="stat-card shadow-sm p-4">
+      <div class="text-secondary mb-2">Best Deals Available</div>
+      <div class="display-6 fw-bold">
+        {{ "{:,}".format(best_deals_count) }}
+      </div>
+    </div>
+    </a>
+  </div>
+
+</div>
+
+{% endmacro %}
+
+{% macro listing_table(listings, currency, title="Popular Listings") %}
+<div class="table-wrap rounded-4 shadow-sm p-4">
+    <h3 class="mb-4">{{ title }}</h3>
+
+    <div class="table-responsive">
+        <table class="table align-middle">
+        <thead>
+            <tr>
+            <th class="col-title">{{ helpers.sort_link('Set', 'set_num', 'price', 'desc') }}</th>
+            <th class="col-condition">Condition</th>
+            <th class="text-nowrap col-price">
+                {% set price_label %}
+                    <span class="price-heading-wrap">
+                        <span>Price</span>
+                        {% if currency %}
+                            <span class="price-heading-code">{{ currency }}</span>
+                        {% endif %}
+                    </span>
+                {% endset %}
+                    
+                {{ helpers.sort_link(price_label|safe, 'price', 'price', 'desc') }}            
+            </th>
+            <th class="col-url">Url</th>
+            </tr>
+        </thead>
+
+        <tbody>
+          {% if listings %}
+          {% for listing in listings %}
+            <tr>
+            <td>
+                <div class="d-flex align-items-center gap-3">
+                <img class="listing-img"
+                    src="{{ listing.image_urls[0] }}" loading="lazy">
+                <div>
+                    <div class="fw-semibold">{{ listing.title }}</div>
+                    <span class="text-secondary">
+                      {% if listing.set_num %}
+                      <a href="{{ url_for('main.set_page', base_set=listing.set_num, country=g.country ) }}">{{ listing.set_num }}</a>
+                      {% else %}
+                      -
+                      {% endif %}
+                    
+                    </span>
+                </div>
+                </div>
+            </td>
+            <td>{{ listing.condition }}</td>
+            <td>{{ helpers.price_display(listing.price, currency, show_code=False) }}</td>
+            <td><a href="{{ listing.affiliate_url }}" class="btn btn-primary text-nowrap" target="_blank">Buy on eBay</a></td>
+            </tr>
+          {% endfor %}
+          {% else %}
+            <tr>
+                <td colspan="5">No listings found.</td>
+            </tr>
+          {% endif %}
+        </tbody>
+        </table>
+    </div>
+</div>
+{% endmacro %}
+
+
+{% macro overview_table(results, currency) %}
+<div class="table-wrap rounded-4 shadow-sm p-4">
+    <h3 class="mb-4">Overview</h3>
+    <p>Browse all tracked LEGO sets and see how many active listings are currently available for each set.</p>
+
+    <div class="table-responsive">
+        <table class="table align-middle">
+        <thead>
+            <tr>
+            <th class="col-set"> {{ helpers.sort_link('Set', 'set_num', 'count', 'desc') }} </th>
+            <th class="col-title">Title</th>
+            <th class="col-starting"> {{ helpers.sort_link('Starting From', 'price', 'count', 'desc') }} </th>
+            <th class="col-count"> {{ helpers.sort_link('Number of Listings', 'count', 'count', 'desc') }}</th>
+            </tr>
+        </thead>
+
+        <tbody>
+          {% if results %}
+          {% for result in results %}
+            <tr>
+            <td>
+                <div class="fw-semibold">
+                  {% if result.set_num %}
+                      <a href="{{ url_for('main.set_page', base_set=result.set_num, country=g.country ) }}">{{ result.set_num }}</a>
+                      {% else %}
+                      -
+                      {% endif %}
+                </div>
+                
+            </td>
+            <td> 
+              <div class="d-flex align-items-center gap-3">
+                <img class="listing-img"
+                    src="{{ result.Listing.image_urls[0] }}" loading="lazy">
+                <div>
+              {% if result.Listing.lego_set.name %}
+                {{ result.Listing.lego_set.name }}  
+              {% else %}
+                -
+              {% endif %}
+             </td>
+            <td>{{ helpers.price_display(result.Listing.price, currency, show_code=False) }}</td>
+            <td>
+              <a href="{{ url_for('main.set_list', country=g.country, set_num=result.Listing.set_num) }}">
+
+                <span class="btn btn-outline-danger px-5">
+                  {{ result.count }}
+                </span>
+              </a>
+            </td>
+            </tr>
+          {% endfor %}
+          {% else %}
+            <tr>
+                <td colspan="5">No listings found.</td>
+            </tr>
+          {% endif %}
+        </tbody>
+        </table>
+    </div>
+</div>
+{% endmacro %}
+
+
+{% macro best_deals_table(listings, currency) %}
+<div class="table-wrap rounded-4 shadow-sm p-4">
+    <h3 class="mb-4">Best Deals</h3>
+    <p>Find LEGO sets currently selling below their average market price based on tracked listings.</p>
+    <div class="table-responsive">
+        <table class="table align-middle">
+        <thead>
+            <tr>
+            <th class="col-set">{{ helpers.sort_link('Set', 'set_num', 'discount', 'desc') }}</th>
+            <th class="col-title">Title</th>
+            <th class="text-nowrap col-price">
+              {% set price_label %}
+                    <span class="price-heading-wrap">
+                        <span>Price</span>
+                        {% if currency %}
+                            <span class="price-heading-code">{{ currency }}</span>
+                        {% endif %}
+                    </span>
+                {% endset %}
+                    
+                {{ helpers.sort_link(price_label|safe, 'price', 'discount', 'desc') }}              
+            </th>
+            <th class="col-url">Market Average</th>
+            <th class="col-discount">{{ helpers.sort_link('Discount', 'discount', 'discount', 'desc') }}</th>
+            <th class="col-url">Listing</th>
+            </tr>
+        </thead>
+
+        <tbody>
+          {% if listings %}
+          {% for listing in listings %}
+            <tr>
+            <td>
+                <div class="fw-semibold">
+                  {% if listing.Listing.set_num %}
+                      <a href="{{ url_for('main.set_page', base_set=listing.Listing.set_num, country=g.country ) }}">{{ listing.Listing.set_num }}</a>
+                      {% else %}
+                      -
+                      {% endif %}
+                </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center gap-3">
+                <img class="listing-img"
+                    src="{{ listing.Listing.image_urls[0] }}" loading="lazy">
+                <div>
+              {% if listing.Listing.lego_set.name %}
+                {{ listing.Listing.lego_set.name }}  
+              {% else %}
+                -
+              {% endif %}
+            </td>
+            <td>{{ helpers.price_display(listing.Listing.price, currency, show_code=False) }}</td>
+            <td>{{ helpers.price_display(listing.avg_price, currency, show_code=False) }}</td>
+            <td><span class="discount"> {{ ((listing.avg_price - listing.Listing.price) / listing.avg_price * 100)|round(1) }}% </span></td>
+            <td><a href="{{ listing.Listing.affiliate_url }}" class="btn btn-primary text-nowrap" target="_blank">Buy on eBay</a></td>
+            </tr>
+          {% endfor %}
+          {% else %}
+            <tr>
+                <td colspan="5">No listings found.</td>
+            </tr>
+          {% endif %}
+        </tbody>
+        </table>
+    </div>
+</div>
+{% endmacro %}
+
+
+{% macro price_drops_table(rows, currency) %}
+<div class="table-wrap rounded-4 shadow-sm p-4">
+    <h3 class="mb-4">Price Drops</h3>
+    <p>Discover listings that have recently been discounted and may offer better value.</p>
+    <div class="table-responsive">
+        <table class="table align-middle">
+        <thead>
+            <tr>
+            <th class="col-set"> {{ helpers.sort_link('Set', 'set_num', 'discount_percent', 'desc') }} </th>
+            <th class="col-title">Title</th>
+            <th class="col-price"> {{ helpers.sort_link('Old Price', 'old_price', 'discount_percent', 'desc') }} </th>
+            <th class="col-price"> {{ helpers.sort_link('New Price', 'new_price', 'discount_percent', 'desc') }} </th>
+            <th class="col-discount"> {{ helpers.sort_link('Discount', 'discount_percent', 'discount_percent', 'desc') }} </th>
+            <th class="col-url">Listing</th>
+            </tr>
+        </thead>
+
+        <tbody>
+          {% if rows %}
+          {% for row in rows %}
+            <tr>
+            <td>
+                <div class="fw-semibold">
+                  {% if row.set_num %}
+                      <a href="{{ url_for('main.set_page', base_set=row.set_num, country=g.country ) }}">{{ row.set_num }}</a>
+                      {% else %}
+                      -
+                      {% endif %}
+                </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center gap-3">
+                <img class="listing-img" src="{{ row.image_url }}" loading="lazy">
+                <div>
+                  {{ row.canon_name or "-" }}
+                </div>
+              </div>
+            </td>
+            
+            <td>
+              {%  if row.old_price %}
+                {{ helpers.price_display(row.old_price, currency, show_code=False) }}
+              {% else %}
+                -
+              {% endif %}
+            </td>
+            <td>
+              {%  if row.new_price %}
+                {{ helpers.price_display(row.new_price, currency, show_code=False) }}
+              {% else %}
+                -
+              {% endif %}
+            </td>
+            <td><span class="discount"> 
+              {% if row.discount_percent is not none %}
+                {{ row.discount_percent|round(0)|int }}%
+              {% else %}
+                -
+              {% endif %} 
+            </span></td>
+            <td><a href="{{ row.affiliate_url }}" class="btn btn-primary text-nowrap" target="_blank">Buy on eBay</a></td>
+            </tr>
+          {% endfor %}
+          {% else %}
+            <tr>
+                <td colspan="5">No price drops right now.</td>
+            </tr>
+          {% endif %}
+        </tbody>
+        </table>
+    </div>
+</div>
+{% endmacro %}
+
+
+{% macro models_table(themes, country) %}
+<H1>Available Lego Sets</H1>
+
+<p class="d-none d-md-block">
+    Browse all tracked LEGO sets by theme and set number to find specific models quickly.
+</p>
+
+<p class="d-md-none mobile-title">
+    Explore the complete LEGO set database, organized by theme and set number.
+</p>
+<p>
+
+<div class="series-nav">
+  {% for theme in themes %}
+    <a href="#theme-{{ theme.slug }}" class="btn btn-sm btn-danger px-1 mb-2 model-menu">
+      {{ theme.name }}
+    </a>
+  {% endfor %}
+</div>
+</p>
+
+  {% for theme in themes %}
+
+  {% set theme_class = "theme-" ~ (loop.index0 % 4) %}
+
+    <section id="theme-{{ theme.slug }}" class="model-series">
+      <span class="theme-label badge text-bg-secondary">
+        {{ theme.name }}
+      </span>
+    </section>
+
+    <div class="model-grid">
+    {% for model in theme.models %}
+      <a class="model-chip {{ theme_class }} p-2"
+         href="{{ url_for('main.set_list',
+           country=g.country.lower(),
+           set_num=model.set_num) }}">
+
+        <span>{{ model.set_num }}</span>
+        <small>{{ model.name }}</small>
+        {% if model.last_seen %} 
+        <small class="model-last-seen">Seen {{ model.last_seen|timeago }}</small> 
+        {% else %} 
+        <small class="model-last-seen">Not Seen</small> 
+        {% endif %}
+      </a>
+    {% endfor %}
+      </div>
+  {% endfor %}
+
+
+{% endmacro %}
+
+{% macro set_hero(set_data, stats=None, currency=None) %}
+
+<div class="card border-0 shadow-sm mb-4">
+    <div class="row g-0">
+
+        <!-- image -->
+        <div class="col-md-4 text-center p-4">
+
+            {% if set_data.img_url %}
+            <img
+                src="{{ set_data.img_url }}"
+                loading="lazy"
+                alt="{{ set_data.name }}"
+                class="img-fluid rounded"
+                style="max-height: 320px;"
+            >
+            {% else %}
+            <div class="text-muted">
+                No image available
+            </div>
+            {% endif %}
+
+        </div>
+
+        <!-- info -->
+        <div class="col-md-8">
+
+            <div class="card-body h-100 d-flex flex-column">
+
+                <!-- title -->
+                <div class="mb-3">
+
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+
+                        <h1 class="h2 mb-0">
+                            {{ set_data.name }}
+                        </h1>
+
+                        <span class="badge bg-secondary">
+                            {{ set_data.base_set_num }}
+                        </span>
+
+                    </div>
+
+                    {% if set_data.theme %}
+                    <div class="text-muted mt-2">
+                        {{ set_data.theme.name }}
+                    </div>
+                    {% endif %}
+
+                </div>
+
+                <!-- metadata -->
+                <div class="row mb-4">
+
+                    <div class="col-6 col-md-3 mb-3">
+                        <div class="text-muted small">
+                            Release Year
+                        </div>
+                        <div class="fw-semibold">
+                            {{ set_data.year or "-" }}
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-3 mb-3">
+                        <div class="text-muted small">
+                            Pieces
+                        </div>
+                        <div class="fw-semibold">
+                            {{ "{:,}".format(set_data.num_parts) if set_data.num_parts else "-" }}
+                        </div>
+                    </div>
+
+                    {% if stats %}
+                    <div class="col-6 col-md-3 mb-3">
+                        <div class="text-muted small">
+                            Active Listings
+                        </div>
+                        <div class="fw-semibold">
+                            {{ stats.active_count or 0 }}
+                        </div>
+                    </div>
+
+                    <div class="col-6 col-md-3 mb-3">
+                        <div class="text-muted small">
+                            Cheapest Price
+                        </div>
+                        <div class="fw-semibold">
+                            {% if stats.cheapest_price %}
+                                {{ currency }} {{ helpers.price_display(stats.cheapest_price, currency, show_code=False) }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                </div>
+
+                <!-- tags -->
+                <div class="mb-4 d-flex flex-wrap gap-2">
+
+                    {% if set_data.num_parts and set_data.num_parts > 2000 %}
+                    <span class="badge bg-dark">
+                        Large Set
+                    </span>
+                    {% endif %}
+
+                    {% if set_data.year and set_data.year < 2000 %}
+                    <span class="badge bg-warning text-dark">
+                        Vintage
+                    </span>
+                    {% endif %}
+
+                    {% if stats and stats.active_count and stats.active_count < 3 %}
+                    <span class="badge bg-danger">
+                        Rare Listing
+                    </span>
+                    {% endif %}
+
+                </div>
+
+                <!-- actions -->
+                <div class="mt-auto d-flex gap-2 flex-wrap">
+
+                   
+                    {% if set_data.base_set_num %}
+                          <a href="{{ url_for('main.set_list',
+                            country=g.country.lower(),
+                            set_num=set_data.base_set_num) }}"
+                           class="btn btn-primary">View Listings</a>
+                        {% else %}
+                        -
+                        {% endif %}
+
+                    {% if set_data.theme %}
+                        <a
+                            href="{{ url_for('main.theme_sets',
+                                country=g.country.lower(),
+                                theme_id=set_data.theme_id) }}"
+                            class="btn btn-outline-secondary"
+                        >
+                            More {{ set_data.theme.name }}
+                        </a>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endmacro %}
