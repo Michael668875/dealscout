@@ -1,6 +1,6 @@
 from flask import abort, request, render_template, url_for
 from sqlalchemy import func, exists, case, desc
-from app.models import Listing, PriceHistory, LegoSet, Theme
+from app.models import Listing, PriceHistory
 from app.extensions import db
 from collections import defaultdict
 from functools import wraps
@@ -119,18 +119,18 @@ def db_overview(marketplaces):
 
     base_q = (
         db.session.query(
-            Listing.set_num.label("set_num"),
+           # Listing.set_num.label("set_num"),
             func.count(Listing.id).label("count")
         )
         .filter(Listing.marketplace.in_(marketplaces))
-        .filter(Listing.set_num.isnot(None))
-        .group_by(Listing.set_num)
+        #.filter(Listing.set_num.isnot(None))
+        #.group_by(Listing.set_num)
         .subquery()
     )
 
     cheapest_listing_subq = (
         db.session.query(Listing.id)
-        .filter(Listing.set_num == base_q.c.set_num)
+        #.filter(Listing.set_num == base_q.c.set_num)
         .filter(Listing.marketplace.in_(marketplaces))
         .order_by(Listing.price.asc())
         .limit(1)
@@ -140,7 +140,7 @@ def db_overview(marketplaces):
 
     query = (
         db.session.query(
-            base_q.c.set_num,
+           # base_q.c.set_num,
             base_q.c.count,
             Listing
         )
@@ -454,7 +454,7 @@ def sort_listings(query, sort, direction):
 
     sort_columns = {
         "price": Listing.price,
-        "set_num": Listing.set_num,
+        #"set_num": Listing.set_num,
     }
 
     column = sort_columns.get(sort, Listing.price)

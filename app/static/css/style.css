@@ -99,41 +99,45 @@
     }
 
     
-    .theme2 {
-      background: #f3f4f6;
-      color: #111827;
+    .theme3 {
+      background: #050505;
+      color: #c4f1ff;
+      font-family: monospace;
     }
 
-    .theme2 .navbar-custom {
-      background: white;
-      border-bottom: 1px solid #e5e7eb;
+    .theme3 .navbar-custom {
+      background: #000;
+      border-bottom: 1px solid #00d9ff;
     }
 
-    .theme2 .menu-link {
-      color: #111827;
+    .theme3 .menu-link {
+      color: #00d9ff;
     }
 
-    .theme2 .hero-card {
-      background: linear-gradient(135deg, #ffd500, #ffeb70);
-      color: #111827;
+    .theme3 .hero-card,
+    .theme3 .stat-card,
+    .theme3 .table-wrap {
+      background: #07131a;
+      border: 1px solid #00d9ff;
     }
 
-    .theme2 .stat-card,
-    .theme2 .table-wrap {
-      background: white;
+    .theme3 .table {
+      color: #c4f1ff;
     }
 
-    .theme2 .table {
-      color: #111827;
+    .theme3 .table tbody tr:hover {
+      background: #0d1d26;
     }
 
-    .theme2 .table tbody tr:hover {
-      background: #f9fafb;
+    .theme3 .badge-pill {
+      background: #00d9ff;
+      color: #001018;
     }
 
-    .theme2 .badge-pill {
-      background: #d01012;
-      color: white;
+    .theme3 .btn-primary {
+      background: #00d9ff;
+      color: black;
+      border: none;
     }
 
     .brand-logo {
@@ -387,15 +391,15 @@
 }
 
 .page-btn:hover {
-    border-color: #d01012;
-    color: #d01012;
+    border-color: #00d9ff;
+    color: #00d9ff;
     transform: translateY(-1px);
 }
 
 .page-btn.active {
-    background: #d01012;
+    background: #00d9ff;
     color: white;
-    border-color: #d01012;
+    border-color: #00d9ff;
 }
 
 .page-ellipsis {

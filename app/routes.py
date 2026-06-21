@@ -107,16 +107,16 @@ def listings(country):
 
     listings = paginate(query)
 
-    stats = homepage_stats(g.marketplaces)
+    #stats = homepage_stats(g.marketplaces)
 
     response = make_response(render_template(
         "listings.html",
         listings=listings,
         sets=listings.items,
-        active_listings=stats["active_listings"],
-        top_theme=stats["top_theme"],
-        top_theme_id=stats["top_theme_id"],
-        best_deals_count=stats["best_deals_count"]
+        #active_listings=stats["active_listings"],
+        #top_theme=stats["top_theme"],
+        #top_theme_id=stats["top_theme_id"],
+        #best_deals_count=stats["best_deals_count"]
     ))
 
     response.headers["Cache-Control"] = "public, max-age=60"
@@ -139,13 +139,13 @@ def set_list(country, set_num):
 @bp.route("/<country>/theme/<int:theme_id>")
 def theme_sets(country, theme_id):
 
-    theme = Theme.query.get_or_404(theme_id)
+    #theme = Theme.query.get_or_404(theme_id)
 
     sets = get_sets(theme_id, g.marketplaces)
     
     response = make_response(render_template(
         "theme_sets.html",
-        theme=theme,
+        #theme=theme,
         sets=sets,
     ))
 

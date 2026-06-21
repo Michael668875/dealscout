@@ -75,36 +75,6 @@
 
 {% endmacro %}
 
-{% macro hero() %}
-<div class="hero-card mb-4">
-            <div class="row align-items-center">
-              <div class="col-lg-7">
-                <div class="badge-pill mb-3">
-                  TOP LEGO DEALS DAILY
-                </div>
-
-                <h1 class="display-4 fw-bold mb-3">
-                  Find your next LEGO set.
-                </h1>
-
-                <p class="fs-5 mb-4">
-                  Browse thousands of listings with pricing insights and collector trends.
-                </p>
-
-                <a href="{{ url_for('main.models', country=g.country ) }}">
-                <button class="btn btn-dark btn-lg">
-                  Browse Sets
-                </button>
-              </a>
-              </div>
-
-              <div class="col-lg-5 mt-4 mt-lg-0">
-                <img class="img-fluid rounded-4"
-                  src="{{ url_for('static', filename='img/lego_bricks.jpg') }}">
-              </div>
-            </div>
-          </div>
-{% endmacro %}
 
 {% macro specials(active_listings, top_theme, top_theme_id, best_deals_count) %}
 
@@ -151,16 +121,75 @@
 
 {% endmacro %}
 
-{% macro listing_table(listings, currency, title="Popular Listings") %}
-<div class="table-wrap rounded-4 shadow-sm p-4">
-    <h3 class="mb-4">{{ title }}</h3>
 
-    <div class="table-responsive">
-        <table class="table align-middle">
-        <thead>
-            <tr>
-            <th class="col-title">{{ helpers.sort_link('Set', 'set_num', 'price', 'desc') }}</th>
-            <th class="col-condition">Condition</th>
+{% macro listing_table(listings, currency, title="Popular Listings") %}
+<section class="theme3">
+    <div class="container">
+      <div class="section-title">{{ title }}</div>
+      <div class="section-subtitle">
+        High-density cyber-terminal interface for advanced collectors and deal hunters.
+      </div>
+
+      <div class="mockup-wrapper">
+
+        <nav class="navbar navbar-expand-lg navbar-custom px-4 py-3">
+          <div class="container-fluid">
+            <span class="navbar-brand fw-bold fs-4 text-info">
+              BRICK-OS
+            </span>
+
+            <div>
+              <a class="menu-link" href="#">HOME</a>
+              <a class="menu-link" href="#">OVERVIEW</a>
+              <a class="menu-link" href="#">BEST DEALS</a>
+              <a class="menu-link" href="#">PRICE DROPS</a>
+              <a class="menu-link" href="#">MODELS</a>
+            </div>
+          </div>
+        </nav>
+
+        <div class="p-4 p-lg-5">
+
+          <div class="hero-card mb-4">
+            <div class="row align-items-center">
+              <div class="col-lg-8">
+                <div class="badge-pill mb-3">
+                  SYSTEM STATUS: ONLINE
+                </div>
+
+                <h1 class="display-5 fw-bold mb-3">
+                  LEGO MARKET TERMINAL
+                </h1>
+
+                <p class="mb-4 text-info-emphasis">
+                  Real-time collector pricing • Active market monitoring • Advanced deal analysis
+                </p>
+
+                <button class="btn btn-primary btn-lg">
+                  ACCESS DEAL FEED
+                </button>
+              </div>
+
+              <div class="col-lg-4 mt-4 mt-lg-0">
+                <div class="p-4 rounded-4 border border-info h-100">
+                  <div class="mb-3">TRACKED MODELS........ 12,994</div>
+                  <div class="mb-3">ACTIVE LISTINGS....... 88,201</div>
+                  <div class="mb-3">PRICE ALERTS.......... 492</div>
+                  <div>AVG SAVINGS........... 11%</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-wrap rounded-4 p-3">
+            <h3 class="mb-4 text-info">LIVE PRICE FEED</h3>
+
+            <div class="table-responsive">
+              <table class="table align-middle">
+                <thead>
+                  <tr>
+                    <th class="col-title">{{ helpers.sort_link('Set', 'set_num', 'price', 'desc') }}</th>
+                    <th class="col-condition">Condition</th>
             <th class="text-nowrap col-price">
                 {% set price_label %}
                     <span class="price-heading-wrap">
@@ -174,11 +203,12 @@
                 {{ helpers.sort_link(price_label|safe, 'price', 'price', 'desc') }}            
             </th>
             <th class="col-url">Url</th>
-            </tr>
-        </thead>
+            
+                  </tr>
+                </thead>
 
-        <tbody>
-          {% if listings %}
+                <tbody>
+                  {% if listings %}
           {% for listing in listings %}
             <tr>
             <td>
@@ -208,11 +238,16 @@
                 <td colspan="5">No listings found.</td>
             </tr>
           {% endif %}
-        </tbody>
-        </table>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
+  </section>
 {% endmacro %}
+
 
 
 {% macro overview_table(results, currency) %}

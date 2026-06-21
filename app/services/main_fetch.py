@@ -44,11 +44,11 @@ def main():
         with app.app_context():
 
             # delete old temp_summaries
-          #  truncate_temp_tables()
+            truncate_temp_tables()
             
             # Fetch summaries
             items = get_paginated_summaries()
-           # save_temp_summaries(items)
+            save_temp_summaries(items)
             print(f"Fetched and saved {len(items)} summaries")     
 
           #  run_pipeline()
