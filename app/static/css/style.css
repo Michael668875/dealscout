@@ -1,10 +1,18 @@
-    body {
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background-color: #111; /* same as your dark theme */
+    overscroll-behavior: none;
+}
+
+body {
       font-family: Inter, sans-serif;
-      padding-bottom: 80px;
     }
 
     section {
-      padding: 20px 0;
+      padding: 10px 0;
     }
 
     .section-title {
@@ -19,6 +27,7 @@
     }
 
     .mockup-wrapper {
+      background: #121417;
       border-radius: 24px;
       overflow: hidden;
       box-shadow: 0 10px 40px rgba(0,0,0,0.4);
@@ -100,7 +109,7 @@
 
     
     .theme3 {
-      background: #050505;
+      background: #1c2024;
       color: #c4f1ff;
       font-family: monospace;
     }
@@ -142,7 +151,7 @@
 
     .brand-logo {
       text-decoration: none;
-      color: #d01012;
+      color: #00d9ff;
     }
 
     /* Model Grid */
@@ -316,11 +325,11 @@
     background-color: white;
     color: #656565;
     border: 2px solid;
-    border-color: #da2323;
+    border-color: #00d9ff;
 }
 
 .country-btn:hover {
-    background-color: #da2323;
+    background-color: #00d9ff;
     color: white;
 }
 
@@ -337,13 +346,13 @@
 }
 
 .text-secondary a:hover {
-  color: #e00d0d;
+  color: #00d9ff;
   text-decoration: none;
 }
 
 .form-control {
-  border: 1px solid;
-  border-color: red;
+  border: 2px solid;
+  border-color: #00d9ff;
 }
 
 .fit-text {
@@ -383,7 +392,7 @@
     color: #111827;
 
     border: 1px solid #e5e7eb;
-    border-radius: 12px;
+    border-radius: 4px;
 
     font-weight: 600;
 
@@ -497,4 +506,8 @@
     text-transform: uppercase;
     opacity: 0.8;
     white-space: nowrap;
+}
+
+.btn-thick {
+    border-width: 2px;
 }

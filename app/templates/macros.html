@@ -29,20 +29,20 @@
 {% macro navigation(country, country_flags) %}
 <nav class="navbar navbar-expand-lg navbar-custom px-4 py-3">
           <div class="container-fluid d-flex align-items-center">
-            <span class="navbar-brand fw-bold fs-4 text-danger">
+            <span class="navbar-brand fw-bold fs-4 text-info">
               <a class="brand-logo" href="{{ url_for('main.listings', country=g.country) }}">
-              BrickDrops
+              DealScout
               </a>
             </span>
             <div class="ms-3">{{ country_select(country, country_flags) }}</div>
             <div class="ms-3">{{ search_bar() }}</div>
 
             <div class="ms-auto">
-              <a class="menu-link btn btn-light mx-0" href="{{ url_for('main.listings', country=country) }}">Home</a>
-              <a class="menu-link btn btn-light mx-0" href="{{ url_for('main.overview', country=country) }}">Overview</a>
-              <a class="menu-link btn btn-light mx-0" href="{{ url_for('main.best_deals', country=country) }}">Best Deals</a>
-              <a class="menu-link btn btn-light mx-0" href="{{ url_for('main.price_drops', country=country) }}">Price Drops</a>
-              <a class="menu-link btn btn-light mx-0" href="{{ url_for('main.models', country=country) }}">Available Sets</a>
+              <a class="menu-link" href="{{ url_for('main.listings', country=country) }}">HOME</a>
+              <a class="menu-link" href="{{ url_for('main.overview', country=country) }}">OVERVIEW</a>
+              <a class="menu-link" href="{{ url_for('main.best_deals', country=country) }}">BEST DEALS</a>
+              <a class="menu-link" href="{{ url_for('main.price_drops', country=country) }}">PRICE DROPS</a>
+              <a class="menu-link" href="{{ url_for('main.models', country=country) }}">BRANDS</a>
             </div>
           </div>
         </nav>
@@ -60,12 +60,12 @@
       class="form-control me-2"
       type="search"
       name="q"
-      placeholder="Search LEGO sets"
-      aria-label="Search LEGO sets"
+      placeholder="Search Keyboards"
+      aria-label="Search Keyboards"
       required
     >
     <button
-      class="btn btn-outline-danger flex-shrink-0"
+      class="btn btn-outline-info btn-thick flex-shrink-0"
       type="submit"
     >
       Search
@@ -122,31 +122,7 @@
 {% endmacro %}
 
 
-{% macro listing_table(listings, currency, title="Popular Listings") %}
-<section class="theme3">
-    <div class="container">
-      <div class="section-title">{{ title }}</div>
-      <div class="section-subtitle">
-        High-density cyber-terminal interface for advanced collectors and deal hunters.
-      </div>
-
-      <div class="mockup-wrapper">
-
-        <nav class="navbar navbar-expand-lg navbar-custom px-4 py-3">
-          <div class="container-fluid">
-            <span class="navbar-brand fw-bold fs-4 text-info">
-              BRICK-OS
-            </span>
-
-            <div>
-              <a class="menu-link" href="#">HOME</a>
-              <a class="menu-link" href="#">OVERVIEW</a>
-              <a class="menu-link" href="#">BEST DEALS</a>
-              <a class="menu-link" href="#">PRICE DROPS</a>
-              <a class="menu-link" href="#">MODELS</a>
-            </div>
-          </div>
-        </nav>
+{% macro listing_table(listings, currency) %}
 
         <div class="p-4 p-lg-5">
 
@@ -243,9 +219,6 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
 {% endmacro %}
 
 
