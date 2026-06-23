@@ -48,6 +48,8 @@ class Listing(db.Model):
 
     ebay_item_id = db.Column(db.String, unique=True, nullable=False)
 
+    product_id = db.Column(db.Integer, db.ForeignKey("products.id"))
+
     title = db.Column(db.Text)
     price = db.Column(db.Numeric(10, 2))
     currency = db.Column(db.String(10), nullable=False)
@@ -108,4 +110,57 @@ class PriceHistory(db.Model):
         ),
     )
 
+class CanonBrand(db.Model):
+    __tablename__ = "brands"
 
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False, unique=True)
+
+    models = db.relationship(
+        "CanonModel",
+        back_populates="brand",
+        cascade="all, delete-orphan"
+    )
+
+class CanonModel(db.Model):
+    __tablename__ = "models"
+
+    id = db.Column(db.Integer, primary_key=True)
+    brand_id = db.Column(db.Integer, db.ForeignKey("brands.id", ondelete="CASCADE"))
+    name = db.Column(db.String, nullable=False)
+    category = db.Column(db.String)
+
+    brand = db.relationship(
+        "CanonBrand",
+        back_populates="models"
+    )
+
+    __table_args__ = (
+        db.UniqueConstraint(
+            "brand_id",
+            "name",
+            name="uq_brand_model"
+        ),
+    )
+
+class Product(db.Model):
+    __tablename__ = "products"
+    id = db.Column(db.Integer, primary_key=True)
+    model_id = db.Column(db.Integer, db.ForeignKey("models.id", ondelete="CASCADE"))
+    display_name = db.Column(db.String, nullable=False)
+
+class ModelAlias(db.Model):
+    __tablename__ = "model_aliases"
+
+    id = db.Column(db.Integer, primary_key=True)
+
+    model_id = db.Column(
+        db.Integer,
+        db.ForeignKey("models.id", ondelete="CASCADE")
+    )
+
+    alias = db.Column(
+        db.String,
+        nullable=False,
+        unique=True
+    )

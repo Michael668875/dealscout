@@ -258,11 +258,7 @@
                 <img class="listing-img"
                     src="{{ result.Listing.image_urls[0] }}" loading="lazy">
                 <div>
-              {% if result.Listing.lego_set.name %}
-                {{ result.Listing.lego_set.name }}  
-              {% else %}
                 -
-              {% endif %}
              </td>
             <td>{{ helpers.price_display(result.Listing.price, currency, show_code=False) }}</td>
             <td>
@@ -333,11 +329,7 @@
                 <img class="listing-img"
                     src="{{ listing.Listing.image_urls[0] }}" loading="lazy">
                 <div>
-              {% if listing.Listing.lego_set.name %}
-                {{ listing.Listing.lego_set.name }}  
-              {% else %}
                 -
-              {% endif %}
             </td>
             <td>{{ helpers.price_display(listing.Listing.price, currency, show_code=False) }}</td>
             <td>{{ helpers.price_display(listing.avg_price, currency, show_code=False) }}</td>

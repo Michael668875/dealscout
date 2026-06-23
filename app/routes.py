@@ -207,7 +207,7 @@ def price_drops(country):
         query,
         request.args.get("sort", "discount_percent"),
         request.args.get("direction", "desc"),
-        ranked.c.set_num,
+       # ranked.c.set_num,
         ranked.c.old_price,
         ranked.c.new_price,
     )
@@ -228,11 +228,11 @@ def models(country):
 
     rows = model_query(g.marketplaces)
 
-    themes = theme_query(rows)
+    #themes = theme_query(rows)
 
     response = make_response(render_template(
         "models.html",
-        themes=themes,
+        #themes=themes,
     ))
 
     response.headers["Cache-Control"] = "public, max-age=60"

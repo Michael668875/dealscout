@@ -154,14 +154,14 @@ def db_overview(marketplaces):
 def db_bestdeals(marketplaces):
     return (
         db.session.query(
-            Listing.set_num.label("set_num"),
+           # Listing.set_num.label("set_num"),
             func.avg(Listing.price).label("avg_price")
         )
         .filter(Listing.marketplace.in_(marketplaces))
-        .filter(Listing.set_num.isnot(None))
+        #.filter(Listing.set_num.isnot(None))
         .filter(Listing.price.isnot(None))
         .filter(Listing.status == "ACTIVE")
-        .group_by(Listing.set_num)
+        #.group_by(Listing.set_num)
         .subquery()
     )
 
@@ -180,13 +180,13 @@ def bestdeals_listings(marketplaces):
             avg_subquery.c.avg_price.label("avg_price"),
             discount_expr
         )
-        .join(
-            avg_subquery,
-            Listing.set_num == avg_subquery.c.set_num
-        )
-        .filter(Listing.marketplace.in_(marketplaces))
-        .filter(Listing.status == "ACTIVE")
-        .filter(Listing.price <= avg_subquery.c.avg_price * 0.75)
+        #.join(
+        #    avg_subquery,
+        #    Listing.set_num == avg_subquery.c.set_num
+        #)
+        #.filter(Listing.marketplace.in_(marketplaces))
+        #.filter(Listing.status == "ACTIVE")
+        #.filter(Listing.price <= avg_subquery.c.avg_price * 0.75)
     )
 
     return query, discount_expr
@@ -202,7 +202,7 @@ def drops_query(marketplaces):
             PriceHistory.price.label("new_price"),
             PriceHistory.recorded_at.label("recorded_at"),
 
-            Listing.set_num.label("set_num"),
+            #Listing.set_num.label("set_num"),
             Listing.title.label("title"),
             Listing.ebay_item_id.label("ebay_item_id"),
             Listing.affiliate_url.label("affiliate_url"),
@@ -220,14 +220,14 @@ def drops_query(marketplaces):
         .filter(
             Listing.status == "ACTIVE",
             Listing.marketplace.in_(marketplaces),
-            Listing.set_num.isnot(None),
+            #Listing.set_num.isnot(None),
         )
         .subquery()
     )
 
     query = (
         db.session.query(
-            ranked.c.set_num,
+            #ranked.c.set_num,
             ranked.c.title,
             ranked.c.ebay_item_id,
             ranked.c.affiliate_url,
@@ -238,13 +238,13 @@ def drops_query(marketplaces):
                 (ranked.c.old_price - ranked.c.new_price)
                 / ranked.c.old_price * 100
             ).label("discount_percent"),
-            LegoSet.name.label("canon_name"),
-            LegoSet.img_url.label("image_url"),
+           # LegoSet.name.label("canon_name"),
+           # LegoSet.img_url.label("image_url"),
         )
-        .outerjoin(
-            LegoSet,
-            LegoSet.base_set_num == ranked.c.set_num
-        )
+        #.outerjoin(
+        #    LegoSet,
+        #    LegoSet.base_set_num == ranked.c.set_num
+        #)
         .filter(
             ranked.c.old_price.isnot(None),
             ranked.c.new_price < ranked.c.old_price
@@ -257,25 +257,25 @@ def drops_query(marketplaces):
 def model_query(marketplaces):
     return (
         db.session.query(
-            Listing.set_num,
-            LegoSet.name.label("name"),
-            LegoSet.theme_id.label("theme_id"),
-            Theme.name.label("theme_name"),
+           # Listing.set_num,
+           # LegoSet.name.label("name"),
+           # LegoSet.theme_id.label("theme_id"),
+           # Theme.name.label("theme_name"),
             func.count(Listing.id).label("count"),
             func.max(Listing.last_seen).label("last_seen"),
         )
-        .join(LegoSet, Listing.set_num == LegoSet.base_set_num)
-        .join(Theme, LegoSet.theme_id == Theme.id)
+        #.join(LegoSet, Listing.set_num == LegoSet.base_set_num)
+        #.join(Theme, LegoSet.theme_id == Theme.id)
         .filter(
             Listing.status == "ACTIVE",
             Listing.marketplace.in_(marketplaces)
         )
-        .group_by(
-            Listing.set_num,
-            LegoSet.name,
-            LegoSet.theme_id,
-            Theme.name,           
-        )
+        #.group_by(
+        #    Listing.set_num,
+        #    LegoSet.name,
+        #    LegoSet.theme_id,
+        #    Theme.name,           
+        #)
         .order_by(func.count(Listing.id).desc())
         .all()
     )
@@ -468,7 +468,7 @@ def sort_deals(query, sort, direction, discount_expr=None):
 
     sort_columns = {
         "price": Listing.price,
-        "set_num": Listing.set_num,
+        #"set_num": Listing.set_num,
         "discount": discount_expr,
     }
 
@@ -483,7 +483,7 @@ def sort_overview(query, sort, direction, l_count):
 
     sort_columns = {
         "price": Listing.price,
-        "set_num": Listing.set_num,
+        #"set_num": Listing.set_num,
         "count": l_count,
     }
 
@@ -493,12 +493,12 @@ def sort_overview(query, sort, direction, l_count):
         return query.order_by(column.asc())
     return query.order_by(column.desc())
 
-def sort_drops(query, sort, direction, set_num, old_price, new_price):
+def sort_drops(query, sort, direction, old_price, new_price):
     
     discount_percent = ((old_price - new_price) / old_price * 100)
 
     sort_columns = {
-        "set_num": set_num,
+        #"set_num": set_num,
         "old_price": old_price,
         "new_price": new_price,
         "discount_percent": discount_percent
