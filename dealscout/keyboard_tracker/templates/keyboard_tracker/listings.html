@@ -1,0 +1,33 @@
+{% extends "keyboard_tracker/layout.html" %}
+
+
+{% block title %}DealScout{% endblock %}
+
+
+
+{% block content %}
+
+    {% for listing in listings %}
+        {% if listing.image_urls %}
+            <img src="{{ listing.image_urls.0 }}" alt="{{ listing.title }}">
+        {% endif %}
+
+        <h3>{{ listing.title }}</h3>
+
+        <p>
+            {{ listing.price }} {{ listing.currency }}
+        </p>
+
+        <p>
+            {{ listing.marketplace }}
+        </p>
+
+        <a href="{{ listing.affiliate_url }}">View on eBay</a>
+
+        <hr>
+
+    {% empty %}
+        <p>No listings found.</p>
+    {% endfor %}
+
+{% endblock %}
