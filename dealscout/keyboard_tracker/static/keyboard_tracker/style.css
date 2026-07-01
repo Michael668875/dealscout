@@ -1,0 +1,513 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background-color: #111; /* same as your dark theme */
+    overscroll-behavior: none;
+}
+
+body {
+      font-family: Inter, sans-serif;
+    }
+
+    section {
+      padding: 10px 0;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .section-subtitle {
+      color: #8b8b8b;
+      margin-bottom: 40px;
+    }
+
+    .mockup-wrapper {
+      background: #121417;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    }
+
+    .hero-card {
+      border-radius: 20px;
+      padding: 40px;
+      margin-bottom: 30px;
+    }
+
+    .stat-card {
+      border-radius: 18px;
+      padding: 20px;
+      height: 100%;
+    }
+
+    .listing-img {
+      width: 56px;
+      height: 56px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .badge-pill {
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .table-wrap,
+    .table-responsive {
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    .table {
+      width: 100%;
+      table-layout: fixed;
+      min-width: 800px;
+    }
+
+    .table th,
+    .table td {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      min-width: 0;
+    }    
+
+    .col-title {
+        white-space: normal;
+        word-break: break-word;
+    }
+    .col-set { width: 90px; }
+    .col-price { width: 120px; }
+    .col-condition { width: 110px}
+    .col-discount { width: 100px; }
+    .col-url { width: 140px; }
+    .col-starting { width: 160px;}
+    .col-count { width: 180px;}
+
+    .menu-link {
+      text-decoration: none;
+      margin-right: 20px;
+      font-weight: 500;
+    }
+
+    .price-down {
+      color: #4ade80;
+      font-weight: 700;
+    }
+
+    .price-up {
+      color: #f87171;
+      font-weight: 700;
+    }
+
+    
+    .theme3 {
+      background: #1c2024;
+      color: #c4f1ff;
+      font-family: monospace;
+    }
+
+    .theme3 .navbar-custom {
+      background: #000;
+      border-bottom: 1px solid #00d9ff;
+    }
+
+    .theme3 .menu-link {
+      color: #00d9ff;
+    }
+
+    .theme3 .hero-card,
+    .theme3 .stat-card,
+    .theme3 .table-wrap {
+      background: #07131a;
+      border: 1px solid #00d9ff;
+    }
+
+    .theme3 .table {
+      color: #c4f1ff;
+    }
+
+    .theme3 .table tbody tr:hover {
+      background: #0d1d26;
+    }
+
+    .theme3 .badge-pill {
+      background: #00d9ff;
+      color: #001018;
+    }
+
+    .theme3 .btn-primary {
+      background: #00d9ff;
+      color: black;
+      border: none;
+    }
+
+    .brand-logo {
+      text-decoration: none;
+      color: #00d9ff;
+    }
+
+    /* Model Grid */
+    /* Responsive grid */
+.model-menu {
+  text-decoration: none;
+}
+
+.model-grid {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 0.75rem;
+}
+
+.model-stream {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.theme-label {
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-weight: 700;
+  white-space: nowrap;
+  margin-right: 0.5rem;
+  background: #eee;
+}
+
+
+/* Card chip */
+.model-chip {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 72px;
+  padding: 0.75rem 0.9rem;
+  border: 5px solid transparent;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #1a1a1a;
+  background: #fff;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+}
+
+.model-chip.theme-0 {
+  border-color: #f90808;
+  background: #ffffff;
+  color: #1a1a1a;
+
+}
+
+.model-chip.theme-1 {
+    border-color: #0d6efd;
+    background: #ffffff;
+    color: #1a1a1a;
+}
+
+.model-chip.theme-2 {
+    border-color: #198754;
+    background: #ffffff;
+    color: #1a1a1a;
+}
+
+.model-chip.theme-3 {
+    border-color: #ffc107;
+    background: #ffffff;
+    color: #1a1a1a;
+}
+
+
+.model-chip:hover {
+  text-decoration: none;
+  color: white;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+.model-chip.theme-0:hover {
+    border-color: #f90808;
+    background: #f90808;
+    color: white;
+}
+
+.model-chip.theme-1:hover {
+    border-color: #0d6efd;
+    background: #0d6efd;
+    color: white;
+}
+
+.model-chip.theme-2:hover {
+    border-color: #198754;
+    background: #198754;
+    color: white;
+}
+
+.model-chip.theme-3:hover {
+    border-color: #ffc107;
+    background: #ffc107;
+    color: rgb(108, 105, 105);
+}
+
+.model-chip:hover .model-last-seen {
+  color: white;
+}
+
+.model-name {
+  display: block;
+  font-weight: 700;
+  font-size: 0.98rem;
+  line-height: 1.25;
+  margin-bottom: 0.25rem;
+  word-break: break-word;
+}
+
+.model-last-seen {
+  display: block;
+  font-size: 0.78rem;
+  color: #9d9d9d;
+  line-height: 1.2;
+}
+
+/* for mobile */
+
+@media (max-width: 768px) {
+  .model-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+  }
+
+  .model-chip {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 72px;
+    padding: 0.75rem 0.9rem;
+    border-radius: 12px;
+    background: #252525;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+  }
+
+  .model-name {
+    font-size: 0.95rem;
+  }
+
+  .model-last-seen {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .model-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .model-series h2 {
+    font-size: 1.1rem;
+  }
+}
+
+
+/* styling for country select */
+
+.country-btn {
+    background-color: white;
+    color: #656565;
+    border: 2px solid;
+    border-color: #00d9ff;
+}
+
+.country-btn:hover {
+    background-color: #00d9ff;
+    color: white;
+}
+
+.country-btn:focus,
+.country-btn:active {
+    background-color: white !important;
+    color: #656565 !important;
+    box-shadow: none;
+}
+
+.text-secondary a {
+  color: #8c8b8b;
+  text-decoration: none;
+}
+
+.text-secondary a:hover {
+  color: #00d9ff;
+  text-decoration: none;
+}
+
+.form-control {
+  border: 2px solid;
+  border-color: #00d9ff;
+}
+
+.fit-text {
+  font-size: clamp(1rem, 2.2vw, 2rem);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.specials {
+  text-decoration: none;
+  color: #111827;
+}
+
+/* pagination */
+
+.pagination-wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.page-btn {
+    min-width: 42px;
+    height: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none;
+
+    background: white;
+    color: #111827;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+
+    font-weight: 600;
+
+    transition: all 0.15s ease;
+}
+
+.page-btn:hover {
+    border-color: #00d9ff;
+    color: #00d9ff;
+    transform: translateY(-1px);
+}
+
+.page-btn.active {
+    background: #00d9ff;
+    color: white;
+    border-color: #00d9ff;
+}
+
+.page-ellipsis {
+    padding: 0 0.5rem;
+    color: #6b7280;
+}
+
+.discount {
+  color: #d01012;
+}
+
+
+/* MOBILE CARDS */
+.mobile-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.listing-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.listing-title {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 4px;
+}
+
+.listing-set {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.listing-set a {
+    text-decoration: none;
+}
+
+.listing-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.detail-label {
+    color: #6c757d;
+}
+
+.listing-price {
+    font-weight: 700;
+}
+
+/*  image for mobile chips */
+.listing-image {
+    margin-bottom: 1rem;
+}
+
+.listing-image img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
+    display: block;
+}
+
+.listing-image {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 0.75rem;
+}
+
+.mobile-title {
+  color: #6c757d;
+}
+
+/* price in the heading */
+.price-heading-wrap {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    white-space: nowrap;
+}
+
+.price-heading-code {
+    font-size: 0.75em;
+    margin-left: 0.35rem;
+    text-transform: uppercase;
+    opacity: 0.8;
+    white-space: nowrap;
+}
+
+.btn-thick {
+    border-width: 2px;
+}

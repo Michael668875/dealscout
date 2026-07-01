@@ -6,28 +6,79 @@
 
 
 {% block content %}
+        <div class="p-4 p-lg-5">
 
-    {% for listing in listings %}
-        {% if listing.image_urls %}
-            <img src="{{ listing.image_urls.0 }}" alt="{{ listing.title }}">
-        {% endif %}
+          <div class="hero-card mb-4">
+            <div class="row align-items-center">
+              <div class="col-lg-8">
+                <div class="badge-pill mb-3">
+                  SYSTEM STATUS: ONLINE
+                </div>
 
-        <h3>{{ listing.title }}</h3>
+                <h1 class="display-5 fw-bold mb-3">
+                  LEGO MARKET TERMINAL
+                </h1>
 
-        <p>
-            {{ listing.price }} {{ listing.currency }}
-        </p>
+                <p class="mb-4 text-info-emphasis">
+                  Real-time collector pricing • Active market monitoring • Advanced deal analysis
+                </p>
 
-        <p>
-            {{ listing.marketplace }}
-        </p>
+                <button class="btn btn-primary btn-lg">
+                  ACCESS DEAL FEED
+                </button>
+              </div>
 
-        <a href="{{ listing.affiliate_url }}">View on eBay</a>
+              <div class="col-lg-4 mt-4 mt-lg-0">
+                <div class="p-4 rounded-4 border border-info h-100">
+                  <div class="mb-3">TRACKED MODELS........ 12,994</div>
+                  <div class="mb-3">ACTIVE LISTINGS....... 88,201</div>
+                  <div class="mb-3">PRICE ALERTS.......... 492</div>
+                  <div>AVG SAVINGS........... 11%</div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        <hr>
+          <div class="table-wrap rounded-4 p-3">
+            <h3 class="mb-4 text-info">LIVE PRICE FEED</h3>
 
-    {% empty %}
-        <p>No listings found.</p>
-    {% endfor %}
+            <div class="table-responsive">
+              <table class="table align-middle">
+                <thead>
+                  <tr>
+                    <th class="col-title">Title</th>
+                    <th class="col-price">Price</th>
+                    <th class="text-nowrap col-price">Market</th>                        
+                    <th class="col-url">Url</th>            
+                  </tr>
+                </thead>
 
+                <tbody>
+                  {% if listings %}
+          {% for listing in listings %}
+            <tr>
+            <td>
+                <div class="d-flex align-items-center gap-3">                
+                    {% if listing.image_urls %}
+                        <img class="listing-img" src="{{ listing.image_urls.0 }}" alt="{{ listing.title }}" loading="lazy">
+                    {% endif %}
+              
+                    <div class="fw-semibold">{{ listing.title }}</div>
+                </div>
+            </td>
+            <td>{{ listing.price }} {{ listing.currency }}</td>
+            <td>{{ listing.marketplace }}</td>
+            <td><a href="{{ listing.affiliate_url }}" class="btn btn-primary text-nowrap" target="_blank">Buy on eBay</a></td>
+            </tr>
+          {% endfor %}
+          {% else %}
+            <tr>
+                <td colspan="5">No listings found.</td>
+            </tr>
+          {% endif %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
 {% endblock %}
