@@ -78,9 +78,8 @@ class CanonModel(models.Model):
     def __str__(self):
         return f"{self.brand.name} {self.name}"
 
-
 class Product(models.Model):
-    model = models.ForeignKey(
+    model = models.OneToOneField(
         CanonModel,
         on_delete=models.CASCADE,
         related_name="products",
