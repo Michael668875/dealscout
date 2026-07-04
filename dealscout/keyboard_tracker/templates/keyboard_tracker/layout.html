@@ -15,12 +15,14 @@
 
     <section class="theme3">
     <div class="container-fluid px-4">
+        
+        <div class="mockup-wrapper">
+            {% include "keyboard_tracker/includes/_navbar.html" %}
 
-      <div class="mockup-wrapper">
-
-    {% block content %}{% endblock %}
+            {% block content %}{% endblock %}
         </div>
     </div>
+    {% include "keyboard_tracker/includes/_footer.html" %}
     </section>
 </body>
 </html>

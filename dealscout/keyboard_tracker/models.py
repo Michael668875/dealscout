@@ -48,6 +48,7 @@ class TempSummary(models.Model):
 
 class CanonBrand(models.Model):
     name = models.CharField(max_length=255, unique=True)
+    flat_name = models.CharField(max_length=100, db_index=True, null=True)
 
     class Meta:
         db_table = "brands"
@@ -64,6 +65,7 @@ class CanonModel(models.Model):
     )
 
     name = models.CharField(max_length=255)
+    flat_name = models.CharField(max_length=100, db_index=True, null=True)
     category = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
