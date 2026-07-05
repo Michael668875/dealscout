@@ -30,26 +30,26 @@ def match_title(ebay_title):
 
 
 
-# preload db query
+    # preload db query
 
-brands = {
-    brand.flat_name: brand
-    for brand in CanonBrand.objects.all()
-}
+    brands = {
+        brand.flat_name: brand
+        for brand in CanonBrand.objects.all()
+    }
 
-models = (
-    CanonModel.objects
-    .select_related("brand")
-)
+    models = (
+        CanonModel.objects
+        .select_related("brand")
+    )
 
 
-# can skip matching brand and just look for model
+    # can skip matching brand and just look for model
 
-for model in CanonModel.objects.select_related("brand"):
+    for model in CanonModel.objects.select_related("brand"):
 
-    if model.flat_name in flat_title:
-        return Product.objects.get(model=model)
-    
+        if model.flat_name in flat_title:
+            return Product.objects.get(model=model)
+        
 
 # even better create a parser class
 
@@ -74,6 +74,7 @@ class CanonParser:
 
 parser = CanonParser()
 
+listings = Listing.objects.all()
 for listing in listings:
 
     product = parser.parse(listing.title)
