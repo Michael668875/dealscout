@@ -1,0 +1,58 @@
+{% extends "keyboard_tracker/layout.html" %}
+
+{% block title %}DealScout{% endblock %}
+
+<div class="table-wrap rounded-4 shadow-sm p-4">
+    <h3 class="mb-4">Overview</h3>
+    <p>Browse all tracked LEGO sets and see how many active listings are currently available for each set.</p>
+
+    <div class="table-responsive">
+        <table class="table align-middle">
+        <thead>
+            <tr>
+            <th class="col-set"> something</th>
+            <th class="col-title">Title</th>
+            <th class="col-starting">Starting From</th>
+            <th class="col-count"> Number of Listings</th>
+            </tr>
+        </thead>
+
+        <tbody>
+          {% if listings %}
+          {% for listing in listings %}
+            <tr>
+            <td>
+                <div class="fw-semibold">
+                  
+                      -
+                      
+                </div>
+                
+            </td>
+            <td> 
+              <div class="d-flex align-items-center gap-3">
+                <img class="listing-img"
+                    src="#" loading="lazy">
+                <div>
+                -
+             </td>
+            <td>price</td>
+            <td>
+              <a href="#">
+
+                <span class="btn btn-outline-danger px-5">
+                  count
+                </span>
+              </a>
+            </td>
+            </tr>
+          {% endfor %}
+          {% else %}
+            <tr>
+                <td colspan="5">No listings found.</td>
+            </tr>
+          {% endif %}
+        </tbody>
+        </table>
+    </div>
+</div>

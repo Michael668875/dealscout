@@ -1,0 +1,60 @@
+{% extends "keyboard_tracker/layout.html" %}
+
+{% block title %}DealScout{% endblock %}
+
+<div class="table-wrap rounded-4 shadow-sm p-4">
+    <h3 class="mb-4">Best Deals</h3>
+    <p>Find LEGO sets currently selling below their average market price based on tracked listings.</p>
+    <div class="table-responsive">
+        <table class="table align-middle">
+        <thead>
+            <tr>
+            <th class="col-set">something</th>
+            <th class="col-title">Title</th>
+            <th class="text-nowrap col-price">
+                    <span class="price-heading-wrap">
+                        <span>Price</span>
+                        {% if currency %}
+                            <span class="price-heading-code">{{ currency }}</span>
+                        {% endif %}
+                    </span>
+                    
+            </th>
+            <th class="col-url">Market Average</th>
+            <th class="col-discount">some%</th>
+            <th class="col-url">Listing</th>
+            </tr>
+        </thead>
+
+        <tbody>
+          {% if listings %}
+          {% for listing in listings %}
+            <tr>
+            <td>
+                <div class="fw-semibold">
+                      -
+                      
+                </div>
+            </td>
+            <td>
+              <div class="d-flex align-items-center gap-3">
+                <img class="listing-img"
+                    src="{{ listing.image_urls.0 }}" loading="lazy">
+                <div>
+                -
+            </td>
+            <td>price</td>
+            <td>avg price</td>
+            <td><span class="discount"> discount% </span></td>
+            <td><a href="{{ listing.Listing.affiliate_url }}" class="btn btn-primary text-nowrap" target="_blank">Buy on eBay</a></td>
+            </tr>
+          {% endfor %}
+          {% else %}
+            <tr>
+                <td colspan="5">No listings found.</td>
+            </tr>
+          {% endif %}
+        </tbody>
+        </table>
+    </div>
+</div>

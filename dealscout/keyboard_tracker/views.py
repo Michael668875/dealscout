@@ -21,3 +21,32 @@ class ListingView(generic.ListView):
 
     def get_queryset(self):
         return Listing.objects.all()
+    
+class OverView(generic.ListView):
+    template_name = "keyboard_tracker/overview.html"
+    context_object_name = "listings"
+
+    def get_queryset(self):
+        return Listing.objects.all()
+    
+class BestdealsView(generic.ListView):
+    template_name = "keyboard_tracker/bestdeals.html"
+    context_object_name = "listings"
+
+    def get_queryset(self):
+        return Listing.objects.all()
+    
+class PricedropsView(generic.ListView):
+    template_name = "keyboard_tracker/pricedrops.html"
+    context_object_name = "listings"
+
+    def get_queryset(self):
+        return Listing.objects.all()
+    
+    
+class ModelsView(generic.ListView):
+    template_name = "keyboard_tracker/models.html"
+    context_object_name = "listings"
+
+    def get_queryset(self):
+        return Listing.objects.all()

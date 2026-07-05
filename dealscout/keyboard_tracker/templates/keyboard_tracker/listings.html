@@ -7,37 +7,7 @@
 
 {% block content %}
         <div class="p-4 p-lg-5">
-
-          <div class="hero-card mb-4">
-            <div class="row align-items-center">
-              <div class="col-lg-8">
-                <div class="badge-pill mb-3">
-                  SYSTEM STATUS: ONLINE
-                </div>
-
-                <h1 class="display-5 fw-bold mb-3">
-                  LEGO MARKET TERMINAL
-                </h1>
-
-                <p class="mb-4 text-info-emphasis">
-                  Real-time collector pricing • Active market monitoring • Advanced deal analysis
-                </p>
-
-                <button class="btn btn-primary btn-lg">
-                  ACCESS DEAL FEED
-                </button>
-              </div>
-
-              <div class="col-lg-4 mt-4 mt-lg-0">
-                <div class="p-4 rounded-4 border border-info h-100">
-                  <div class="mb-3">TRACKED MODELS........ 12,994</div>
-                  <div class="mb-3">ACTIVE LISTINGS....... 88,201</div>
-                  <div class="mb-3">PRICE ALERTS.......... 492</div>
-                  <div>AVG SAVINGS........... 11%</div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {% include "keyboard_tracker/includes/hero_card.html" %}
 
           <div class="table-wrap rounded-4 p-3">
             <h3 class="mb-4 text-info">LIVE PRICE FEED</h3>
