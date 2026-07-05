@@ -1,4 +1,5 @@
 import re
+from keyboard_tracker.models import CanonBrand, CanonModel, Product, Listing
 
 def flatten(text):
     text = text.lower()
@@ -6,25 +7,26 @@ def flatten(text):
     return text
 
 
+def match_title(ebay_title):
+    
+    ebay_title = Listing.title
 
+    flat_title = flatten(ebay_title)
 
+    for brand in CanonBrand.objects.all():
 
-flat_title = flatten(ebay_title)
+        if brand.flat_name not in flat_title:
+            continue
 
-for brand in CanonBrand.objects.all():
+        models = CanonModel.objects.filter(brand=brand)
 
-    if brand.flat_name not in flat_title:
-        continue
+        for model in models:
 
-    models = CanonModel.objects.filter(brand=brand)
+            if model.flat_name in flat_title:
+                product = Product.objects.get(model=model)
 
-    for model in models:
-
-        if model.flat_name in flat_title:
-            product = Product.objects.get(model=model)
-
-            listing.product = product
-            break
+                Listing.product = product
+                break
 
 
 
