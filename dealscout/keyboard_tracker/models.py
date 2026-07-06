@@ -66,6 +66,7 @@ class CanonModel(models.Model):
 
     name = models.CharField(max_length=255)
     flat_name = models.CharField(max_length=100, db_index=True, null=True)
+    slug = models.CharField(max_length=100, null=True)
     category = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
@@ -76,24 +77,14 @@ class CanonModel(models.Model):
                 name="uq_brand_model",
             )
         ]
-
+        
     def __str__(self):
         return f"{self.brand.name} {self.name}"
 
-class Product(models.Model):
-    model = models.OneToOneField(
-        CanonModel,
-        on_delete=models.CASCADE,
-        related_name="products",
-    )
+    @property
+    def display_name(self):
+        return f"{self.brand.name} {self.name}"
 
-    display_name = models.CharField(max_length=255)
-
-    class Meta:
-        db_table = "products"
-
-    def __str__(self):
-        return self.display_name
 
 
 class Listing(models.Model):
@@ -104,14 +95,6 @@ class Listing(models.Model):
     ]
 
     ebay_item_id = models.CharField(max_length=255, unique=True)
-
-    product = models.ForeignKey(
-        Product,
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
-        related_name="listings",
-    )
 
     title = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
@@ -138,6 +121,14 @@ class Listing(models.Model):
     ended_at = models.DateTimeField(blank=True, null=True)
 
     last_updated = models.DateTimeField(auto_now=True)
+
+    model = models.ForeignKey(
+        CanonModel,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="listings",
+    )
 
     class Meta:
         db_table = "listings"
@@ -179,21 +170,3 @@ class PriceHistory(models.Model):
     def __str__(self):
         return f"{self.listing.ebay_item_id}: {self.price}"
 
-
-class ModelAlias(models.Model):
-    model = models.ForeignKey(
-        CanonModel,
-        on_delete=models.CASCADE,
-        related_name="aliases",
-    )
-
-    alias = models.CharField(
-        max_length=255,
-        unique=True,
-    )
-
-    class Meta:
-        db_table = "model_aliases"
-
-    def __str__(self):
-        return self.alias

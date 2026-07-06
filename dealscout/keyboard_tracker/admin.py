@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CanonBrand, CanonModel, Product, Listing, PriceHistory, ModelAlias, TempSummary
+from .models import CanonBrand, CanonModel, Listing, PriceHistory, TempSummary
 
 # Register your models here.
 
@@ -11,7 +11,5 @@ class ListingAdmin(admin.ModelAdmin):
 admin.site.register(Listing, ListingAdmin)
 admin.site.register(CanonBrand)
 admin.site.register(CanonModel)
-admin.site.register(Product)
 admin.site.register(PriceHistory)
-admin.site.register(ModelAlias)
 admin.site.register(TempSummary)

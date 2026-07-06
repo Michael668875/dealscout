@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.views import generic
 from .models import Listing
+from django.db.models import Count, Min
 
 # Create your views here.
 
@@ -21,13 +22,34 @@ class ListingView(generic.ListView):
 
     def get_queryset(self):
         return Listing.objects.all()
-    
+
+
 class OverView(generic.ListView):
     template_name = "keyboard_tracker/overview.html"
-    context_object_name = "listings"
+    context_object_name = "models"
 
     def get_queryset(self):
-        return Listing.objects.all()
+        return (
+            Listing.objects
+            .filter(
+                status="ACTIVE",
+               # model__isnull=False,
+            )
+            .values(
+                "title",
+                "image_urls",
+               # "model_id",
+               # "model__name",
+               # "model__brand__name",
+               # "model__slug",
+            )
+            .annotate(
+                listing_count=Count("id"),
+                lowest_price=Min("price"),
+            )
+           # .order_by("model__brand__name", "model__name")
+        )
+        
     
 class BestdealsView(generic.ListView):
     template_name = "keyboard_tracker/bestdeals.html"

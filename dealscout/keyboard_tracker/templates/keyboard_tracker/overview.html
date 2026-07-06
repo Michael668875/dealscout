@@ -2,6 +2,7 @@
 
 {% block title %}DealScout{% endblock %}
 
+{% block content %}
 <div class="table-wrap rounded-4 shadow-sm p-4">
     <h3 class="mb-4">Overview</h3>
     <p>Browse all tracked LEGO sets and see how many active listings are currently available for each set.</p>
@@ -10,38 +11,42 @@
         <table class="table align-middle">
         <thead>
             <tr>
-            <th class="col-set"> something</th>
-            <th class="col-title">Title</th>
+            <th class="col-title">Keyboard</th>
             <th class="col-starting">Starting From</th>
             <th class="col-count"> Number of Listings</th>
             </tr>
         </thead>
 
         <tbody>
-          {% if listings %}
-          {% for listing in listings %}
+          {% if models %}
+          {% for model in models %}
             <tr>
-            <td>
-                <div class="fw-semibold">
-                  
-                      -
-                      
-                </div>
-                
-            </td>
+
             <td> 
               <div class="d-flex align-items-center gap-3">
                 <img class="listing-img"
-                    src="#" loading="lazy">
+                    src="{{ model.image_urls.0 }}" loading="lazy">
                 <div>
-                -
+                  {% if model.model__name %}
+                      {{ model.model__brand__name }} {{ model.model__name }}
+                  {% else %}
+                      {{ model.title }}
+                  {% endif %}
+                </div>
+              </div>
              </td>
-            <td>price</td>
+            <td>
+              {% if model.lowest_price %}
+                  ${{ model.lowest_price }}
+              {% else %}
+                  —
+              {% endif %}
+            </td>
             <td>
               <a href="#">
 
                 <span class="btn btn-outline-danger px-5">
-                  count
+                  {{ model.listing_count }}
                 </span>
               </a>
             </td>
@@ -56,3 +61,4 @@
         </table>
     </div>
 </div>
+{% endblock %}
