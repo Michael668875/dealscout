@@ -2,6 +2,8 @@
 
 {% block title %}DealScout{% endblock %}
 
+{% block content %}
+
 <H1>Available Lego Sets</H1>
 
 <p class="d-none d-md-block">
@@ -14,27 +16,38 @@
 <p>
 
 <div class="series-nav">
-something</div>
+  {% for brand in brands %}
+    <a href="#theme-{{ theme.slug }}" class="btn btn-sm btn-danger px-1 mb-2 model-menu">
+      {{ brand.name }}
+    </a>
+  
+</div>
 </p>
 
 
     <section id="">
       <span class="theme-label badge text-bg-secondary">
-        something
+        {{ brand.name }}
       </span>
     </section>
-
+    {% endfor %}
+    <!--
     <div class="model-grid">
-    something
+      {% for model in brand.models %}
+        
       <a class="model-chip  p-2"
          href="#">
 
-        <span>brand</span>
-        <small>model</small>
-        
-        <small class="model-last-seen">Seen </small> 
-        
+        <span>{{ model.name }}</span>
+        <small>{{ model.model__name }}</small>
+        {% if model.last_seen %}
+        <small class="model-last-seen">Seen {{ model.last_seen }} </small> 
+        {% else %} 
+        <small class="model-last-seen">Not Seen</small> 
+        {% endif %}
       </a>
-  
+      {% endfor %}
       </div>
-
+      -->
+      
+{% endblock %}

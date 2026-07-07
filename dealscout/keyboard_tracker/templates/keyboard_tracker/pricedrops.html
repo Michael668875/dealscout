@@ -2,6 +2,7 @@
 
 {% block title %}DealScout{% endblock %}
 
+{% block content %}
 <div class="table-wrap rounded-4 shadow-sm p-4">
     <h3 class="mb-4">Price Drops</h3>
     <p>Discover listings that have recently been discounted and may offer better value.</p>
@@ -9,7 +10,6 @@
         <table class="table align-middle">
         <thead>
             <tr>
-            <th class="col-set"> something </th>
             <th class="col-title">Title</th>
             <th class="col-price"> old price </th>
             <th class="col-price"> new price </th>
@@ -19,47 +19,41 @@
         </thead>
 
         <tbody>
-          {% if listings %}
-          {% for listing in listings %}
+          {% if drops %}
+          {% for drop in drops %}
             <tr>
-            <td>
-                <div class="fw-semibold">
-                  
-                      -
-                     
-                </div>
-            </td>
+            
             <td>
               <div class="d-flex align-items-center gap-3">
-                <img class="listing-img" src="{{ listing.image_url.0 }}" loading="lazy">
-                <div>
-                  name
+                <img class="listing-img" src="{{ drop.listing.image_urls.0 }}" loading="lazy">
+                <div class="fw-semibold">                  
+                  {{ drop.listing.title }}                     
                 </div>
               </div>
             </td>
             
             <td>
-              {%  if listing.old_price %}
-                old price
+              {%  if drop.old_price %}
+                {{ drop.old_price }}
               {% else %}
                 -
               {% endif %}
             </td>
             <td>
-              {%  if listing.new_price %}
-                new price
+              {%  if drop.price %}
+                {{ drop.price }}
               {% else %}
                 -
               {% endif %}
             </td>
             <td><span class="discount"> 
-              {% if listing.discount_percent is not none %}
-                some discount%
+              {% if drop.discount_percent is not none %}
+                {{ drop.discount_percent|floatformat:0 }}%
               {% else %}
                 -
               {% endif %} 
             </span></td>
-            <td><a href="{{ listing.affiliate_url }}" class="btn btn-primary text-nowrap" target="_blank">Buy on eBay</a></td>
+            <td><a href="{{ drop.listing.affiliate_url }}" class="btn btn-primary text-nowrap" target="_blank">Buy on eBay</a></td>
             </tr>
           {% endfor %}
           {% else %}
@@ -71,3 +65,4 @@
         </table>
     </div>
 </div>
+{% endblock %}

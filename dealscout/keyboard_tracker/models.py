@@ -57,33 +57,33 @@ class CanonBrand(models.Model):
         return self.name
 
 
-class CanonModel(models.Model):
-    brand = models.ForeignKey(
-        CanonBrand,
-        on_delete=models.CASCADE,
-        related_name="models",
-    )
+# class CanonModel(models.Model):
+#     brand = models.ForeignKey(
+#         CanonBrand,
+#         on_delete=models.CASCADE,
+#         related_name="models",
+#     )
 
-    name = models.CharField(max_length=255)
-    flat_name = models.CharField(max_length=100, db_index=True, null=True)
-    slug = models.CharField(max_length=100, null=True)
-    category = models.CharField(max_length=255, blank=True, null=True)
+#     name = models.CharField(max_length=255)
+#     flat_name = models.CharField(max_length=100, db_index=True, null=True)
+#     slug = models.CharField(max_length=100, null=True)
+#     category = models.CharField(max_length=255, blank=True, null=True)
 
-    class Meta:
-        db_table = "models"
-        constraints = [
-            models.UniqueConstraint(
-                fields=["brand", "name"],
-                name="uq_brand_model",
-            )
-        ]
+#     class Meta:
+#         db_table = "models"
+#         constraints = [
+#             models.UniqueConstraint(
+#                 fields=["brand", "name"],
+#                 name="uq_brand_model",
+#             )
+#         ]
         
-    def __str__(self):
-        return f"{self.brand.name} {self.name}"
+#     def __str__(self):
+#         return f"{self.brand.name} {self.name}"
 
-    @property
-    def display_name(self):
-        return f"{self.brand.name} {self.name}"
+#     @property
+#     def display_name(self):
+#         return f"{self.brand.name} {self.name}"
 
 
 
@@ -122,13 +122,13 @@ class Listing(models.Model):
 
     last_updated = models.DateTimeField(auto_now=True)
 
-    model = models.ForeignKey(
-        CanonModel,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        related_name="listings",
-    )
+    # model = models.ForeignKey(
+    #     CanonModel,
+    #     on_delete=models.SET_NULL,
+    #     null=True,
+    #     blank=True,
+    #     related_name="listings",
+    # )
 
     class Meta:
         db_table = "listings"
