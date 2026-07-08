@@ -57,36 +57,6 @@ class CanonBrand(models.Model):
         return self.name
 
 
-# class CanonModel(models.Model):
-#     brand = models.ForeignKey(
-#         CanonBrand,
-#         on_delete=models.CASCADE,
-#         related_name="models",
-#     )
-
-#     name = models.CharField(max_length=255)
-#     flat_name = models.CharField(max_length=100, db_index=True, null=True)
-#     slug = models.CharField(max_length=100, null=True)
-#     category = models.CharField(max_length=255, blank=True, null=True)
-
-#     class Meta:
-#         db_table = "models"
-#         constraints = [
-#             models.UniqueConstraint(
-#                 fields=["brand", "name"],
-#                 name="uq_brand_model",
-#             )
-#         ]
-        
-#     def __str__(self):
-#         return f"{self.brand.name} {self.name}"
-
-#     @property
-#     def display_name(self):
-#         return f"{self.brand.name} {self.name}"
-
-
-
 class Listing(models.Model):
     STATUS_CHOICES = [
         ("ACTIVE", "Active"),
@@ -121,14 +91,6 @@ class Listing(models.Model):
     ended_at = models.DateTimeField(blank=True, null=True)
 
     last_updated = models.DateTimeField(auto_now=True)
-
-    # model = models.ForeignKey(
-    #     CanonModel,
-    #     on_delete=models.SET_NULL,
-    #     null=True,
-    #     blank=True,
-    #     related_name="listings",
-    # )
 
     class Meta:
         db_table = "listings"
@@ -170,3 +132,69 @@ class PriceHistory(models.Model):
     def __str__(self):
         return f"{self.listing.ebay_item_id}: {self.price}"
 
+from django.db import models
+
+
+class Specs(models.Model):
+    listing = models.OneToOneField(
+        "Listing",
+        on_delete=models.CASCADE,
+        related_name="specs"
+    )
+
+    brand = models.ForeignKey(
+        "CanonBrand",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="specs"
+    )
+
+    # Layout
+    layout_size = models.CharField(
+        max_length=50,
+        blank=True,
+        null=True
+    )
+
+    # Switch information
+    switch_type = models.CharField(
+        max_length=100,
+        blank=True,
+        null=True
+    )
+
+    # Features
+    low_profile = models.BooleanField(default=False)
+    hall_effect = models.BooleanField(default=False)
+    optical = models.BooleanField(default=False)
+    hot_swap = models.BooleanField(default=False)
+    gasket_mount = models.BooleanField(default=False)
+    knob = models.BooleanField(default=False)
+
+    # Connectivity
+    wireless = models.BooleanField(default=False)
+    bluetooth = models.BooleanField(default=False)
+
+    # Firmware
+    qmk = models.BooleanField(default=False)
+    via = models.BooleanField(default=False)
+
+    # Layout standards
+    iso = models.BooleanField(default=False)
+    ansi = models.BooleanField(default=False)
+
+    # Build type
+    barebones = models.BooleanField(default=False)
+
+    # Lighting
+    rgb = models.BooleanField(default=False)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = "specs"
+
+    def __str__(self):
+        return f"Specs for ID: {self.listing.id} Title: {self.listing.title}"
