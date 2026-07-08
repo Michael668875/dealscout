@@ -1,0 +1,8 @@
+{% extends "keyboard_tracker/layout.html" %}
+
+{% block content %}
+    {% for switch in switches %}
+        | {{ switch.switch_type }} |
+    {% endfor %}
+
+{% endblock %}

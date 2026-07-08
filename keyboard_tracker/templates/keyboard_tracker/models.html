@@ -16,9 +16,9 @@
 <p>
 
 <div class="series-nav">
-  {% for brand in brands %}
+  {% for model in models %}
     <a href="#theme-{{ theme.slug }}" class="btn btn-sm btn-danger px-1 mb-2 model-menu">
-      {{ brand.name }}
+      {{ model.name }}
     </a>
   
 </div>
@@ -27,13 +27,13 @@
 
     <section id="">
       <span class="theme-label badge text-bg-secondary">
-        {{ brand.name }}
+        {{ model.name }}
       </span>
     </section>
     {% endfor %}
     <!--
     <div class="model-grid">
-      {% for model in brand.models %}
+      {% for model in model.models %}
         
       <a class="model-chip  p-2"
          href="#">

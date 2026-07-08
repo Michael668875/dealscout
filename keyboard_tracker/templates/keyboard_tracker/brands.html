@@ -1,0 +1,8 @@
+{% extends "keyboard_tracker/layout.html" %}
+
+{% block content %}
+    {% for brand in brands %}
+        | {{ brand.name }} |
+    {% endfor %}
+
+{% endblock %}

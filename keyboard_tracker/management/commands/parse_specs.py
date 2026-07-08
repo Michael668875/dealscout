@@ -11,7 +11,7 @@ class Command(BaseCommand):
             self.style.SUCCESS("Specs parsed successfully")
         )
 
-def parse_keyboard_specs():
+def parse_keyboard_specs(): # SIMPLE PARSING. TO BE UPDATED LATER
     listings = Listing.objects.filter(status="ACTIVE")
 
     brands = CanonBrand.objects.all()

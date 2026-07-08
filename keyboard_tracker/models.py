@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from .managers import PriceHistoryManager
 
 # Create your models here.
 
@@ -119,6 +120,8 @@ class PriceHistory(models.Model):
         default=timezone.now,
         db_index=True,
     )
+
+    objects = PriceHistoryManager()
 
     class Meta:
         db_table = "price_history"
