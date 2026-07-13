@@ -4,8 +4,8 @@ from django.db.models.functions import Lag
 
 class PriceHistoryManager(models.Manager):
 
-    def drops(self):
-        return (
+    def drops(self, country=None):
+        queryset = (
             self.get_queryset()
             .filter(
                 listing__status="ACTIVE",
@@ -31,5 +31,48 @@ class PriceHistoryManager(models.Manager):
                 )
             )
             .select_related("listing")
-            .order_by("-discount_percent")
+        )
+
+        if country:
+            queryset = queryset.filter(listing__country=country)
+
+        return queryset.order_by("-discount_percent")
+    
+
+class ListingQuerySet(models.QuerySet):
+    def filter_country(self, country):
+        if country:
+            return self.filter(country=country)
+        return self
+
+
+class ListingManager(models.Manager):
+    def get_queryset(self):
+        return ListingQuerySet(self.model, using=self._db)
+
+    def listings(self, country=None):
+        return (
+            self.get_queryset()
+            .filter_country(country)
+            .order_by("id")
+        )
+    
+    def by_brand(self, brand, country=None): # use for models page. needs adjusting
+        queryset = self.filter(
+            model__brand=brand,
+            status="ACTIVE",
+        )
+
+        if country:
+            queryset = queryset.filter(
+                country=country
+            )
+
+        return queryset.order_by("price")
+    
+class CanonBrandManager(models.Manager):
+    def all_brands(self):
+        return (
+            self.get_queryset()
+            .order_by("name")
         )

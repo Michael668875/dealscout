@@ -21,13 +21,13 @@
             
 
             <div class="ms-auto">
-              <a class="menu-link" href="/keyboard_tracker/listings">HOME</a>
-              <a class="menu-link" href="/keyboard_tracker/pricedrops">PRICE DROPS</a>
-              <a class="menu-link" href="/keyboard_tracker/models">MODELS</a>
-              <a class="menu-link" href="/keyboard_tracker/brands">BRANDS</a>
-              <a class="menu-link" href="/keyboard_tracker/features">FEATURES</a>
-              <a class="menu-link" href="/keyboard_tracker/sizes">SIZES</a>
-              <a class="menu-link" href="/keyboard_tracker/switches">SWITCHES</a>
+              <a class="menu-link" href="{% url 'listings' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">HOME</a>
+              <a class="menu-link" href="{% url 'pricedrops' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">PRICE DROPS</a>
+              <a class="menu-link" href="{% url 'models' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">MODELS</a>
+              <a class="menu-link" href="{% url 'brands' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">BRANDS</a>
+              <a class="menu-link" href="{% url 'features' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">FEATURES</a>
+              <a class="menu-link" href="{% url 'sizes' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">SIZES</a>
+              <a class="menu-link" href="{% url 'switches' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">SWITCHES</a>
             </div>
           </div>
         </nav>

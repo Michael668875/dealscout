@@ -1,6 +1,6 @@
 from django.db import models
 from django.utils import timezone
-from .managers import PriceHistoryManager
+from .managers import PriceHistoryManager, ListingManager, CanonBrandManager
 
 # Create your models here.
 
@@ -51,6 +51,8 @@ class CanonBrand(models.Model):
     name = models.CharField(max_length=255, unique=True)
     flat_name = models.CharField(max_length=100, db_index=True, null=True)
 
+    objects = CanonBrandManager()
+
     class Meta:
         db_table = "brands"
 
@@ -92,6 +94,8 @@ class Listing(models.Model):
     ended_at = models.DateTimeField(blank=True, null=True)
 
     last_updated = models.DateTimeField(auto_now=True)
+
+    objects = ListingManager()
 
     class Meta:
         db_table = "listings"
