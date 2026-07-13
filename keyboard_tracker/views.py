@@ -17,9 +17,27 @@ def index(request):
 class ListingView(generic.ListView):
     template_name = "keyboard_tracker/listings.html"
     context_object_name = "listings"
+    paginate_by = 50
 
     def get_queryset(self):
-        return Listing.objects.all()
+        queryset = Listing.objects.order_by("id")
+
+        country = self.request.GET.get("country")
+        if country:
+            queryset = queryset.filter(country=country)
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["selected_country"] = self.request.GET.get("country", "")
+        context["countries"] = [
+            ("AU", "Australia"),
+            ("US", "United States"),
+            ("GB", "United Kingdom"),
+            ("DE", "Germany"),
+        ]
+        return context
 
     
 class PriceDropsView(generic.ListView):
@@ -36,37 +54,6 @@ class ModelsView(generic.ListView):
 
     def get_queryset(self):
         return CanonBrand.objects.all()
-
-        # rows = (
-        #     Listing.objects
-        #     .filter(
-        #         status="ACTIVE",
-        #         model__isnull=False,
-        #     )
-        #     .values(
-        #         "model__id",
-        #         "model__name",
-        #         "model__brand__name",
-        #     )
-        #     .annotate(
-        #         count=Count("id"),
-        #         last_seen=Max("last_seen"),
-        #     )
-        #     .order_by("-count")
-        # )
-
-        # grouped = defaultdict(list)
-
-        # for row in rows:
-        #     grouped[row["model__brand__name"]].append(row)
-
-        # return [
-        #     {
-        #         "name": brand,
-        #         "models": models,
-        #     }
-        #     for brand, models in grouped.items()
-        # ]
 
 class BrandsView(generic.ListView):
     model = CanonBrand

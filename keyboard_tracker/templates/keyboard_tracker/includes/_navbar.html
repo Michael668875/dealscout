@@ -5,6 +5,19 @@
               DealScout
               </a>
             </span>
+
+            <form method="get">
+                <select name="country" onchange="this.form.submit()">
+                    <option value="">All Countries</option>
+
+                    {% for code, name in countries %}
+                        <option value="{{ code }}"
+                            {% if selected_country == code %}selected{% endif %}>
+                            {{ name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
             
 
             <div class="ms-auto">
