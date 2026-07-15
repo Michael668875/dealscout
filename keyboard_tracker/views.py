@@ -24,7 +24,6 @@ class ListingView(generic.ListView):
         return Listing.objects.listings(country)
     
 class PriceDropsView(generic.ListView):
-    model = PriceHistory
     template_name = "keyboard_tracker/pricedrops.html"
     context_object_name = "drops"
 
@@ -32,21 +31,25 @@ class PriceDropsView(generic.ListView):
         country = self.request.GET.get("country")
         return PriceHistory.objects.drops(country)    
     
-class ModelsView(generic.ListView):
-    template_name = "keyboard_tracker/models.html"
-    context_object_name = "models"
-
-    def get_queryset(self):
-        return CanonBrand.objects.all_brands()
-
 class BrandsView(generic.ListView):
-    model = CanonBrand
     template_name = "keyboard_tracker/brands.html"
     context_object_name = "brands"
 
     def get_queryset(self):
         country = self.request.GET.get("country")
-        return CanonBrand.objects.all()
+        return CanonBrand.objects.all_brands(country)
+
+class BrandView(generic.ListView):
+    template_name = "keyboard_tracker/brand.html"
+    context_object_name = "listings"
+
+    def get_queryset(self):
+        country = self.request.GET.get("country")
+        slug = self.kwargs["slug"]
+        return Specs.objects.brand_list(slug=slug, country=country)
+    
+    
+
     
 class FeaturesView(generic.ListView):
     template_name = "keyboard_tracker/features.html"

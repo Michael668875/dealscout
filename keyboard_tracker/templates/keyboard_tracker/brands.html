@@ -1,8 +1,30 @@
 {% extends "keyboard_tracker/layout.html" %}
 
-{% block content %}
-    {% for brand in brands %}
-        | {{ brand.name }} |
-    {% endfor %}
+{% block title %}DealScout{% endblock %}
 
+{% block content %}
+
+<H1>Available Lego Sets</H1>
+
+<p class="d-none d-md-block">
+    Browse all tracked LEGO sets by theme and set number to find specific models quickly.
+</p>
+
+<p class="d-md-none mobile-title">
+    Explore the complete LEGO set database, organized by theme and set number.
+</p>
+<p>
+
+<div class="series-nav">
+  {% for brand in brands %}
+    <a href="{% url 'brand' slug=brand.slug %}{% if selected_country %}?country={{ selected_country }}{% endif %}"
+       class="btn btn-sm btn-danger px-1 mb-2 model-menu">
+        {{ brand.name }}
+    </a>
+    {% endfor %}
+  
+</div>
+</p>
+
+      
 {% endblock %}

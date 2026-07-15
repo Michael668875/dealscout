@@ -1,0 +1,23 @@
+{% extends "keyboard_tracker/layout.html" %}
+
+{% block content %}
+
+<h1>{{ listings.0.brand.name }}</h1>
+
+{% for spec in listings %}
+    <div>
+        <h3>{{ spec.listing.title }}</h3>
+
+        <p>Price: {{ spec.listing.price }}</p>
+        <p>Country: {{ spec.listing.country }}</p>
+        <p>Last updated: {{ spec.listing.last_updated }}</p>
+
+        <a href="{{ spec.listing.affiliate_url }}">View on eBay</a>
+    </div>
+
+    <hr>
+{% empty %}
+    <p>No listings found.</p>
+{% endfor %}
+
+{% endblock %}

@@ -57,22 +57,35 @@ class ListingManager(models.Manager):
             .order_by("id")
         )
     
-    def by_brand(self, brand, country=None): # use for models page. needs adjusting
-        queryset = self.filter(
-            model__brand=brand,
-            status="ACTIVE",
-        )
-
-        if country:
-            queryset = queryset.filter(
-                country=country
-            )
-
-        return queryset.order_by("price")
-    
 class CanonBrandManager(models.Manager):
-    def all_brands(self):
+    def all_brands(self, country=None):
+
+        filters = {"specs__listing__status": "ACTIVE",}
+        
+        if country:
+            filters["specs__listing__country"] = country
+
         return (
             self.get_queryset()
+            .filter(**filters)
+            .distinct()
             .order_by("name")
+        )
+    
+class BrandViewManager(models.Manager):
+    def brand_list(self, slug, country=None):
+
+        filters = {
+            "listing__status": "ACTIVE",
+            "brand__slug": slug,
+            }
+
+        if country:
+            filters["listing__country"] = country
+
+        return (
+            self.get_queryset()
+            .filter(**filters)
+            .select_related("listing")
+            .order_by("listing__last_updated")
         )

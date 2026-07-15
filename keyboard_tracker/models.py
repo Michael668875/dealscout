@@ -1,6 +1,11 @@
 from django.db import models
 from django.utils import timezone
-from .managers import PriceHistoryManager, ListingManager, CanonBrandManager
+from .managers import (
+    PriceHistoryManager, 
+    ListingManager, 
+    CanonBrandManager, 
+    BrandViewManager
+    )
 
 # Create your models here.
 
@@ -50,6 +55,7 @@ class TempSummary(models.Model):
 class CanonBrand(models.Model):
     name = models.CharField(max_length=255, unique=True)
     flat_name = models.CharField(max_length=100, db_index=True, null=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
 
     objects = CanonBrandManager()
 
@@ -156,6 +162,8 @@ class Specs(models.Model):
         blank=True,
         related_name="specs"
     )
+
+    objects = BrandViewManager()
 
     # Layout
     layout_size = models.CharField(
