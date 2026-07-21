@@ -1,12 +1,14 @@
-{% extends "keyboard_tracker/layout.html" %}
 
-{% block content %}
 
-<h1>{{ listings.0.brand.name }}</h1>
+<h2>{{ listings.0.brand.name }}</h2>
 
 {% for spec in listings %}
     <div>
-        <h3>{{ spec.listing.title }}</h3>
+        <p>{{ spec.listing.title }}</p>
+        <p>{% if spec.listing.image_urls %}
+                <img class="listing-img" src="{{ spec.listing.image_urls.0 }}" alt="{{ spec.listing.title }}" loading="lazy">
+            {% endif %}
+        </p>
 
         <p>Price: {{ spec.listing.price }}</p>
         <p>Country: {{ spec.listing.country }}</p>
@@ -20,4 +22,3 @@
     <p>No listings found.</p>
 {% endfor %}
 
-{% endblock %}
