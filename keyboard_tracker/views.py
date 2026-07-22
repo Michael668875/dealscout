@@ -1,5 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.views import generic
+from django.utils.text import slugify
 from .models import Listing, PriceHistory, CanonBrand, Specs
 
 # Create your views here.
@@ -82,13 +83,40 @@ class FeaturesView(generic.ListView):
         return Listing.objects.all()
     
 class SizesView(generic.ListView):
-    model = Specs
     template_name = "keyboard_tracker/sizes.html"
     context_object_name = "sizes"
 
     def get_queryset(self):
         country = self.request.GET.get("country")
-        return Specs.objects.all()
+        return Specs.objects.all_sizes(country)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        country = self.request.GET.get("country")
+        slug = self.kwargs.get("slug")
+
+        context["sizes"] = [
+            {
+                "name": size,
+                "slug": slugify(size),
+            }
+            for size in Specs.objects.all_sizes(
+                self.request.GET.get("country")
+            )
+        ]
+
+        if slug:
+            context["listings"] = Specs.objects.size_list(
+                slug=slug,
+                country=country,
+            )
+        else:
+            context["listings"] = Specs.objects.none()
+
+
+        return context
+    
     
 class SwitchesView(generic.ListView):
     model = Specs

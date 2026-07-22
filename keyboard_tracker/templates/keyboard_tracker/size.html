@@ -1,0 +1,27 @@
+{% for spec in listings %}
+    {% if forloop.first %}
+        <h2>{{ spec.layout_size }}</h2>
+    {% endif %}
+
+    <div>
+        <p>{{ spec.listing.title }}</p>
+
+        {% if spec.listing.image_urls %}
+            <img
+                class="listing-img"
+                src="{{ spec.listing.image_urls.0 }}"
+                alt="{{ spec.listing.title }}"
+                loading="lazy">
+        {% endif %}
+
+        <p>Price: {{ spec.listing.price }}</p>
+        <p>Country: {{ spec.listing.country }}</p>
+        <p>Last updated: {{ spec.listing.last_updated }}</p>
+
+        <a href="{{ spec.listing.affiliate_url }}">View on eBay</a>
+    </div>
+
+    <hr>
+{% empty %}
+    <h2>No listings found.</h2>
+{% endfor %}

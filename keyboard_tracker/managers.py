@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models import Window, ExpressionWrapper, FloatField, F
 from django.db.models.functions import Lag
+from django.utils.text import slugify
 
 class PriceHistoryManager(models.Manager):
 
@@ -71,8 +72,10 @@ class CanonBrandManager(models.Manager):
             .distinct()
             .order_by("name")
         )
+        
     
-class BrandViewManager(models.Manager):
+class SpecsManager(models.Manager):
+
     def brand_list(self, slug, country=None):
 
         filters = {
@@ -89,3 +92,34 @@ class BrandViewManager(models.Manager):
             .select_related("listing")
             .order_by("listing__last_updated")
         )
+    
+    def all_sizes(self, country=None):
+
+        filters = {"listing__status": "ACTIVE",}
+
+        if country:
+            filters["listing__country"] = country
+
+        return (
+            self.get_queryset()
+            .filter(**filters)
+            .exclude(layout_size="")
+            .exclude(layout_size__isnull=True)
+            .values_list("layout_size", flat=True)
+            .distinct()
+            .order_by("layout_size")
+        )
+        
+    def size_list(self, slug, country=None):
+        filters = {"listing__status": "ACTIVE"}
+
+        if country:
+            filters["listing__country"] = country
+
+        queryset = self.get_queryset().filter(**filters)
+
+        for value in queryset.values_list("layout_size", flat=True).distinct():
+            if slugify(value) == slug:
+                return queryset.filter(layout_size=value)
+
+        return queryset.none()

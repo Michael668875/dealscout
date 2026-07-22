@@ -2,7 +2,15 @@
 
 {% block content %}
     {% for size in sizes %}
-        | {{ size.layout_size }} |
+        <a href="{% url 'size' slug=size.slug %}{% if selected_country %}?country={{ selected_country }}{% endif %}"
+        class="btn btn-sm btn-danger px-1 mb-2 model-menu">
+         {{ size.name }} 
+        </a>
+
     {% endfor %}
+
+    {% if listings %}
+    {% include "keyboard_tracker/size.html" %}
+    {% endif %}
 
 {% endblock %}

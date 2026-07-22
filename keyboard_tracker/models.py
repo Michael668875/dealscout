@@ -4,7 +4,7 @@ from .managers import (
     PriceHistoryManager, 
     ListingManager, 
     CanonBrandManager, 
-    BrandViewManager
+    SpecsManager,
     )
 
 # Create your models here.
@@ -163,8 +163,6 @@ class Specs(models.Model):
         related_name="specs"
     )
 
-    objects = BrandViewManager()
-
     # Layout
     layout_size = models.CharField(
         max_length=50,
@@ -207,6 +205,8 @@ class Specs(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    objects = SpecsManager()
 
     class Meta:
         db_table = "specs"
