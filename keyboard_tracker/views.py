@@ -24,6 +24,7 @@ class ListingView(generic.ListView):
         country = self.request.GET.get("country")
         return Listing.objects.listings(country)
     
+    
 class PriceDropsView(generic.ListView):
     template_name = "keyboard_tracker/pricedrops.html"
     context_object_name = "drops"
@@ -32,22 +33,6 @@ class PriceDropsView(generic.ListView):
         country = self.request.GET.get("country")
         return PriceHistory.objects.drops(country)    
     
-# class BrandsView(generic.ListView):
-#     template_name = "keyboard_tracker/brands.html"
-#     context_object_name = "brands"
-
-#     def get_queryset(self):
-#         country = self.request.GET.get("country")
-#         return CanonBrand.objects.all_brands(country)
-
-# class BrandView(generic.ListView):
-#     template_name = "keyboard_tracker/brand.html"
-#     context_object_name = "listings"
-
-#     def get_queryset(self):
-#         country = self.request.GET.get("country")
-#         slug = self.kwargs["slug"]
-#         return Specs.objects.brand_list(slug=slug, country=country)
     
 class BrandsView(generic.ListView):
     template_name = "keyboard_tracker/brands.html"
@@ -80,7 +65,28 @@ class FeaturesView(generic.ListView):
 
     def get_queryset(self):
         country = self.request.GET.get("country")
-        return Listing.objects.all()
+        return Specs.objects.all_features(country)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        country = self.request.GET.get("country")
+        slug = self.kwargs.get("slug")
+
+        # Dictionary is already created in all_features. Just call it.
+        # no need to use slugify as the dictionary already stores slug
+        context["features"] = Specs.objects.all_features(country)
+
+        if slug:
+            context["listings"] = Specs.objects.feature_list(
+                slug=slug,
+                country=country,
+            )
+        else:
+            context["listings"] = Specs.objects.none()
+
+        return context
+    
     
 class SizesView(generic.ListView):
     template_name = "keyboard_tracker/sizes.html"
@@ -117,13 +123,38 @@ class SizesView(generic.ListView):
 
         return context
     
-    
+
 class SwitchesView(generic.ListView):
-    model = Specs
     template_name = "keyboard_tracker/switches.html"
     context_object_name = "switches"
 
     def get_queryset(self):
         country = self.request.GET.get("country")
-        return Specs.objects.all()
-    
+        return Specs.objects.all_switches(country)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        country = self.request.GET.get("country")
+        slug = self.kwargs.get("slug")
+
+        context["switches"] = [
+            {
+                "name": switch,
+                "slug": slugify(switch),
+            }
+            for switch in Specs.objects.all_switches(
+                self.request.GET.get("country")
+            )
+        ]
+
+        if slug:
+            context["listings"] = Specs.objects.switches_list(
+                slug=slug,
+                country=country,
+            )
+        else:
+            context["listings"] = Specs.objects.none()
+
+        return context
+

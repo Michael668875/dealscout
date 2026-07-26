@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Window, ExpressionWrapper, FloatField, F
+from django.db.models import Window, ExpressionWrapper, FloatField, F, Q
 from django.db.models.functions import Lag
 from django.utils.text import slugify
 
@@ -73,7 +73,25 @@ class CanonBrandManager(models.Manager):
             .order_by("name")
         )
         
-    
+
+FEATURES = {
+    "hall-effect": ("Hall Effect", "hall_effect"),
+    "hot-swap": ("Hot Swap", "hot_swap"),
+    "wireless": ("Wireless", "wireless"),
+    "bluetooth": ("Bluetooth", "bluetooth"),
+    "rgb": ("RGB", "rgb"),
+    "gasket-mount": ("Gasket Mount", "gasket_mount"),
+    "low-profile": ("Low Profile", "low_profile"),
+    "optical": ("Optical", "optical"),
+    "knob": ("Knob", "knob"),
+    "qmk": ("QMK", "qmk"),
+    "via": ("VIA", "via"),
+    "iso": ("ISO", "iso"),
+    "ansi": ("ANSI", "ansi"),
+    "barebones": ("Barebones", "barebones"),
+}
+
+
 class SpecsManager(models.Manager):
 
     def brand_list(self, slug, country=None):
@@ -92,6 +110,43 @@ class SpecsManager(models.Manager):
             .select_related("listing")
             .order_by("listing__last_updated")
         )
+
+
+    def all_features(self, country=None):
+
+        filters = {"listing__status": "ACTIVE",}
+
+        if country:
+            filters["listing__country"] = country
+
+        queryset = self.get_queryset().filter(**filters)
+
+        features = []
+
+        for slug, (name, field) in FEATURES.items():
+            if queryset.filter(**{field: True}).exists():
+                features.append({
+                    "name": name,
+                    "slug": slug,
+                })
+        return features
+
+    def feature_list(self, slug, country=None):
+        if slug not in FEATURES:
+            return self.none()
+
+        _, field = FEATURES[slug]
+
+        filters = {
+            "listing__status": "ACTIVE",
+            field: True,
+        }
+
+        if country:
+            filters["listing__country"] = country
+
+        return self.get_queryset().filter(**filters)
+
     
     def all_sizes(self, country=None):
 
@@ -123,3 +178,35 @@ class SpecsManager(models.Manager):
                 return queryset.filter(layout_size=value)
 
         return queryset.none()
+
+    def all_switches(self, country=None):
+
+        filters = {"listing__status": "ACTIVE",}
+
+        if country:
+            filters["listing__country"] = country
+
+        return (
+            self.get_queryset()
+            .filter(**filters)
+            .exclude(switch_type="")
+            .exclude(switch_type__isnull=True)
+            .values_list("switch_type", flat=True)
+            .distinct()
+            .order_by("switch_type")
+        )
+
+    def switches_list(self, slug, country=None): 
+        filters = {"listing__status": "ACTIVE"}
+
+        if country:
+            filters["listing__country"] = country
+
+        queryset = self.get_queryset().filter(**filters)
+
+        for value in queryset.values_list("switch_type", flat=True).distinct():
+            if slugify(value) == slug:
+                return queryset.filter(switch_type=value)
+
+        return queryset.none()
+

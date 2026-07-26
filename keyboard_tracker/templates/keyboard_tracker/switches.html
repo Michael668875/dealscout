@@ -2,7 +2,15 @@
 
 {% block content %}
     {% for switch in switches %}
-        | {{ switch.switch_type }} |
-    {% endfor %}
+
+        <a href="{% url 'switch' slug=switch.slug %}{% if selected_country %}?country={{ selected_country }}{% endif %}"
+            class="btn btn-sm btn-danger px-1 mb-2 model-menu">
+            {{ switch.name }}
+        </a>
+        {% endfor %}
+
+    {% if listings %}
+        {% include "keyboard_tracker/switch.html" %}
+    {% endif %}
 
 {% endblock %}

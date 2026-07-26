@@ -9,7 +9,9 @@ urlpatterns = [
     path("brands/", views.BrandsView.as_view(), name="brands"),    
     path("brands/<slug:slug>/", views.BrandsView.as_view(), name="brand"),    
     path("features/", views.FeaturesView.as_view(), name="features"),    
+    path("features/<slug:slug>/", views.FeaturesView.as_view(), name="feature"),    
     path("sizes/", views.SizesView.as_view(), name="sizes"),    
     path("sizes/<slug:slug>/", views.SizesView.as_view(), name="size"),    
     path("switches/", views.SwitchesView.as_view(), name="switches"),    
+    path("switches/<slug:slug>/", views.SwitchesView.as_view(), name="switch"),    
 ]
