@@ -13,5 +13,6 @@ urlpatterns = [
     path("sizes/", views.SizesView.as_view(), name="sizes"),    
     path("sizes/<slug:slug>/", views.SizesView.as_view(), name="size"),    
     path("switches/", views.SwitchesView.as_view(), name="switches"),    
-    path("switches/<slug:slug>/", views.SwitchesView.as_view(), name="switch"),    
+    path("switches/<slug:slug>/", views.SwitchesView.as_view(), name="switch"),
+    path("search/", views.SearchView.as_view(), name="search"),  
 ]

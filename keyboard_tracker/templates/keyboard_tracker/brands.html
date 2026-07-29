@@ -16,12 +16,16 @@
 <p>
 
 <div class="series-nav">
-  {% for brand in brands %}
+{% if canonbrand_list %}
+  {% for brand in canonbrand_list %}
     <a href="{% url 'brand' slug=brand.slug %}{% if selected_country %}?country={{ selected_country }}{% endif %}"
        class="btn btn-sm btn-danger px-1 mb-2 model-menu">
         {{ brand.name }}
     </a>
     {% endfor %}
+{% else %}
+    No brands available.
+{% endif %}
   
 </div>
 </p>

@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.views import generic
+from django.views.generic import ListView, DetailView
 from django.utils.text import slugify
 from .models import Listing, PriceHistory, CanonBrand, Specs
 
@@ -15,9 +15,8 @@ def index(request):
 #        "listings": listings,
 #    })
 
-class ListingView(generic.ListView):
+class ListingView(ListView):
     template_name = "keyboard_tracker/listings.html"
-    context_object_name = "listings"
     paginate_by = 50
 
     def get_queryset(self):
@@ -25,18 +24,18 @@ class ListingView(generic.ListView):
         return Listing.objects.listings(country)
     
     
-class PriceDropsView(generic.ListView):
+class PriceDropsView(ListView):
     template_name = "keyboard_tracker/pricedrops.html"
-    context_object_name = "drops"
+    #context_object_name = "drops"
 
     def get_queryset(self):
         country = self.request.GET.get("country")
         return PriceHistory.objects.drops(country)    
     
     
-class BrandsView(generic.ListView):
+class BrandsView(ListView):
     template_name = "keyboard_tracker/brands.html"
-    context_object_name = "brands"
+    #context_object_name = "brands"
 
     def get_queryset(self):
         country = self.request.GET.get("country")
@@ -59,9 +58,9 @@ class BrandsView(generic.ListView):
         return context    
 
     
-class FeaturesView(generic.ListView):
+class FeaturesView(ListView):
     template_name = "keyboard_tracker/features.html"
-    context_object_name = "features"
+    #context_object_name = "features"
 
     def get_queryset(self):
         country = self.request.GET.get("country")
@@ -88,9 +87,9 @@ class FeaturesView(generic.ListView):
         return context
     
     
-class SizesView(generic.ListView):
+class SizesView(ListView):
     template_name = "keyboard_tracker/sizes.html"
-    context_object_name = "sizes"
+    #context_object_name = "sizes"
 
     def get_queryset(self):
         country = self.request.GET.get("country")
@@ -124,9 +123,9 @@ class SizesView(generic.ListView):
         return context
     
 
-class SwitchesView(generic.ListView):
+class SwitchesView(ListView):
     template_name = "keyboard_tracker/switches.html"
-    context_object_name = "switches"
+    #context_object_name = "switches"
 
     def get_queryset(self):
         country = self.request.GET.get("country")
@@ -157,4 +156,21 @@ class SwitchesView(generic.ListView):
             context["listings"] = Specs.objects.none()
 
         return context
+
+class SearchView(ListView):
+    model = Listing
+    template_name = "keyboard_tracker/search.html"
+    paginate_by = 50
+
+    def get_queryset(self):
+        query = self.request.GET.get("q", "").strip()
+
+        queryset = Listing.objects.listings(
+            country = self.request.GET.get("country")
+        )
+
+        if queryset:
+            queryset = queryset.filter(title__icontains=query)
+
+        return queryset
 

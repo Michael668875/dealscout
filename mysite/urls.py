@@ -18,6 +18,6 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path('keyboard_tracker/', include('keyboard_tracker.urls')),
+    path('', include('keyboard_tracker.urls')),
     path('admin/', admin.site.urls),
 ]

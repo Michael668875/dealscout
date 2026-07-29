@@ -19,6 +19,16 @@
                 </select>
             </form>
             
+            <div class="ms-3">
+            <div class="search-wrap ms-auto">
+            <form class="d-flex" action="{% url 'search' %}" method="get">
+              <input class="form-control me-2" type="search" name="q" value="{{ query }}" placeholder="Search Keyboards">
+              <input type="hidden" name="country" value="{{ selected_coutnry }}">
+              <button class="btn btn-outline-info flex-shrink-0" type="submit">Search</button>
+            </form>
+            </div>
+            </div>
+            
 
             <div class="ms-auto">
               <a class="menu-link" href="{% url 'listings' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">HOME</a>

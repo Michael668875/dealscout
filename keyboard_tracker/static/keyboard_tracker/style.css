@@ -154,6 +154,10 @@ body {
       color: #00d9ff;
     }
 
+.btn-outline-info {
+    border-width: 2px; 
+}
+
     /* Model Grid */
     /* Responsive grid */
 .model-menu {
