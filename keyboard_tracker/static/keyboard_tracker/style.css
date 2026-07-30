@@ -7,10 +7,6 @@ body {
     overscroll-behavior: none;
 }
 
-body {
-      font-family: Inter, sans-serif;
-    }
-
     section {
       padding: 10px 0;
     }
