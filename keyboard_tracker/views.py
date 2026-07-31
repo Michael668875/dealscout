@@ -1,13 +1,16 @@
 from django.http import HttpResponseRedirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, RedirectView
 from django.utils.text import slugify
 from .models import Listing, PriceHistory, CanonBrand, Specs
 
 # Create your views here.
 
+class Home(RedirectView):
+    pattern_name = "listings"
+    permanent = True
 
-def index(request):
-    return HttpResponseRedirect("listings/")
+# def index(request):
+    # return HttpResponseRedirect("listings/")
 
 #def listings(request):
 #    listings = Listing.objects.all()
