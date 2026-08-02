@@ -512,3 +512,75 @@ body {
 .btn-thick {
     border-width: 2px;
 }
+
+
+/* new styling - not from lego */
+
+.theme3 .brand-chip{
+    background:#07131a;
+    border:1px solid #00d9ff;
+    border-radius:12px;
+    padding:22px 10px;
+    transition:.2s;
+    height:100%;
+}
+
+.theme3 .brand-chip:hover{
+    background:#0d1d26;
+    transform:translateY(-3px);
+    box-shadow:0 0 15px rgba(0,217,255,.25);
+}
+
+.theme3 .brand-name{
+    color:#c4f1ff;
+    font-size:1rem;
+    font-weight:600;
+}
+
+.theme3 .keyboard-card{
+    background:#07131a;
+    border:1px solid #00d9ff;
+    border-radius:12px;
+    padding:16px;
+    transition:.2s;
+}
+
+.theme3 .keyboard-card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 0 18px rgba(0,217,255,.25);
+}
+
+.theme3 .keyboard-image{
+    width:100%;
+    aspect-ratio:1;
+    object-fit:contain;
+    background:#111;
+    border-radius:8px;
+    padding:10px;
+}
+
+.theme3 .keyboard-card h5{
+    color:#c4f1ff;
+    font-size:1rem;
+    min-height:3rem;
+}
+
+.theme3 .keyboard-meta{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:15px;
+    color:#c4f1ff;
+    font-size:.9rem;
+}
+
+.theme3 .keyboard-meta .label{
+    color:#00d9ff;
+    font-size:.75rem;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+.theme3 .keyboard-card .btn{
+    margin-top:auto;
+}

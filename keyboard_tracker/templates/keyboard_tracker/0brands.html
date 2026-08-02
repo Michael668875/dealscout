@@ -1,10 +1,10 @@
 {% extends "keyboard_tracker/layout.html" %}
 
-{% block title %}Brands{% endblock %}
+{% block title %}DealScout{% endblock %}
 
 {% block content %}
 
-<h1 class="mb-3">Available Brands</h1>
+<H1>Available Brands</H1>
 
 <p class="d-none d-md-block">
     Browse all tracked brands to find specific models quickly.
@@ -13,40 +13,25 @@
 <p class="d-md-none mobile-title">
     Explore keyboard brands.
 </p>
+<p>
 
+<div class="series-nav">
 {% if canonbrand_list %}
-
-<div class="row g-3">
-
-{% for brand in canonbrand_list %}
-<div class="col-6 col-md-4 col-lg-3 col-xl-2">
-
+  {% for brand in canonbrand_list %}
     <a href="{% url 'brand' slug=brand.slug %}{% if selected_country %}?country={{ selected_country }}{% endif %}"
-       class="text-decoration-none">
-
-        <div class="brand-chip text-center h-100">
-
-            <div class="brand-name">
-                {{ brand.name }}
-            </div>
-
-        </div>
-
+       class="btn btn-sm btn-danger px-1 mb-2 model-menu">
+        {{ brand.name }}
     </a>
-
-</div>
-{% endfor %}
-
-</div>
-
+    {% endfor %}
 {% else %}
-
-<p>No brands available.</p>
-
+    No brands available.
 {% endif %}
+  
+</div>
+</p>
 
 {% if listings %}
     {% include "keyboard_tracker/brand.html" %}
 {% endif %}
-
+      
 {% endblock %}
