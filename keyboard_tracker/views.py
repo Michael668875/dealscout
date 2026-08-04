@@ -38,27 +38,19 @@ class PriceDropsView(ListView):
     
 class BrandsView(ListView):
     template_name = "keyboard_tracker/brands.html"
-    #context_object_name = "brands"
 
     def get_queryset(self):
         country = self.request.GET.get("country")
         return CanonBrand.objects.all_brands(country)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
+class SingleBrandView(ListView):
+    template_name = "keyboard_tracker/brand.html"
 
-        country = self.request.GET.get("country")
-        slug = self.kwargs.get("slug")
-
-        if slug:
-            context["listings"] = Specs.objects.brand_list(
-                slug=slug,
-                country=country,
+    def get_queryset(self):
+            return Specs.objects.brand_list(
+                slug=self.kwargs["slug"],
+                country=self.request.GET.get("country"),
             )
-        else:
-            context["listings"] = Specs.objects.none()
-
-        return context    
 
     
 class FeaturesView(ListView):

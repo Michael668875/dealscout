@@ -1,14 +1,14 @@
 {% extends "keyboard_tracker/layout.html" %}
 
-{% block title %}{{ listings.0.brand.name }}{% endblock %}
+{% block title %}{{ specs_list.0.brand.name }}{% endblock %}
 
 {% block content %}
 
-<h1 class="mb-4">{{ listings.0.brand.name }}</h1>
+<h1 class="mb-4">{{ specs_list.0.brand.name }}</h1>
 
 <div class="row g-4">
 
-{% for spec in listings %}
+{% for spec in specs_list %}
 
 <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
 
