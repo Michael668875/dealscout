@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.views.generic import ListView, DetailView, RedirectView
+from django.views.generic import ListView, DetailView, RedirectView, TemplateView
 from django.utils.text import slugify
 from .models import Listing, PriceHistory, CanonBrand, Specs
 
@@ -52,6 +52,9 @@ class SingleBrandView(ListView):
                 country=self.request.GET.get("country"),
             )
 
+class AdvancedSearchView(TemplateView):
+    template_name = "keyboard_tracker/advanced_search.html"
+    
     
 class FeaturesView(ListView):
     template_name = "keyboard_tracker/features.html"

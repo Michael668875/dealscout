@@ -32,11 +32,9 @@
 
             <div class="ms-auto">
               <a class="menu-link" href="{% url 'listings' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">HOME</a>
-              <a class="menu-link" href="{% url 'pricedrops' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">PRICE DROPS</a>
               <a class="menu-link" href="{% url 'brands' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">BRANDS</a>
-              <a class="menu-link" href="{% url 'features' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">FEATURES</a>
-              <a class="menu-link" href="{% url 'sizes' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">SIZES</a>
-              <a class="menu-link" href="{% url 'switches' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">SWITCHES</a>
+              <a class="menu-link" href="{% url 'pricedrops' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">PRICE DROPS</a>
+              <a class="menu-link" href="{% url 'advanced_search' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">ADVANCED SEARCH</a>
             </div>
           </div>
         </nav>

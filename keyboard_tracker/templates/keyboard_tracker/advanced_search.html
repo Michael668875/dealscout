@@ -1,0 +1,13 @@
+{% extends "keyboard_tracker/layout.html" %}
+
+{% block content %}
+
+<div>
+
+    <a class="menu-link" href="{% url 'features' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">FEATURES</a>
+    <a class="menu-link" href="{% url 'sizes' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">SIZES</a>
+    <a class="menu-link" href="{% url 'switches' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">SWITCHES</a>
+
+</div>
+
+{% endblock %}

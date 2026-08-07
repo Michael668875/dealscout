@@ -8,6 +8,7 @@ urlpatterns = [
     path("pricedrops/", views.PriceDropsView.as_view(), name="pricedrops"),
     path("brands/", views.BrandsView.as_view(), name="brands"),    
     path("brands/<slug:slug>/", views.SingleBrandView.as_view(), name="brand"),    
+    path("advanced_search/", views.AdvancedSearchView.as_view(), name="advanced_search"),    
     path("features/", views.FeaturesView.as_view(), name="features"),    
     path("features/<slug:slug>/", views.FeaturesView.as_view(), name="feature"),    
     path("sizes/", views.SizesView.as_view(), name="sizes"),    
