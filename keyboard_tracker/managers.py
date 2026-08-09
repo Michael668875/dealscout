@@ -209,4 +209,22 @@ class SpecsManager(models.Manager):
                 return queryset.filter(switch_type=value)
 
         return queryset.none()
+    
+    # advanced search function
+    def advanced_search(self, country=None, switches=None, sizes=None, features=None):
+        filters = {
+            "listing__status": "ACTIVE",
+        }
 
+        if country:
+            filters["listing__country"] = country
+
+        if switches:
+            filters["switch_type__in"] = switches
+
+        if sizes:
+            filters["layout_size__in"] = sizes
+
+        # More filters will go here
+
+        return self.get_queryset().filter(**filters).distinct()
