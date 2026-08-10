@@ -211,7 +211,28 @@ class SpecsManager(models.Manager):
         return queryset.none()
     
     # advanced search function
+
+
     def advanced_search(self, country=None, switches=None, sizes=None, features=None):
+
+        VALID_FEATURES = {
+            "low_profile",
+            "hall_effect",
+            "optical",
+            "hot_swap",
+            "gasket_mount",
+            "knob",
+            "wireless",
+            "bluetooth",
+            "qmk",
+            "via",
+            "iso",
+            "ansi",
+            "barebones",
+            "rgb",
+        }
+
+
         filters = {
             "listing__status": "ACTIVE",
         }
@@ -225,6 +246,9 @@ class SpecsManager(models.Manager):
         if sizes:
             filters["layout_size__in"] = sizes
 
-        # More filters will go here
+        if features:
+            for feature in features:
+                if feature in VALID_FEATURES:
+                    filters[feature] = True
 
         return self.get_queryset().filter(**filters).distinct()

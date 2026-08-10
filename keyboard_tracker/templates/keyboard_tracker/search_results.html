@@ -1,0 +1,76 @@
+{% extends "keyboard_tracker/layout.html" %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+
+<h1>Search Results</h1>
+
+{% if specs %}
+
+    <p>{{ page_obj.paginator.count }} keyboards found.</p>
+
+    {% for spec in specs %}
+
+        <div class="search-result">
+
+            <h2>
+                {{ spec.listing.title }}
+            </h2>
+
+            <p>
+                Brand: {{ spec.brand.name }}
+            </p>
+
+            <p>
+                Size: {{ spec.layout_size }}
+            </p>
+
+            <p>
+                Switches: {{ spec.switch_type }}
+            </p>
+
+            <p>
+                Price: {{ spec.listing.price }}
+            </p>
+
+            <a href="{{ spec.listing.affiliate_url }}">
+                View listing
+            </a>
+
+        </div>
+
+    {% endfor %}
+
+{% if is_paginated %}
+
+    <div class="pagination">
+
+        {% if page_obj.has_previous %}
+            <a href="?{{ search_params }}&page={{ page_obj.previous_page_number }}">
+                Previous
+            </a>
+        {% endif %}
+
+        <span>
+            Page {{ page_obj.number }}
+            of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?{{ search_params }}&page={{ page_obj.next_page_number }}">
+                Next
+            </a>
+        {% endif %}
+
+    </div>
+
+{% endif %}
+
+{% else %}
+
+    <p>No keyboards matched your search.</p>
+
+{% endif %}
+
+{% endblock %}

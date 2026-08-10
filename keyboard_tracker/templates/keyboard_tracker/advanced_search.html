@@ -1,13 +1,67 @@
 {% extends "keyboard_tracker/layout.html" %}
 
+{% block title %}Advanced Search{% endblock %}
+
 {% block content %}
 
-<div>
+<h1>Advanced Search</h1>
 
-    <a class="menu-link" href="{% url 'features' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">FEATURES</a>
-    <a class="menu-link" href="{% url 'sizes' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">SIZES</a>
-    <a class="menu-link" href="{% url 'switches' %}{% if selected_country %}?country={{ selected_country }}{% endif %}">SWITCHES</a>
+<form method="get" action="{% url 'search_results' %}">
 
-</div>
+    <input type="hidden" name="country" value="{{ country }}">
+
+    <h2>Switches</h2>
+
+    {% for switch in switches %}
+        <div>
+            <label>
+                <input
+                    type="checkbox"
+                    name="switches"
+                    value="{{ switch }}"
+                >
+                {{ switch }}
+            </label>
+        </div>
+    {% endfor %}
+
+
+    <h2>Sizes</h2>
+
+    {% for size in sizes %}
+        <div>
+            <label>
+                <input
+                    type="checkbox"
+                    name="sizes"
+                    value="{{ size }}"
+                >
+                {{ size }}
+            </label>
+        </div>
+    {% endfor %}
+
+
+    <h2>Features</h2>
+
+    {% for value, label in features %}
+        <div>
+            <label>
+                <input
+                    type="checkbox"
+                    name="features"
+                    value="{{ value }}"
+                >
+                {{ label }}
+            </label>
+        </div>
+    {% endfor %}
+
+
+    <button type="submit">
+        Search
+    </button>
+
+</form>
 
 {% endblock %}
