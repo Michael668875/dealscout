@@ -54,7 +54,7 @@ class ListingManager(models.Manager):
         return (
             self.get_queryset()
             .filter_country(country)
-            .order_by("id")
+            .order_by("listing__last_updated")
         )
     
 class CanonBrandManager(models.Manager):
@@ -149,4 +149,9 @@ class SpecsManager(models.Manager):
                 if feature in VALID_FEATURES:
                     filters[feature] = True
 
-        return self.get_queryset().filter(**filters).distinct()
+        return (
+            self.get_queryset()
+            .filter(**filters)
+            .distinct()
+            .order_by("listing__last_updated")
+            )
