@@ -1,6 +1,4 @@
-from django.http import HttpResponseRedirect
-from django.views.generic import ListView, DetailView, RedirectView, TemplateView
-from django.utils.text import slugify
+from django.views.generic import ListView, RedirectView, TemplateView
 from .models import Listing, PriceHistory, CanonBrand, Specs
 
 # Create your views here.
@@ -8,15 +6,6 @@ from .models import Listing, PriceHistory, CanonBrand, Specs
 class Home(RedirectView):
     pattern_name = "listings"
     permanent = True
-
-# def index(request):
-    # return HttpResponseRedirect("listings/")
-
-#def listings(request):
-#    listings = Listing.objects.all()
-#    return render(request, "keyboard_tracker/listings.html", {
-#        "listings": listings,
-#    })
 
 class ListingView(ListView):
     template_name = "keyboard_tracker/listings.html"
@@ -52,20 +41,6 @@ class SingleBrandView(ListView):
                 country=self.request.GET.get("country"),
             )
 
-# class AdvancedSearchView(TemplateView):
-#     template_name = "keyboard_tracker/advanced_search.html"
-
-#     def get_queryset(self):
-#         country = self.request.GET.get("country")
-#         return Specs.objects.all_features(country)
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-
-#         country = self.request.GET.get("country")
-
-#         context["features"] = Specs.objects.get()
-        
 class AdvancedSearchView(TemplateView):
     template_name = "keyboard_tracker/advanced_search.html"
 
@@ -147,105 +122,6 @@ class SearchResultsView(ListView):
         return context
     
     
-# class FeaturesView(ListView):
-#     template_name = "keyboard_tracker/features.html"
-#     #context_object_name = "features"
-
-#     def get_queryset(self):
-#         country = self.request.GET.get("country")
-#         return Specs.objects.all_features(country)
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-
-#         country = self.request.GET.get("country")
-#         slug = self.kwargs.get("slug")
-
-#         # Dictionary is already created in all_features. Just call it.
-#         # no need to use slugify as the dictionary already stores slug
-#         context["features"] = Specs.objects.all_features(country)
-
-#         if slug:
-#             context["listings"] = Specs.objects.feature_list(
-#                 slug=slug,
-#                 country=country,
-#             )
-#         else:
-#             context["listings"] = Specs.objects.none()
-
-#         return context
-    
-    
-# class SizesView(ListView):
-#     template_name = "keyboard_tracker/sizes.html"
-#     #context_object_name = "sizes"
-
-#     def get_queryset(self):
-#         country = self.request.GET.get("country")
-#         return Specs.objects.all_sizes(country)
-    
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-
-#         country = self.request.GET.get("country")
-#         slug = self.kwargs.get("slug")
-
-#         context["sizes"] = [
-#             {
-#                 "name": size,
-#                 "slug": slugify(size),
-#             }
-#             for size in Specs.objects.all_sizes(
-#                 self.request.GET.get("country")
-#             )
-#         ]
-
-#         if slug:
-#             context["listings"] = Specs.objects.size_list(
-#                 slug=slug,
-#                 country=country,
-#             )
-#         else:
-#             context["listings"] = Specs.objects.none()
-
-
-#         return context
-    
-
-# class SwitchesView(ListView):
-#     template_name = "keyboard_tracker/switches.html"
-#     #context_object_name = "switches"
-
-#     def get_queryset(self):
-#         country = self.request.GET.get("country")
-#         return Specs.objects.all_switches(country)
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-
-#         country = self.request.GET.get("country")
-#         slug = self.kwargs.get("slug")
-
-#         context["switches"] = [
-#             {
-#                 "name": switch,
-#                 "slug": slugify(switch),
-#             }
-#             for switch in Specs.objects.all_switches(
-#                 self.request.GET.get("country")
-#             )
-#         ]
-
-#         if slug:
-#             context["listings"] = Specs.objects.switches_list(
-#                 slug=slug,
-#                 country=country,
-#             )
-#         else:
-#             context["listings"] = Specs.objects.none()
-
-#         return context
-
 class SearchView(ListView):
     model = Listing
     template_name = "keyboard_tracker/search.html"

@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import Window, ExpressionWrapper, FloatField, F, Q
+from django.db.models import Window, ExpressionWrapper, FloatField, F
 from django.db.models.functions import Lag
 from django.utils.text import slugify
 
@@ -112,103 +112,103 @@ class SpecsManager(models.Manager):
         )
 
 
-    def all_features(self, country=None):
+    # def all_features(self, country=None):
 
-        filters = {"listing__status": "ACTIVE",}
+    #     filters = {"listing__status": "ACTIVE",}
 
-        if country:
-            filters["listing__country"] = country
+    #     if country:
+    #         filters["listing__country"] = country
 
-        queryset = self.get_queryset().filter(**filters)
+    #     queryset = self.get_queryset().filter(**filters)
 
-        features = []
+    #     features = []
 
-        for slug, (name, field) in FEATURES.items():
-            if queryset.filter(**{field: True}).exists():
-                features.append({
-                    "name": name,
-                    "slug": slug,
-                })
-        return features
+    #     for slug, (name, field) in FEATURES.items():
+    #         if queryset.filter(**{field: True}).exists():
+    #             features.append({
+    #                 "name": name,
+    #                 "slug": slug,
+    #             })
+    #     return features
 
-    def feature_list(self, slug, country=None):
-        if slug not in FEATURES:
-            return self.none()
+    # def feature_list(self, slug, country=None):
+    #     if slug not in FEATURES:
+    #         return self.none()
 
-        _, field = FEATURES[slug]
+    #     _, field = FEATURES[slug]
 
-        filters = {
-            "listing__status": "ACTIVE",
-            field: True,
-        }
+    #     filters = {
+    #         "listing__status": "ACTIVE",
+    #         field: True,
+    #     }
 
-        if country:
-            filters["listing__country"] = country
+    #     if country:
+    #         filters["listing__country"] = country
 
-        return self.get_queryset().filter(**filters)
+    #     return self.get_queryset().filter(**filters)
 
     
-    def all_sizes(self, country=None):
+    # def all_sizes(self, country=None):
 
-        filters = {"listing__status": "ACTIVE",}
+    #     filters = {"listing__status": "ACTIVE",}
 
-        if country:
-            filters["listing__country"] = country
+    #     if country:
+    #         filters["listing__country"] = country
 
-        return (
-            self.get_queryset()
-            .filter(**filters)
-            .exclude(layout_size="")
-            .exclude(layout_size__isnull=True)
-            .values_list("layout_size", flat=True)
-            .distinct()
-            .order_by("layout_size")
-        )
+    #     return (
+    #         self.get_queryset()
+    #         .filter(**filters)
+    #         .exclude(layout_size="")
+    #         .exclude(layout_size__isnull=True)
+    #         .values_list("layout_size", flat=True)
+    #         .distinct()
+    #         .order_by("layout_size")
+    #     )
         
-    def size_list(self, slug, country=None):
-        filters = {"listing__status": "ACTIVE"}
+    # def size_list(self, slug, country=None):
+    #     filters = {"listing__status": "ACTIVE"}
 
-        if country:
-            filters["listing__country"] = country
+    #     if country:
+    #         filters["listing__country"] = country
 
-        queryset = self.get_queryset().filter(**filters)
+    #     queryset = self.get_queryset().filter(**filters)
 
-        for value in queryset.values_list("layout_size", flat=True).distinct():
-            if slugify(value) == slug:
-                return queryset.filter(layout_size=value)
+    #     for value in queryset.values_list("layout_size", flat=True).distinct():
+    #         if slugify(value) == slug:
+    #             return queryset.filter(layout_size=value)
 
-        return queryset.none()
+    #     return queryset.none()
 
-    def all_switches(self, country=None):
+    # def all_switches(self, country=None):
 
-        filters = {"listing__status": "ACTIVE",}
+    #     filters = {"listing__status": "ACTIVE",}
 
-        if country:
-            filters["listing__country"] = country
+    #     if country:
+    #         filters["listing__country"] = country
 
-        return (
-            self.get_queryset()
-            .filter(**filters)
-            .exclude(switch_type="")
-            .exclude(switch_type__isnull=True)
-            .values_list("switch_type", flat=True)
-            .distinct()
-            .order_by("switch_type")
-        )
+    #     return (
+    #         self.get_queryset()
+    #         .filter(**filters)
+    #         .exclude(switch_type="")
+    #         .exclude(switch_type__isnull=True)
+    #         .values_list("switch_type", flat=True)
+    #         .distinct()
+    #         .order_by("switch_type")
+    #     )
 
-    def switches_list(self, slug, country=None): 
-        filters = {"listing__status": "ACTIVE"}
+    # def switches_list(self, slug, country=None): 
+    #     filters = {"listing__status": "ACTIVE"}
 
-        if country:
-            filters["listing__country"] = country
+    #     if country:
+    #         filters["listing__country"] = country
 
-        queryset = self.get_queryset().filter(**filters)
+    #     queryset = self.get_queryset().filter(**filters)
 
-        for value in queryset.values_list("switch_type", flat=True).distinct():
-            if slugify(value) == slug:
-                return queryset.filter(switch_type=value)
+    #     for value in queryset.values_list("switch_type", flat=True).distinct():
+    #         if slugify(value) == slug:
+    #             return queryset.filter(switch_type=value)
 
-        return queryset.none()
+    #     return queryset.none()
     
     # advanced search function
 

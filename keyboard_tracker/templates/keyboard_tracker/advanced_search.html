@@ -8,7 +8,9 @@
 
 <form method="get" action="{% url 'search_results' %}">
 
+    {% if country %}
     <input type="hidden" name="country" value="{{ country }}">
+    {% endif %}
 
     <h2>Switches</h2>
 
