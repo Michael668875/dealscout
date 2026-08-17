@@ -6,63 +6,74 @@
 <div class="table-wrap rounded-4 shadow-sm p-4">
     <h3 class="mb-4">Price Drops</h3>
     <p>Discover listings that have recently been discounted and may offer better value.</p>
-    <div class="table-responsive">
-        <table class="table align-middle">
-        <thead>
-            <tr>
-            <th class="col-title">Title</th>
-            <th class="col-price"> old price </th>
-            <th class="col-price"> new price </th>
-            <th class="col-discount"> discount</th>
-            <th class="col-url">Listing</th>
-            </tr>
-        </thead>
 
-        <tbody>
-          {% if pricehistory_list %}
-          {% for drop in pricehistory_list %}
-            <tr>
-            
-            <td>
-              <div class="d-flex align-items-center gap-3">
-                <img class="listing-img" src="{{ drop.listing.image_urls.0 }}" loading="lazy">
-                <div class="fw-semibold">                  
-                  {{ drop.listing.title }}                     
-                </div>
-              </div>
-            </td>
-            
-            <td>
-              {%  if drop.old_price %}
-                {{ drop.old_price }}
-              {% else %}
-                -
-              {% endif %}
-            </td>
-            <td>
-              {%  if drop.price %}
-                {{ drop.price }}
-              {% else %}
-                -
-              {% endif %}
-            </td>
-            <td><span class="discount"> 
-              {% if drop.discount_percent is not none %}
+<div class="row g-4">
+{% for drop in pricehistory_list %}
+
+<div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+
+    <div class="keyboard-card h-100">
+
+        {% if drop.listing.image_urls %}
+            <img
+                src="{{ drop.listing.image_urls.0 }}"
+                class="keyboard-image"
+                alt="{{ drop.listing.title }}"
+                loading="lazy">
+        {% endif %}
+
+        <h5 class="mt-3">
+            {{ drop.listing.title }}
+        </h5>
+
+        <div class="keyboard-meta">
+
+            <div>
+                <span class="label">Old Price</span><br>
+                {%  if drop.old_price %}
+                {{ drop.listing.currency }} {{ drop.old_price }}
+                {% else %}
+                  -
+                {% endif %}
+            </div>
+
+            <div>
+                <span class="label">New Price</span><br>
+                 {%  if drop.price %}
+                  {{ drop.listing.currency }} {{ drop.price }}
+                  {% else %}
+                    -
+                  {% endif %}
+            </div>
+
+            <div>
+                <span class="discount">Discount
+                {% if drop.discount_percent is not none %}
                 {{ drop.discount_percent|floatformat:0 }}%
               {% else %}
                 -
-              {% endif %} 
-            </span></td>
-            <td><a href="{{ drop.listing.affiliate_url }}" class="btn btn-primary text-nowrap" target="_blank">Buy on eBay</a></td>
-            </tr>
-          {% endfor %}
-          {% else %}
-            <tr>
-                <td colspan="5">No price drops right now.</td>
-            </tr>
-          {% endif %}
-        </tbody>
-        </table>
+              {% endif %}
+              </span>
+            </div>
+
+        </div>
+
+        <a href="{{ drop.listing.affiliate_url }}" target="_blank" class="btn btn-primary w-100 mt-3">
+            View on eBay
+        </a>
+
     </div>
+
+</div>
+
+{% empty %}
+
+<div class="col-12">
+    <p>No price drops right now.</p>
+</div>
+
+{% endfor %}
+
+</div>
 </div>
 {% endblock %}
