@@ -30,27 +30,18 @@
 
             <div>
                 <span class="label">Price</span><br>
-                {{ spec.listing.price }}
+                {{ spec.listing.currency }} {{ spec.listing.price }}
             </div>
 
             <div>
-                <span class="label">Country</span><br>
-                {{ spec.listing.country }}
-            </div>
-
-            <div>
-                <span class="label">Updated</span><br>
-                {{ spec.listing.last_updated|date:"j M Y" }}
+                <span class="label">Condition</span><br>
+                {{ spec.listing.condition }}
             </div>
 
         </div>
 
-        <a
-            href="{{ spec.listing.affiliate_url }}"
-            class="btn btn-primary w-100 mt-3">
-
+        <a href="{{ spec.listing.affiliate_url }}" target="_blank" class="btn btn-primary w-100 mt-3">
             View on eBay
-
         </a>
 
     </div>

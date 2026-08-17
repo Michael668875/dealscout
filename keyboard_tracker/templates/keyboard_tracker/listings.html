@@ -12,43 +12,58 @@
           <div class="table-wrap rounded-4 p-3">
             <h3 class="mb-4 text-info">LIVE PRICE FEED</h3>
 
-            <div class="table-responsive">
-              <table class="table align-middle">
-                <thead>
-                  <tr>
-                    <th class="col-title">Title</th>
-                    <th class="col-price">Price</th>
-                    <th class="text-nowrap col-price">Market</th>                        
-                    <th class="col-url">Url</th>            
-                  </tr>
-                </thead>
+            <div class="row g-4">
 
-                <tbody>
-                  {% if listing_list %}
-          {% for listing in listing_list %}
-            <tr>
-            <td>
-                <div class="d-flex align-items-center gap-3">                
-                    {% if listing.image_urls %}
-                        <img class="listing-img" src="{{ listing.image_urls.0 }}" alt="{{ listing.title }}" loading="lazy">
-                    {% endif %}
-              
-                    <div class="fw-semibold">{{ listing.title }}</div>
-                </div>
-            </td>
-            <td>{{ listing.price }} {{ listing.currency }}</td>
-            <td>{{ listing.marketplace }}</td>
-            <td><a href="{{ listing.affiliate_url }}" class="btn btn-primary text-nowrap" target="_blank">Buy on eBay</a></td>
-            </tr>
-          {% endfor %}
-          {% else %}
-            <tr>
-                <td colspan="5">No listings found.</td>
-            </tr>
-          {% endif %}
-                </tbody>
-              </table>
+
+{% for listing in listing_list %}
+
+<div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+
+    <div class="keyboard-card h-100">
+
+        {% if listing.image_urls %}
+            <img
+                src="{{ listing.image_urls.0 }}"
+                class="keyboard-image"
+                alt="{{ listing.title }}"
+                loading="lazy">
+        {% endif %}
+
+        <h5 class="mt-3">
+            {{ listing.title }}
+        </h5>
+
+        <div class="keyboard-meta">
+
+            <div>
+                <span class="label">Price</span><br>
+                {{ listing.currency }} {{ listing.price }}
             </div>
-          </div>
+
+            <div>
+                <span class="label">Condition</span><br>
+                {{ listing.condition }}
+            </div>
+
         </div>
+
+        <a href="{{ listing.affiliate_url }}" target="_blank" class="btn btn-primary w-100 mt-3">
+            View on eBay
+        </a>
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<div class="col-12">
+    <p>No listings found.</p>
+</div>
+
+{% endfor %}
+
+</div>
+</div>
+</div>
 {% endblock %}

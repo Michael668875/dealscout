@@ -54,7 +54,7 @@ class ListingManager(models.Manager):
         return (
             self.get_queryset()
             .filter_country(country)
-            .order_by("listing__last_updated")
+            .order_by("-last_updated")
         )
     
 class CanonBrandManager(models.Manager):
