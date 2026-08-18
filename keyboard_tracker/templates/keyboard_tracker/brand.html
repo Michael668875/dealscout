@@ -3,8 +3,9 @@
 {% block title %}{{ specs_list.0.brand.name }}{% endblock %}
 
 {% block content %}
-
-<h1 class="mb-4">{{ specs_list.0.brand.name }}</h1>
+<div class="p-4 p-lg-5">
+<div class="table-wrap rounded-4 p-3">
+<h3 class="mb-4">{{ specs_list.0.brand.name }}</h3>
 
 <div class="row g-4">
 
@@ -57,5 +58,6 @@
 {% endfor %}
 
 </div>
-
+</div>
+</div>
 {% endblock %}

@@ -206,6 +206,30 @@ class Specs(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    FEATURE_LABELS = {
+        "low_profile": "Low Profile",
+        "hall_effect": "Hall Effect",
+        "optical": "Optical",
+        "hot_swap": "Hot Swap",
+        "gasket_mount": "Gasket Mount",
+        "knob": "Knob",
+        "wireless": "Wireless",
+        "bluetooth": "Bluetooth",
+        "qmk": "QMK",
+        "via": "VIA",
+        "iso": "ISO",
+        "ansi": "ANSI",
+        "barebones": "Barebones",
+        "rgb": "RGB",
+    }
+
+    def get_features(self):
+        return [
+            label
+            for field, label in self.FEATURE_LABELS.items()
+            if getattr(self, field)
+        ]
+
     objects = SpecsManager()
 
     class Meta:

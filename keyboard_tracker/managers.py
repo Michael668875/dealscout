@@ -113,24 +113,6 @@ class SpecsManager(models.Manager):
     # advanced search function
     def advanced_search(self, country=None, switches=None, sizes=None, features=None):
 
-        VALID_FEATURES = {
-            "low_profile",
-            "hall_effect",
-            "optical",
-            "hot_swap",
-            "gasket_mount",
-            "knob",
-            "wireless",
-            "bluetooth",
-            "qmk",
-            "via",
-            "iso",
-            "ansi",
-            "barebones",
-            "rgb",
-        }
-
-
         filters = {
             "listing__status": "ACTIVE",
         }
@@ -146,7 +128,7 @@ class SpecsManager(models.Manager):
 
         if features:
             for feature in features:
-                if feature in VALID_FEATURES:
+                if feature in self.model.FEATURE_LABELS:
                     filters[feature] = True
 
         return (
