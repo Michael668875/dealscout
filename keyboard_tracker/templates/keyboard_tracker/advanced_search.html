@@ -4,66 +4,218 @@
 
 {% block content %}
 
-<h1>Advanced Search</h1>
+<h1 class="mb-4">Advanced Search</h1>
 
 <form method="get" action="{% url 'search_results' %}">
 
     {% if country %}
-    <input type="hidden" name="country" value="{{ country }}">
+        <input type="hidden" name="country" value="{{ country }}">
     {% endif %}
 
-    <h2>Switches</h2>
+    <!-- Brands -->
 
-    {% for switch in switches %}
-        <div>
-            <label>
-                <input
-                    type="checkbox"
-                    name="switches"
-                    value="{{ switch }}"
-                >
-                {{ switch }}
-            </label>
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="h5 mb-0">Brands</h2>
         </div>
-    {% endfor %}
 
+        <div class="card-body">
 
-    <h2>Sizes</h2>
+            <div class="dropdown">
 
-    {% for size in sizes %}
-        <div>
-            <label>
-                <input
-                    type="checkbox"
-                    name="sizes"
-                    value="{{ size }}"
+                <button
+                    id="brandDropdownButton"
+                    class="btn btn-outline-secondary dropdown-toggle text-start"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside"
+                    aria-expanded="false"
                 >
-                {{ size }}
-            </label>
+                    Select brands
+                </button>
+
+                <div class="dropdown-menu brand-dropdown p-3">
+
+                    {% for brand in brands %}
+                        <div class="form-check">
+                            <input
+                                class="form-check-input brand-checkbox"
+                                type="checkbox"
+                                name="brands"
+                                value="{{ brand.slug }}"
+                                id="brand-{{ forloop.counter }}"
+                            >
+
+                            <label
+                                class="form-check-label"
+                                for="brand-{{ forloop.counter }}"
+                            >
+                                {{ brand.name }}
+                            </label>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
         </div>
-    {% endfor %}
+    </div>
 
 
-    <h2>Features</h2>
-
-    {% for value, label in features %}
-        <div>
-            <label>
-                <input
-                    type="checkbox"
-                    name="features"
-                    value="{{ value }}"
-                >
-                {{ label }}
-            </label>
+    <!-- Switches -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="h5 mb-0">Switches</h2>
         </div>
-    {% endfor %}
+
+        <div class="card-body">
+            <div class="row">
+
+                {% for switch in switches %}
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2">
+
+                        <div class="form-check">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                name="switches"
+                                value="{{ switch }}"
+                                id="switch-{{ forloop.counter }}"
+                            >
+
+                            <label
+                                class="form-check-label"
+                                for="switch-{{ forloop.counter }}"
+                            >
+                                {{ switch }}
+                            </label>
+                        </div>
+
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
 
 
-    <button type="submit">
-        Search
-    </button>
+    <!-- Sizes -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="h5 mb-0">Sizes</h2>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+
+                {% for size in sizes %}
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2">
+
+                        <div class="form-check">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                name="sizes"
+                                value="{{ size }}"
+                                id="size-{{ forloop.counter }}"
+                            >
+
+                            <label
+                                class="form-check-label"
+                                for="size-{{ forloop.counter }}"
+                            >
+                                {{ size }}
+                            </label>
+                        </div>
+
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Features -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h2 class="h5 mb-0">Features</h2>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+
+                {% for value, label in features %}
+                    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-2">
+
+                        <div class="form-check">
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                name="features"
+                                value="{{ value }}"
+                                id="feature-{{ forloop.counter }}"
+                            >
+
+                            <label
+                                class="form-check-label"
+                                for="feature-{{ forloop.counter }}"
+                            >
+                                {{ label }}
+                            </label>
+                        </div>
+
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Search button -->
+    <div class="d-grid d-md-flex justify-content-md-end mb-4">
+        <button type="submit" class="btn btn-primary px-5">
+            Search
+        </button>
+    </div>
 
 </form>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const button = document.getElementById("brandDropdownButton");
+    const checkboxes = document.querySelectorAll(".brand-checkbox");
+
+    function updateBrandButton() {
+
+        const selected = [];
+
+        checkboxes.forEach(function (checkbox) {
+            if (checkbox.checked) {
+                const label = document.querySelector(
+                    'label[for="' + checkbox.id + '"]'
+                );
+
+                selected.push(label.textContent.trim());
+            }
+        });
+
+        if (selected.length === 0) {
+            button.textContent = "Select brands";
+        } else if (selected.length <= 2) {
+            button.textContent = selected.join(", ");
+        } else {
+            button.textContent = selected.length + " brands selected";
+        }
+    }
+
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener("change", updateBrandButton);
+    });
+
+});
+</script>
 {% endblock %}

@@ -538,6 +538,8 @@ body {
 }
 
 .theme3 .keyboard-card{
+    display: flex;
+    flex-direction: column;
     background:#07131a;
     border:1px solid #00d9ff;
     border-radius:12px;
@@ -587,4 +589,14 @@ body {
 
 .feature {
     color:#00d9ff;
+}
+
+.brand-dropdown {
+    width: 300px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+#brandDropdownButton {
+    min-width: 250px;
 }

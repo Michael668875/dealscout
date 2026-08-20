@@ -111,7 +111,7 @@ class SpecsManager(models.Manager):
         )
     
     # advanced search function
-    def advanced_search(self, country=None, switches=None, sizes=None, features=None):
+    def advanced_search(self, country=None,brands=None, switches=None, sizes=None, features=None):
 
         filters = {
             "listing__status": "ACTIVE",
@@ -119,6 +119,9 @@ class SpecsManager(models.Manager):
 
         if country:
             filters["listing__country"] = country
+
+        if brands:
+            filters["brand__slug__in"] = brands
 
         if switches:
             filters["switch_type__in"] = switches

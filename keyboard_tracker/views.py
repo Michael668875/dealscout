@@ -55,6 +55,8 @@ class AdvancedSearchView(TemplateView):
 
         context["country"] = country
 
+        context["brands"] = CanonBrand.objects.all_brands(country=country)
+
         context["switches"] = (
             specs
             .filter(switch_type__isnull=False)
@@ -100,12 +102,14 @@ class SearchResultsView(ListView):
     def get_queryset(self):
         country = self.request.GET.get("country")
 
+        brands = self.request.GET.getlist("brands")
         switches = self.request.GET.getlist("switches")
         sizes = self.request.GET.getlist("sizes")
         features = self.request.GET.getlist("features")
 
         return Specs.objects.advanced_search(
             country=country,
+            brands=brands,
             switches=switches,
             sizes=sizes,
             features=features,
