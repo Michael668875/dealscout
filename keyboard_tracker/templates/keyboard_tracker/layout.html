@@ -19,24 +19,50 @@
             {% block content %}{% endblock %}
         </div>
     </div>
+    {% load pagination_tags %}
+
     {% if is_paginated %}
-    <nav class="pagination">
 
-        {% if page_obj.has_previous %}
-            <a href="?country={{ selected_country }}&page=1">First</a>
-            <a href="?country={{ selected_country }}&page={{ page_obj.previous_page_number }}">Previous</a>
-        {% endif %}
+    {% elided_page_range page_obj as page_range %}
 
-        <span>
-            Page {{ page_obj.number }} of {{ paginator.num_pages }}
-        </span>
+        <nav class="pagination">
 
-        {% if page_obj.has_next %}
-            <a href="?country={{ selected_country }}&page={{ page_obj.next_page_number }}">Next</a>
-            <a href="?country={{ selected_country }}&page={{ paginator.num_pages }}">Last</a>
-        {% endif %}
+            {% if page_obj.has_previous %}
+                <a href="?country={{ selected_country }}&page=1">First</a>
+                <a href="?country={{ selected_country }}&page={{ page_obj.previous_page_number }}">
+                    Previous
+                </a>
+            {% endif %}
 
-    </nav>
+            {% for num in page_range %}
+
+                {% if num == page_obj.paginator.ELLIPSIS %}
+
+                    <span class="ellipsis">...</span>
+
+                {% elif num == page_obj.number %}
+
+                    <span class="current-page">{{ num }}</span>
+
+                {% else %}
+
+                    <a href="?country={{ selected_country }}&page={{ num }}">
+                        {{ num }}
+                    </a>
+
+                {% endif %}
+
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+                <a href="?country={{ selected_country }}&page={{ page_obj.next_page_number }}">
+                    Next
+                </a>
+                <a href="?country={{ selected_country }}&page={{ paginator.num_pages }}">Last</a>
+            {% endif %}
+
+        </nav>
+
     {% endif %}
 
     {% include "keyboard_tracker/includes/_footer.html" %}

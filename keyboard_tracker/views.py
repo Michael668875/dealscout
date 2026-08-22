@@ -9,7 +9,7 @@ class Home(RedirectView):
 
 class ListingView(ListView):
     template_name = "keyboard_tracker/listings.html"
-    paginate_by = 50
+    paginate_by = 40
 
     def get_queryset(self):
         country = self.request.GET.get("country", "US")
@@ -18,6 +18,7 @@ class ListingView(ListView):
     
 class PriceDropsView(ListView):
     template_name = "keyboard_tracker/pricedrops.html"
+    paginate_by = 40
     #context_object_name = "drops"
 
     def get_queryset(self):
@@ -34,6 +35,7 @@ class BrandsView(ListView):
 
 class SingleBrandView(ListView):
     template_name = "keyboard_tracker/brand.html"
+    paginate_by = 40
 
     def get_queryset(self):
             return Specs.objects.brand_list(
@@ -97,7 +99,7 @@ class AdvancedSearchView(TemplateView):
 class SearchResultsView(ListView):
     template_name = "keyboard_tracker/search_results.html"
     context_object_name = "specs"
-    paginate_by = 50
+    paginate_by = 40
 
     def get_queryset(self):
         country = self.request.GET.get("country", "US")
@@ -129,7 +131,7 @@ class SearchResultsView(ListView):
 class SearchView(ListView):
     model = Listing
     template_name = "keyboard_tracker/search.html"
-    paginate_by = 50
+    paginate_by = 40
 
     def get_queryset(self):
         query = self.request.GET.get("q", "").strip()
