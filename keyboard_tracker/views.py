@@ -12,7 +12,7 @@ class ListingView(ListView):
     paginate_by = 50
 
     def get_queryset(self):
-        country = self.request.GET.get("country")
+        country = self.request.GET.get("country", "US")
         return Listing.objects.listings(country)
     
     
@@ -21,7 +21,7 @@ class PriceDropsView(ListView):
     #context_object_name = "drops"
 
     def get_queryset(self):
-        country = self.request.GET.get("country")
+        country = self.request.GET.get("country", "US")
         return PriceHistory.objects.drops(country)    
     
     
@@ -29,7 +29,7 @@ class BrandsView(ListView):
     template_name = "keyboard_tracker/brands.html"
 
     def get_queryset(self):
-        country = self.request.GET.get("country")
+        country = self.request.GET.get("country", "US")
         return CanonBrand.objects.all_brands(country)
 
 class SingleBrandView(ListView):
@@ -38,7 +38,7 @@ class SingleBrandView(ListView):
     def get_queryset(self):
             return Specs.objects.brand_list(
                 slug=self.kwargs["slug"],
-                country=self.request.GET.get("country"),
+                country = self.request.GET.get("country", "US"),
             )
 
 class AdvancedSearchView(TemplateView):
@@ -47,7 +47,7 @@ class AdvancedSearchView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        country = self.request.GET.get("country")
+        country = self.request.GET.get("country", "US")
 
         specs = Specs.objects.filter(
             listing__status="ACTIVE"
@@ -100,7 +100,7 @@ class SearchResultsView(ListView):
     paginate_by = 50
 
     def get_queryset(self):
-        country = self.request.GET.get("country")
+        country = self.request.GET.get("country", "US")
 
         brands = self.request.GET.getlist("brands")
         switches = self.request.GET.getlist("switches")
@@ -135,7 +135,7 @@ class SearchView(ListView):
         query = self.request.GET.get("q", "").strip()
 
         queryset = Listing.objects.listings(
-            country = self.request.GET.get("country")
+            country = self.request.GET.get("country", "US")
         )
 
         if queryset:

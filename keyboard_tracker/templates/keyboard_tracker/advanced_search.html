@@ -3,8 +3,10 @@
 {% block title %}Advanced Search{% endblock %}
 
 {% block content %}
+<div class="p-4 p-lg-5">
+<div class="table-wrap rounded-4 p-3">
 
-<h1 class="mb-4">Advanced Search</h1>
+<h3 class="mb-4">Advanced Search</h3>
 
 <form method="get" action="{% url 'search_results' %}">
 
@@ -14,9 +16,9 @@
 
     <!-- Brands -->
 
-    <div class="card mb-4">
+    <div class="stat-card mb-4">
         <div class="card-header">
-            <h2 class="h5 mb-0">Brands</h2>
+            <h2 class="h5 mb-4">Brands</h2>
         </div>
 
         <div class="card-body">
@@ -25,7 +27,7 @@
 
                 <button
                     id="brandDropdownButton"
-                    class="btn btn-outline-secondary dropdown-toggle text-start"
+                    class="btn btn-outline-info dropdown-toggle text-start"
                     type="button"
                     data-bs-toggle="dropdown"
                     data-bs-auto-close="outside"
@@ -64,9 +66,9 @@
 
 
     <!-- Switches -->
-    <div class="card mb-4">
+    <div class="stat-card mb-4">
         <div class="card-header">
-            <h2 class="h5 mb-0">Switches</h2>
+            <h2 class="h5 mb-4">Switches</h2>
         </div>
 
         <div class="card-body">
@@ -101,9 +103,9 @@
 
 
     <!-- Sizes -->
-    <div class="card mb-4">
+    <div class="stat-card mb-4">
         <div class="card-header">
-            <h2 class="h5 mb-0">Sizes</h2>
+            <h2 class="h5 mb-4">Sizes</h2>
         </div>
 
         <div class="card-body">
@@ -138,9 +140,9 @@
 
 
     <!-- Features -->
-    <div class="card mb-4">
+    <div class="stat-card mb-4">
         <div class="card-header">
-            <h2 class="h5 mb-0">Features</h2>
+            <h2 class="h5 mb-4">Features</h2>
         </div>
 
         <div class="card-body">
@@ -182,6 +184,8 @@
     </div>
 
 </form>
+</div>
+</div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
