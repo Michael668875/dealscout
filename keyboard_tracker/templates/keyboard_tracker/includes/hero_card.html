@@ -1,29 +1,34 @@
+  {% load static %}
           <div class="hero-card mb-4">
             <div class="row align-items-center">
               <div class="col-lg-8">
                 <div class="badge-pill mb-3">
-                  SYSTEM STATUS: ONLINE
+                  MARKET DATA: ONLINE
                 </div>
 
-                <h1 class="display-5 fw-bold mb-3">
-                  LEGO MARKET TERMINAL
+                <h1 class="display-6 fw-bold mb-3">
+                  MECHANICAL KEYBOARD DEALS
                 </h1>
 
                 <p class="mb-4 text-info-emphasis">
-                  Real-time collector pricing • Active market monitoring • Advanced deal analysis
+                  Find your next mechanical keyboard without searching dozens of listings.
+                  Compare prices, specifications, switches, sizes and features to find the 
+                  right keyboard at the right price.
                 </p>
 
-                <button class="btn btn-primary btn-lg">
-                  ACCESS DEAL FEED
-                </button>
+                <a href="{% url 'pricedrops' %}{% if selected_country %}?country={{ selected_country }}{% endif %}"
+                  class="btn btn-primary btn-lg">
+                    VIEW PRICE DROPS
+                </a>
+                <a href="{% url 'brands' %}{% if selected_country %}?country={{ selected_country }}{% endif %}"
+                  class="btn btn-outline-info btn-lg">
+                    BROWSE BRANDS
+                </a>
               </div>
 
               <div class="col-lg-4 mt-4 mt-lg-0">
-                <div class="p-4 rounded-4 border border-info h-100">
-                  <div class="mb-3">TRACKED MODELS........ 12,994</div>
-                  <div class="mb-3">ACTIVE LISTINGS....... 88,201</div>
-                  <div class="mb-3">PRICE ALERTS.......... 492</div>
-                  <div>AVG SAVINGS........... 11%</div>
+                <div class="p-3 rounded-4 border border-info h-100">
+                  <img src="{% static 'keyboard_tracker/mkb.jpeg' %}" alt="Mechanical keyboard" class="img-fluid rounded-3">
                 </div>
               </div>
             </div>
