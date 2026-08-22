@@ -143,3 +143,31 @@ class SearchView(ListView):
 
         return queryset
 
+# static pages
+
+class AboutView(TemplateView):
+    template_name = "keyboard_tracker/about.html"
+
+
+class HowItWorksView(TemplateView):
+    template_name = "keyboard_tracker/how_it_works.html"
+
+
+class AffiliateDisclosureView(TemplateView):
+    template_name = "keyboard_tracker/affiliate_disclosure.html"
+
+
+class DisclaimerView(TemplateView):
+    template_name = "keyboard_tracker/disclaimer.html"
+
+
+class PrivacyView(TemplateView):
+    template_name = "keyboard_tracker/privacy.html"
+
+
+class TermsView(TemplateView):
+    template_name = "keyboard_tracker/terms.html"
+
+
+class ContactView(TemplateView):
+    template_name = "keyboard_tracker/contact.html"

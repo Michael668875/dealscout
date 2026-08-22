@@ -12,4 +12,11 @@ urlpatterns = [
     path("search/", views.SearchView.as_view(), name="search"),
     path("advanced-search/", views.AdvancedSearchView.as_view(), name="advanced_search"),
     path("search-results", views.SearchResultsView.as_view(), name="search_results"),
+    path("about/", views.AboutView.as_view(), name="about"),
+    path("how-it-works/", views.HowItWorksView.as_view(), name="how_it_works"),
+    path("affiliate-disclosure/", views.AffiliateDisclosureView.as_view(), name="affiliate_disclosure"),
+    path("disclaimer/", views.DisclaimerView.as_view(), name="disclaimer"),
+    path("privacy/", views.PrivacyView.as_view(), name="privacy"),
+    path("terms/", views.TermsView.as_view(), name="terms"),
+    path("contact/", views.ContactView.as_view(), name="contact"),
 ]

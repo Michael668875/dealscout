@@ -7,13 +7,13 @@
             </div>
 
             <div class="d-flex flex-wrap gap-3">
-                <a href="#" class="text-decoration-none">About</a>
-                <a href="#" class="text-decoration-none">How It Works</a>
-                <a href="#" class="text-decoration-none">Affiliate Disclosure</a>
-                <a href="#" class="text-decoration-none">Disclaimer</a>
-                <a href="#" class="text-decoration-none">Privacy</a>
-                <a href="#" class="text-decoration-none">Terms</a>
-                <a href="#" class="text-decoration-none">Contact</a>
+                <a href="{% url 'about' %}?country={{ selected_country }}">About</a>
+                <a href="{% url 'how_it_works' %}?country={{ selected_country }}">How It Works</a>
+                <a href="{% url 'affiliate_disclosure' %}?country={{ selected_country }}">Affiliate Disclosure</a>
+                <a href="{% url 'disclaimer' %}?country={{ selected_country }}">Disclaimer</a>
+                <a href="{% url 'privacy' %}?country={{ selected_country }}">Privacy</a>
+                <a href="{% url 'terms' %}?country={{ selected_country }}">Terms</a>
+                <a href="{% url 'contact' %}?country={{ selected_country }}">Contact</a>
             </div>
         </div>
 
