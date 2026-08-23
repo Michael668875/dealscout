@@ -10,7 +10,6 @@ urlpatterns = [
     path("brands/<slug:slug>/", views.SingleBrandView.as_view(), name="brand"),    
     path("advanced_search/", views.AdvancedSearchView.as_view(), name="advanced_search"),    
     path("search/", views.SearchView.as_view(), name="search"),
-    path("advanced-search/", views.AdvancedSearchView.as_view(), name="advanced_search"),
     path("search-results", views.SearchResultsView.as_view(), name="search_results"),
     path("about/", views.AboutView.as_view(), name="about"),
     path("how-it-works/", views.HowItWorksView.as_view(), name="how_it_works"),

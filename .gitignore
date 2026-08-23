@@ -223,3 +223,6 @@ __marimo__/
 .my_pgpass
 
 .vscode/
+
+staticfiles/
+dealscout_data.json
