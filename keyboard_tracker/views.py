@@ -135,12 +135,11 @@ class SearchView(ListView):
 
     def get_queryset(self):
         query = self.request.GET.get("q", "").strip()
+        country = self.request.GET.get("country", "US")
 
-        queryset = Listing.objects.listings(
-            country = self.request.GET.get("country", "US")
-        )
+        queryset = Listing.objects.listings(country=country)
 
-        if queryset:
+        if query:
             queryset = queryset.filter(title__icontains=query)
 
         return queryset
