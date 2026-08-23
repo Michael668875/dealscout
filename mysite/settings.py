@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
 
 ALLOWED_HOSTS = ["dealscout.dev", "www.dealscout.dev", "localhost", "127.0.0.1", ]
 
@@ -132,8 +132,10 @@ STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = os.getenv("DJANGO_SECURE_SSL_REDIRECT", "False") == "True"
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+
+
 
 
