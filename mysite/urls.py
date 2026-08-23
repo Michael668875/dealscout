@@ -16,8 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.contrib.sitemaps.views import sitemap
+from keyboard_tracker.sitemaps import StaticViewSitemap, BrandSitemap
+
+sitemaps = {
+    "static": StaticViewSitemap,
+    "brands": BrandSitemap,
+}
 
 urlpatterns = [
     path('', include('keyboard_tracker.urls')),
     path('admin/', admin.site.urls),
+    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap", ),
 ]

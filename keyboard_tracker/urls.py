@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.generic import TemplateView
 
 from . import views
 
@@ -18,4 +19,12 @@ urlpatterns = [
     path("privacy/", views.PrivacyView.as_view(), name="privacy"),
     path("terms/", views.TermsView.as_view(), name="terms"),
     path("contact/", views.ContactView.as_view(), name="contact"),
+    path(
+    "robots.txt",
+        TemplateView.as_view(
+            template_name="keyboard_tracker/robots.txt",
+            content_type="text/plain"
+        ),
+        name="robots",
+    ),
 ]

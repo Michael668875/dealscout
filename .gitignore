@@ -226,3 +226,7 @@ __marimo__/
 
 staticfiles/
 dealscout_data.json
+
+logs/
+# Logs
+**/logs/
