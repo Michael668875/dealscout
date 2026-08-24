@@ -19,7 +19,7 @@ def parse_keyboard_specs(): # SIMPLE PARSING. TO BE UPDATED LATER
     for listing in listings:
         title = listing.title.lower()
 
-        specs = Specs(
+        specs, created = Specs.objects.get_or_create(
             listing=listing
         )
 
