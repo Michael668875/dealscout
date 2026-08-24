@@ -27,3 +27,9 @@ def elided_page_range(page_obj):
         page_range.append(total)
 
     return page_range
+
+@register.simple_tag
+def pagination_url(request, page):
+    query = request.GET.copy()
+    query["page"] = page
+    return "?" + query.urlencode()

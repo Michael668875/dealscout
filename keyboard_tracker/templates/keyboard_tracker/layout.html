@@ -29,8 +29,8 @@
         <nav class="pagination">
 
             {% if page_obj.has_previous %}
-                <a href="?country={{ selected_country }}&page=1">First</a>
-                <a href="?country={{ selected_country }}&page={{ page_obj.previous_page_number }}">
+                <a href="{% pagination_url request 1 %}">First</a>
+                <a href="{% pagination_url request page_obj.previous_page_number %}">
                     Previous
                 </a>
             {% endif %}
@@ -47,7 +47,7 @@
 
                 {% else %}
 
-                    <a href="?country={{ selected_country }}&page={{ num }}">
+                    <a href="{% pagination_url request num %}">
                         {{ num }}
                     </a>
 
@@ -56,10 +56,12 @@
             {% endfor %}
 
             {% if page_obj.has_next %}
-                <a href="?country={{ selected_country }}&page={{ page_obj.next_page_number }}">
+                <a href="{% pagination_url request page_obj.next_page_number %}">
                     Next
                 </a>
-                <a href="?country={{ selected_country }}&page={{ paginator.num_pages }}">Last</a>
+                <a href="{% pagination_url request paginator.num_pages %}">
+                    Last
+                </a>
             {% endif %}
 
         </nav>
