@@ -1,5 +1,7 @@
 from django.db import transaction
 
+from keyboard_tracker.services.spec_parser import parse_keyboard_specs
+
 from .sql import (
     insert_listings,
     update_listing_prices,
@@ -10,7 +12,6 @@ from .sql import (
     mark_ended_listings,
 )
 
-from keyboard_tracker.management.commands.parse_specs import parse_keyboard_specs
 
 def run_pipeline():
     """
