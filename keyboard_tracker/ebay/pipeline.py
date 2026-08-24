@@ -10,6 +10,7 @@ from .sql import (
     mark_ended_listings,
 )
 
+from keyboard_tracker.management.commands.parse_specs import parse_keyboard_specs
 
 def run_pipeline():
     """
@@ -32,3 +33,4 @@ def run_pipeline():
 
         mark_ended_listings()
 
+        parse_keyboard_specs()
