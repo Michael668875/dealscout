@@ -32,7 +32,7 @@
             <div>
                 <span class="label">Old Price</span><br>
                 {%  if drop.old_price %}
-                {{ drop.listing.currency }} {{ drop.old_price }}
+                {{ drop.listing.currency }} {{ drop.listing.currency_symbol }}{{ drop.old_price }}
                 {% else %}
                   -
                 {% endif %}
@@ -41,7 +41,7 @@
             <div>
                 <span class="label">New Price</span><br>
                  {%  if drop.price %}
-                  {{ drop.listing.currency }} {{ drop.price }}
+                  {{ drop.listing.currency }} {{ drop.listing.currency_symbol }}{{ drop.price }}
                   {% else %}
                     -
                   {% endif %}

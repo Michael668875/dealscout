@@ -7,6 +7,13 @@ from .managers import (
     SpecsManager,
     )
 
+CURRENCY_SYMBOLS = {
+    "USD": "$",
+    "AUD": "$",
+    "GBP": "£",
+    "EUR": "€",
+}
+
 # Create your models here.
 
 
@@ -114,6 +121,10 @@ class Listing(models.Model):
 
     def __str__(self):
         return self.title or self.ebay_item_id
+
+    @property
+    def currency_symbol(self):
+        return CURRENCY_SYMBOLS.get(self.currency, self.currency)
 
 
 class PriceHistory(models.Model):
