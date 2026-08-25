@@ -20,8 +20,8 @@
             </div>
             <div class="me-3 mb-3 mb-lg-0">
             <div class="search-wrap ms-auto">
-            <form class="d-flex" action="{% url 'search' %}" method="get">
-              <input class="form-control me-2" type="search" name="q" value="{{ query }}" placeholder="Search Keyboards">
+            <form class="d-flex flex-wrap" action="{% url 'search' %}" method="get">
+              <input class="form-control me-2 mb-2" type="search" name="q" value="{{ query }}" placeholder="Search Keyboards">
               <input type="hidden" name="country" value="{{ selected_country }}">
               <button class="btn btn-outline-info flex-shrink-0" type="submit">Search</button>
             </form>
