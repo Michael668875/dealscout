@@ -1,0 +1,160 @@
+features:
+
+  low_profile:
+    name: Low Profile
+    aliases:
+      - low profile
+      - low-profile
+
+  hall_effect:
+    name: Hall Effect
+    aliases:
+      - hall effect
+
+  optical:
+    name: Optical
+    aliases:
+      - optical switch
+      - optical switches
+
+  hot_swap:
+    name: Hot Swap
+    aliases:
+      - hot swap
+      - hot-swap
+      - hot-swappable
+      - hotswap
+
+  gasket_mount:
+    name: Gasket Mount
+    aliases:
+      - gasket mount
+      - gasket-mounted
+
+  knob:
+    name: Knob
+    aliases:
+      - knob
+      - rotary knob
+      - volume knob
+
+  wireless:
+    name: Wireless
+    aliases:
+      - wireless
+
+  bluetooth:
+    name: Bluetooth
+    aliases:
+      - bluetooth
+
+  qmk:
+    name: QMK
+    aliases:
+      - qmk
+
+  via:
+    name: VIA
+    aliases:
+      - via compatible
+
+  iso:
+    name: ISO
+    aliases:
+      - iso layout
+
+  ansi:
+    name: ANSI
+    aliases:
+      - ansi layout
+
+  barebones:
+    name: Barebones
+    aliases:
+      - barebones
+
+  rgb:
+    name: RGB
+    aliases:
+      - rgb
+      - rgb lighting
+      - rgb backlight
+
+
+sizes:
+
+  "40":
+    name: "40%"
+    aliases:
+      - 40%
+      - 40 percent
+
+  "60":
+    name: "60%"
+    aliases:
+      - 60%
+      - 60 percent
+
+  "65":
+    name: "65%"
+    aliases:
+      - 65%
+      - 65 percent
+
+  "75":
+    name: "75%"
+    aliases:
+      - 75%
+      - 75 percent
+
+  tkl:
+    name: TKL
+    aliases:
+      - tkl
+      - tenkeyless
+
+  full_size:
+    name: Full Size
+    aliases:
+      - full size
+      - full-size
+      - 100%
+
+
+switches:
+
+  linear:
+    name: Linear
+    aliases:
+      - linear switch
+      - linear switches
+
+  tactile:
+    name: Tactile
+    aliases:
+      - tactile switch
+      - tactile switches
+
+  clicky:
+    name: Clicky
+    aliases:
+      - clicky switch
+      - clicky switches
+
+  red:
+    name: Red
+    aliases:
+      - red switch
+      - red switches
+
+  blue:
+    name: Blue
+    aliases:
+      - blue switch
+      - blue switches
+
+  brown:
+    name: Brown
+    aliases:
+      - brown switch
+      - brown switches      

@@ -113,6 +113,8 @@ class SpecsManager(models.Manager):
     # advanced search function
     def advanced_search(self, country=None,brands=None, switches=None, sizes=None, features=None):
 
+        queryset = self.get_queryset()
+
         filters = {
             "listing__status": "ACTIVE",
         }
@@ -123,20 +125,37 @@ class SpecsManager(models.Manager):
         if brands:
             filters["brand__slug__in"] = brands
 
+        queryset = queryset.filter(**filters)
+
         if switches:
-            filters["switch_type__in"] = switches
+            queryset = queryset.filter(
+                values__specification__category="switch",
+                values__specification__slug__in=switches,
+            )
 
         if sizes:
-            filters["layout_size__in"] = sizes
+            queryset = queryset.filter(
+                values__specification__category="size",
+                values__specification__slug__in=sizes,
+            )
 
         if features:
-            for feature in features:
-                if feature in self.model.FEATURE_LABELS:
-                    filters[feature] = True
+            queryset = queryset.filter(
+                values__specification__category="feature",
+                values__specification__slug__in=features,
+            )
 
         return (
-            self.get_queryset()
-            .filter(**filters)
-            .distinct()
-            .order_by("listing__last_updated")
+            queryset
+            .select_related(
+                "listing",
+                "brand"
             )
+            .prefetch_related(
+                "values__specification"
+            )
+            .distinct()
+            .order_by(
+                "listing__last_updated"
+            )
+        )

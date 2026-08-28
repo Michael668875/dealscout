@@ -56,21 +56,21 @@
                 <span class="feature label">Brand:</span> {{ spec.brand.name }}            
             </div>
         {% endif %}
-        {% if spec.layout_size %}
+        {% if spec.get_size %}
             <div>            
-                <span class="feature label">Size:</span> {{ spec.layout_size }}            
+                <span class="feature label">Size:</span> {{ spec.get_size.specification.name }}            
             </div>
         {% endif %}
-        {% if spec.switch_type %}
+        {% if spec.get_switch %}
             <div>            
-                <span class="feature label">Switches:</span> {{ spec.switch_type }}            
+                <span class="feature label">Switches:</span> {{ spec.get_switch.specification.name }}            
             </div>
         {% endif %}
         {% if spec.get_features %}
             <div>            
                 <span class="feature label">Features:</span>
                 {% for feature in spec.get_features %}
-                    {{ feature }}{% if not forloop.last %}, {% endif %}
+                    {{ value.specification.name }}{% if not forloop.last %}, {% endif %}
                 {% endfor %}            
             </div>
         {% endif %}

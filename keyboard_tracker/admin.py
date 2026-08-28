@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import CanonBrand, Listing, PriceHistory, TempSummary, Specs
+from .models import CanonBrand, Listing, PriceHistory, TempSummary, Specs, Specification, SpecValue
 
 # Register your models here.
 
@@ -8,14 +8,63 @@ class ListingAdmin(admin.ModelAdmin):
     search_fields = ["title"]
     list_filter = ["country"]
 
+
+admin.site.register(Listing, ListingAdmin)
+admin.site.register(PriceHistory)
+admin.site.register(TempSummary)
+
+@admin.register(CanonBrand)
+class CanonBrandAdmin(admin.ModelAdmin):
+
+    search_fields = (
+        "name",
+    )
+
+@admin.register(Specification)
+class SpecificationAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "name",
+        "slug",
+        "category",
+    )
+
+    list_filter = (
+        "category",
+    )
+
+    search_fields = (
+        "name",
+        "slug",
+    )
+
+    ordering = (
+        "category",
+        "name",
+    )
+
+class SpecValueInline(admin.TabularInline):
+
+    model = SpecValue
+
+    extra = 0
+
+    autocomplete_fields = (
+        "specification",
+    )
+
+@admin.register(Specs)
 class SpecsAdmin(admin.ModelAdmin):
+
     list_display = (
         "listing",
         "brand",
-        "layout_size",
-        "wireless",
-        "hall_effect",
-        "low_profile",
+        "get_specifications",
+        "created_at",
+    )
+
+    list_filter = (
+        "brand",
     )
 
     search_fields = (
@@ -23,17 +72,27 @@ class SpecsAdmin(admin.ModelAdmin):
         "brand__name",
     )
 
-    list_filter = (
+    autocomplete_fields = (
         "brand",
-        "layout_size",
-        "wireless",
-        "hall_effect",
-        "low_profile",
+    )
+
+    inlines = (
+        SpecValueInline,
     )
 
 
-admin.site.register(Listing, ListingAdmin)
-admin.site.register(CanonBrand)
-admin.site.register(PriceHistory)
-admin.site.register(TempSummary)
-admin.site.register(Specs, SpecsAdmin)
+    @admin.display(
+        description="Specifications"
+    )
+    def get_specifications(self, obj):
+
+        return ", ".join(
+            obj.values
+            .select_related(
+                "specification"
+            )
+            .values_list(
+                "specification__name",
+                flat=True
+            )
+        )

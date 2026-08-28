@@ -61,7 +61,6 @@ class TempSummary(models.Model):
 
 class CanonBrand(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    flat_name = models.CharField(max_length=100, db_index=True, null=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True, null=True)
 
     objects = CanonBrandManager()
@@ -156,10 +155,147 @@ class PriceHistory(models.Model):
     def __str__(self):
         return f"{self.listing.ebay_item_id}: {self.price}"
 
-from django.db import models
+
+
+
+# class Specs(models.Model):
+#     listing = models.OneToOneField(
+#         "Listing",
+#         on_delete=models.CASCADE,
+#         related_name="specs"
+#     )
+
+#     brand = models.ForeignKey(
+#         "CanonBrand",
+#         on_delete=models.SET_NULL,
+#         null=True,
+#         blank=True,
+#         related_name="specs"
+#     )
+
+#     # Layout
+#     layout_size = models.CharField(
+#         max_length=50,
+#         blank=True,
+#         null=True
+#     )
+
+#     # Switch information
+#     switch_type = models.CharField(
+#         max_length=100,
+#         blank=True,
+#         null=True
+#     )
+
+#     # Features
+#     low_profile = models.BooleanField(default=False)
+#     hall_effect = models.BooleanField(default=False)
+#     optical = models.BooleanField(default=False)
+#     hot_swap = models.BooleanField(default=False)
+#     gasket_mount = models.BooleanField(default=False)
+#     knob = models.BooleanField(default=False)
+
+#     # Connectivity
+#     wireless = models.BooleanField(default=False)
+#     bluetooth = models.BooleanField(default=False)
+
+#     # Firmware
+#     qmk = models.BooleanField(default=False)
+#     via = models.BooleanField(default=False)
+
+#     # Layout standards
+#     iso = models.BooleanField(default=False)
+#     ansi = models.BooleanField(default=False)
+
+#     # Build type
+#     barebones = models.BooleanField(default=False)
+
+#     # Lighting
+#     rgb = models.BooleanField(default=False)
+
+#     created_at = models.DateTimeField(auto_now_add=True)
+#     updated_at = models.DateTimeField(auto_now=True)
+
+#     FEATURE_LABELS = {
+#         "low_profile": "Low Profile",
+#         "hall_effect": "Hall Effect",
+#         "optical": "Optical",
+#         "hot_swap": "Hot Swap",
+#         "gasket_mount": "Gasket Mount",
+#         "knob": "Knob",
+#         "wireless": "Wireless",
+#         "bluetooth": "Bluetooth",
+#         "qmk": "QMK",
+#         "via": "VIA",
+#         "iso": "ISO",
+#         "ansi": "ANSI",
+#         "barebones": "Barebones",
+#         "rgb": "RGB",
+#     }
+
+#     def get_features(self):
+#         return [
+#             label
+#             for field, label in self.FEATURE_LABELS.items()
+#             if getattr(self, field)
+#         ]
+
+#     objects = SpecsManager()
+
+#     class Meta:
+#         db_table = "specs"
+
+#     def __str__(self):
+#         return f"Specs for ID: {self.listing.id} Title: {self.listing.title}"
+
+
+
+class Specification(models.Model):
+
+    CATEGORY_CHOICES = (
+        ("feature", "Feature"),
+        ("size", "Size"),
+        ("switch", "Switch"),
+    )
+
+    slug = models.SlugField(
+        max_length=100
+    )
+
+    name = models.CharField(
+        max_length=100
+    )
+
+    category = models.CharField(
+        max_length=20,
+        choices=CATEGORY_CHOICES
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True
+    )
+
+    class Meta:
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["slug", "category"],
+                name="unique_specification_slug_category"
+            )
+        ]
+
+        ordering = ["category", "name"]
+
+    def __str__(self):
+        return f"{self.name} ({self.category})"
 
 
 class Specs(models.Model):
+
     listing = models.OneToOneField(
         "Listing",
         on_delete=models.CASCADE,
@@ -174,77 +310,92 @@ class Specs(models.Model):
         related_name="specs"
     )
 
-    # Layout
-    layout_size = models.CharField(
-        max_length=50,
-        blank=True,
-        null=True
+    created_at = models.DateTimeField(
+        auto_now_add=True
     )
 
-    # Switch information
-    switch_type = models.CharField(
-        max_length=100,
-        blank=True,
-        null=True
+    updated_at = models.DateTimeField(
+        auto_now=True
     )
-
-    # Features
-    low_profile = models.BooleanField(default=False)
-    hall_effect = models.BooleanField(default=False)
-    optical = models.BooleanField(default=False)
-    hot_swap = models.BooleanField(default=False)
-    gasket_mount = models.BooleanField(default=False)
-    knob = models.BooleanField(default=False)
-
-    # Connectivity
-    wireless = models.BooleanField(default=False)
-    bluetooth = models.BooleanField(default=False)
-
-    # Firmware
-    qmk = models.BooleanField(default=False)
-    via = models.BooleanField(default=False)
-
-    # Layout standards
-    iso = models.BooleanField(default=False)
-    ansi = models.BooleanField(default=False)
-
-    # Build type
-    barebones = models.BooleanField(default=False)
-
-    # Lighting
-    rgb = models.BooleanField(default=False)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    FEATURE_LABELS = {
-        "low_profile": "Low Profile",
-        "hall_effect": "Hall Effect",
-        "optical": "Optical",
-        "hot_swap": "Hot Swap",
-        "gasket_mount": "Gasket Mount",
-        "knob": "Knob",
-        "wireless": "Wireless",
-        "bluetooth": "Bluetooth",
-        "qmk": "QMK",
-        "via": "VIA",
-        "iso": "ISO",
-        "ansi": "ANSI",
-        "barebones": "Barebones",
-        "rgb": "RGB",
-    }
-
-    def get_features(self):
-        return [
-            label
-            for field, label in self.FEATURE_LABELS.items()
-            if getattr(self, field)
-        ]
 
     objects = SpecsManager()
-
+    
     class Meta:
         db_table = "specs"
 
+    def get_features(self):
+
+        return (
+            self.values
+            .filter(
+                specification__category="feature"
+            )
+            .select_related(
+                "specification"
+            )
+        )
+
+
+    def get_sizes(self):
+
+        return (
+            self.values
+            .filter(
+                specification__category="size"
+            )
+            .select_related(
+                "specification"
+            )
+        )
+
+
+    def get_switches(self):
+
+        return (
+            self.values
+            .filter(
+                specification__category="switch"
+            )
+            .select_related(
+                "specification"
+            )
+        )
+
     def __str__(self):
-        return f"Specs for ID: {self.listing.id} Title: {self.listing.title}"
+        return (
+            f"Specs for ID: {self.listing.id} "
+            f"Title: {self.listing.title}"
+        )
+
+class SpecValue(models.Model):
+
+    specs = models.ForeignKey(
+        Specs,
+        on_delete=models.CASCADE,
+        related_name="values"
+    )
+
+    specification = models.ForeignKey(
+        Specification,
+        on_delete=models.CASCADE,
+        related_name="values"
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["specs", "specification"],
+                name="unique_specs_specification"
+            )
+        ]
+
+    def __str__(self):
+        return (
+            f"{self.specs.listing.title}: "
+            f"{self.specification.name}"
+        )

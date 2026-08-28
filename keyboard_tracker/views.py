@@ -1,5 +1,5 @@
 from django.views.generic import ListView, RedirectView, TemplateView
-from .models import Listing, PriceHistory, CanonBrand, Specs
+from .models import Listing, PriceHistory, CanonBrand, Specs, Specification
 
 # Create your views here.
 
@@ -51,48 +51,42 @@ class AdvancedSearchView(TemplateView):
 
         country = self.request.GET.get("country", "US")
 
-        specs = Specs.objects.filter(
-            listing__status="ACTIVE"
-        )
-
         context["country"] = country
 
         context["brands"] = CanonBrand.objects.all_brands(country=country)
 
+
+        # Switches
+
         context["switches"] = (
-            specs
-            .filter(switch_type__isnull=False)
-            .exclude(switch_type="")
-            .values_list("switch_type", flat=True)
-            .distinct()
-            .order_by("switch_type")
+            Specification.objects
+            .filter(
+                category="switch"
+            )
+            .order_by("name")
         )
+
+
+        # Sizes
 
         context["sizes"] = (
-            specs
-            .filter(layout_size__isnull=False)
-            .exclude(layout_size="")
-            .values_list("layout_size", flat=True)
-            .distinct()
-            .order_by("layout_size")
+            Specification.objects
+            .filter(
+                category="size"
+            )
+            .order_by("name")
         )
 
-        context["features"] = [
-            ("low_profile", "Low Profile"),
-            ("hall_effect", "Hall Effect"),
-            ("optical", "Optical"),
-            ("hot_swap", "Hot Swap"),
-            ("gasket_mount", "Gasket Mount"),
-            ("knob", "Knob"),
-            ("wireless", "Wireless"),
-            ("bluetooth", "Bluetooth"),
-            ("qmk", "QMK"),
-            ("via", "VIA"),
-            ("iso", "ISO"),
-            ("ansi", "ANSI"),
-            ("barebones", "Barebones"),
-            ("rgb", "RGB"),
-        ]
+
+        # Features
+
+        context["features"] = (
+            Specification.objects
+            .filter(
+                category="feature"
+            )
+            .order_by("name")
+        )
 
         return context
 
