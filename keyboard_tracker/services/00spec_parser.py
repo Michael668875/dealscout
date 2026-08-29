@@ -107,35 +107,6 @@ def specification_matches(
     return False
 
 
-def sync_specifications(yaml_data):
-
-    category_mapping = {
-        "features": "feature",
-        "sizes": "size",
-        "switches": "switch",
-    }
-
-    for yaml_category, category in category_mapping.items():
-
-        specifications = yaml_data.get(
-            yaml_category,
-            {}
-        )
-
-        for slug, specification_data in specifications.items():
-
-            Specification.objects.update_or_create(
-                slug=slug,
-                category=category,
-                defaults={
-                    "name": specification_data.get(
-                        "name",
-                        slug
-                    )
-                }
-            )
-
-
 def add_specification(
     specs,
     specification
@@ -193,10 +164,6 @@ def parse_keyboard_specs():
 
     yaml_data = load_specs_yaml()
 
-    # Make sure the Specification table
-    # matches specs.yaml before parsing listings.
-    sync_specifications(yaml_data)
-
     listings = Listing.objects.filter(
         status="ACTIVE"
     )
@@ -222,7 +189,6 @@ def parse_keyboard_specs():
             if brand.name.lower() in title_lower:
 
                 specs.brand = brand
-
                 specs.save(
                     update_fields=["brand"]
                 )
@@ -230,8 +196,13 @@ def parse_keyboard_specs():
                 break
 
         # -------------------------
-        # REMOVE EXISTING VALUES
+        # REMOVE OLD SPEC VALUES
         # -------------------------
+        #
+        # This makes the parser safe to run
+        # repeatedly. Existing relationships
+        # are rebuilt from the current title.
+        #
 
         SpecValue.objects.filter(
             specs=specs

@@ -73,7 +73,7 @@ class CanonBrandManager(models.Manager):
         )
         
 
-FEATURES = {
+FEATURES = {    # I don't need this anymore
     "hall-effect": ("Hall Effect", "hall_effect"),
     "hot-swap": ("Hot Swap", "hot_swap"),
     "wireless": ("Wireless", "wireless"),

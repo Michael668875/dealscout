@@ -1,5 +1,7 @@
 # USE THIS TO MIGRATE EXISTING SPECS FIELDS TO THE NEW SCHEMA
 
+# THIS IS NO LONGER NEEDED. USE parse_specs.py TO POPULATE THE SpecValue TABLE INSTEAD.
+
 import re
 import yaml
 
@@ -157,23 +159,22 @@ class Command(BaseCommand):
 
         yaml_data = self.load_yaml()
 
-        feature_fields = [
-            "low_profile",
-            "hall_effect",
-            "optical",
-            "hot_swap",
-            "gasket_mount",
-            "knob",
-            "wireless",
-            "bluetooth",
-            "qmk",
-            "via",
-            "iso",
-            "ansi",
-            "barebones",
-            "rgb",
-        ]
-
+        feature_fields = {
+            "low_profile": "Low Profile",
+            "hall_effect": "Hall Effect",
+            "optical": "Optical",
+            "hot_swap": "Hot Swap",
+            "gasket_mount": "Gasket Mount",
+            "knob": "Knob",
+            "wireless": "Wireless",
+            "bluetooth": "Bluetooth",
+            "qmk": "QMK",
+            "via": "VIA",
+            "iso": "ISO",
+            "ansi": "ANSI",
+            "barebones": "Barebones",
+            "rgb": "RGB",
+        }
 
         created_count = 0
         processed_count = 0
@@ -202,7 +203,7 @@ class Command(BaseCommand):
             # BOOLEAN FEATURES
             # -------------------------
 
-            for field_name in feature_fields:
+            for field_name, feature_name in feature_fields.items():
 
                 if getattr(
                     specs,
@@ -211,11 +212,11 @@ class Command(BaseCommand):
                 ):
 
                     specification = (
-                        Specification.objects.filter(
-                            slug=field_name,
-                            category="feature"
+                        self.find_specification(
+                            feature_name,
+                            "feature",
+                            yaml_data
                         )
-                        .first()
                     )
 
                     if specification is None:
@@ -223,13 +224,12 @@ class Command(BaseCommand):
                         self.stdout.write(
                             self.style.WARNING(
                                 f"  Missing feature "
-                                f"Specification: "
-                                f"{field_name}"
+                                f"Specification for: "
+                                f"{feature_name}"
                             )
                         )
 
                         continue
-
 
                     created = (
                         self.add_specification(
@@ -237,7 +237,6 @@ class Command(BaseCommand):
                             specification
                         )
                     )
-
 
                     if created:
 
@@ -249,7 +248,6 @@ class Command(BaseCommand):
                                 f"{specification.name}"
                             )
                         )
-
 
             # -------------------------
             # LAYOUT SIZE

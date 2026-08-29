@@ -66,6 +66,16 @@
                 <span class="feature label">Switches:</span> {{ spec.get_switch.specification.name }}            
             </div>
         {% endif %}
+
+            {% with switch_specs=spec.values.all %} 
+            {% for value in switch_specs %} 
+            {% if value.specification.category == "switch" %} 
+            <div> <span class="feature label">Switches:</span> {{ value.specification.name }} </div> 
+            {% endif %} 
+            {% endfor %} 
+            {% endwith %}
+
+
         {% if spec.get_features %}
             <div>            
                 <span class="feature label">Features:</span>

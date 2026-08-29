@@ -1,12 +1,12 @@
 features:
 
-  low_profile:
+  low-profile:
     name: Low Profile
     aliases:
       - low profile
       - low-profile
 
-  hall_effect:
+  hall-effect:
     name: Hall Effect
     aliases:
       - hall effect
@@ -17,7 +17,7 @@ features:
       - optical switch
       - optical switches
 
-  hot_swap:
+  hot-swap:
     name: Hot Swap
     aliases:
       - hot swap
@@ -25,7 +25,7 @@ features:
       - hot-swappable
       - hotswap
 
-  gasket_mount:
+  gasket-mount:
     name: Gasket Mount
     aliases:
       - gasket mount
@@ -113,7 +113,7 @@ sizes:
       - tkl
       - tenkeyless
 
-  full_size:
+  full-size:
     name: Full Size
     aliases:
       - full size
@@ -157,4 +157,12 @@ switches:
     name: Brown
     aliases:
       - brown switch
-      - brown switches      
+      - brown switches
+
+  silent:
+    name: Silent
+    aliases:
+      - silent switches
+      - silent switch
+      
+        
