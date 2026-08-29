@@ -27,7 +27,7 @@
             {{ drop.listing.title }}
         </h5>
 
-        <div class="keyboard-meta">
+        <div class="keyboard-meta my-3">
 
             <div>
                 <span class="label">Old Price</span><br>
@@ -48,7 +48,7 @@
             </div>
 
             <div>
-                <span class="discount">Discount
+                <span class="discount my-3">Discount
                 {% if drop.discount_percent is not none %}
                 {{ drop.discount_percent|floatformat:0 }}%
               {% else %}

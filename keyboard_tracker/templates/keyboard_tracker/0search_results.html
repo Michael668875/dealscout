@@ -36,7 +36,7 @@
             {{ spec.listing.title }}
         </h5>            
 
-        <div class="keyboard-meta my-3">
+        <div class="keyboard-meta">
 
             <div>
                 <span class="label">Price</span><br>
@@ -50,46 +50,32 @@
 
         </div>
 
-        <div class="my-3">
-        {% if spec.brand %}
-            <div>
-                <span class="feature label">Brand:</span> {{ spec.brand.name }}
+                <p>
+        {% if spec.brand.name %}
+            <div>            
+                <span class="feature label">Brand:</span> {{ spec.brand.name }}            
             </div>
         {% endif %}
-
-        {% with sizes=spec.get_sizes %}
-            {% if sizes %}
-                <div>
-                    <span class="feature label">Size:</span>
-                    {% for value in sizes %}
-                        {{ value.specification.name }}{% if not forloop.last %}, {% endif %}
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-
-        {% with switches=spec.get_switches %}
-            {% if switches %}
-                <div>
-                    <span class="feature label">Switches:</span>
-                    {% for value in switches %}
-                        {{ value.specification.name }}{% if not forloop.last %}, {% endif %}
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-
-        {% with features=spec.get_features %}
-            {% if features %}
-                <div>
-                    <span class="feature label">Features:</span>
-                    {% for value in features %}
-                        {{ value.specification.name }}{% if not forloop.last %}, {% endif %}
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
+        {% if spec.layout_size %}
+            <div>            
+                <span class="feature label">Size:</span> {{ spec.layout_size }}            
             </div>
+        {% endif %}
+        {% if spec.switch_type %}
+            <div>            
+                <span class="feature label">Switches:</span> {{ spec.switch_type }}            
+            </div>
+        {% endif %}
+        {% if spec.get_features %}
+            <div>            
+                <span class="feature label">Features:</span>
+                {% for feature in spec.get_features %}
+                    {{ feature }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}            
+            </div>
+        {% endif %}
+        </p>
+
 
         <a href="{{ spec.listing.affiliate_url }}" target="_blank" class="btn btn-primary w-100 mt-auto">
             View on eBay
