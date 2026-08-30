@@ -1,5 +1,8 @@
 from django.views.generic import ListView, RedirectView, TemplateView
 from .models import Listing, PriceHistory, CanonBrand, Specs, Specification
+from keyboard_tracker.services.spec_parser import (
+    get_specifications_in_yaml_order
+)
 
 # Create your views here.
 
@@ -43,6 +46,53 @@ class SingleBrandView(ListView):
                 country = self.request.GET.get("country", "US"),
             )
 
+# class AdvancedSearchView(TemplateView):
+#     template_name = "keyboard_tracker/advanced_search.html"
+
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+
+#         country = self.request.GET.get("country", "US")
+
+#         context["country"] = country
+
+#         context["brands"] = CanonBrand.objects.all_brands(country=country)
+
+
+#         # Switches
+
+#         context["switches"] = (
+#             Specification.objects
+#             .filter(
+#                 category="switch"
+#             )
+#             .order_by("name")
+#         )
+
+
+#         # Sizes
+
+#         context["sizes"] = (
+#             Specification.objects
+#             .filter(
+#                 category="size"
+#             )
+#             .order_by("name")
+#         )
+
+
+#         # Features
+
+#         context["features"] = (
+#             Specification.objects
+#             .filter(
+#                 category="feature"
+#             )
+#             .order_by("name")
+#         )
+
+#         return context
+
 class AdvancedSearchView(TemplateView):
     template_name = "keyboard_tracker/advanced_search.html"
 
@@ -53,42 +103,30 @@ class AdvancedSearchView(TemplateView):
 
         context["country"] = country
 
-        context["brands"] = CanonBrand.objects.all_brands(country=country)
-
+        context["brands"] = CanonBrand.objects.all_brands(
+            country=country
+        )
 
         # Switches
-
-        context["switches"] = (
-            Specification.objects
-            .filter(
-                category="switch"
-            )
-            .order_by("name")
+        context["switches"] = get_specifications_in_yaml_order(
+            "switch",
+            "switches"
         )
-
 
         # Sizes
-
-        context["sizes"] = (
-            Specification.objects
-            .filter(
-                category="size"
-            )
-            .order_by("name")
+        context["sizes"] = get_specifications_in_yaml_order(
+            "size",
+            "sizes"
         )
 
-
         # Features
-
-        context["features"] = (
-            Specification.objects
-            .filter(
-                category="feature"
-            )
-            .order_by("name")
+        context["features"] = get_specifications_in_yaml_order(
+            "feature",
+            "features"
         )
 
         return context
+
 
 class SearchResultsView(ListView):
     template_name = "keyboard_tracker/search_results.html"

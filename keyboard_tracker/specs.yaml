@@ -6,17 +6,6 @@ features:
       - low profile
       - low-profile
 
-  hall-effect:
-    name: Hall Effect
-    aliases:
-      - hall effect
-
-  optical:
-    name: Optical
-    aliases:
-      - optical switch
-      - optical switches
-
   hot-swap:
     name: Hot Swap
     aliases:
@@ -101,11 +90,47 @@ sizes:
       - 65%
       - 65 percent
 
+  "68":
+    name: "68%"
+    aliases:
+      - 68%
+      - 68 percent
+
   "75":
     name: "75%"
     aliases:
       - 75%
       - 75 percent
+
+  "80":
+    name: "80%"
+    aliases:
+      - 80%
+      - 80 percent
+
+  "90":
+    name: "90%"
+    aliases:
+      - 90%
+      - 90 percent
+
+  "95":
+    name: "95%"
+    aliases:
+      - 95%
+      - 95 percent
+
+  "96":
+    name: "96%"
+    aliases:
+      - 96%
+      - 96 percent
+
+  "100":
+    name: "100%"
+    aliases:
+      - 100%
+      - 100 percent
 
   tkl:
     name: TKL
@@ -122,6 +147,17 @@ sizes:
 
 
 switches:
+
+  hall-effect:
+    name: Hall Effect
+    aliases:
+      - hall effect
+
+  optical:
+    name: Optical
+    aliases:
+      - optical switch
+      - optical switches
 
   linear:
     name: Linear
@@ -141,6 +177,28 @@ switches:
       - clicky switch
       - clicky switches
 
+  silent:
+    name: Silent
+    aliases:
+      - silent switches
+      - silent switch
+
+  silent-linear:
+    name: Silent Linear
+    aliases:
+      - silent linear switches
+      - silent linear switch
+      - silent linear
+
+  silent-tactile:
+    name: Silent Tactile
+    aliases:
+      - silent tactile switches
+      - silent tactile switch
+      - silent tactile
+
+  # colours
+  
   red:
     name: Red
     aliases:
@@ -159,10 +217,66 @@ switches:
       - brown switch
       - brown switches
 
-  silent:
-    name: Silent
+  black:
+    name: Black
     aliases:
-      - silent switches
-      - silent switch
+      - black switch
+      - black switches
+
+  pink:
+    name: Pink
+    aliases:
+      - pink switch
+      - pink switches
+
+  silver:
+    name: Silver
+    aliases:
+      - silver switch
+      - silver switches
+
+  yellow:
+    name: Yellow
+    aliases:
+      - yellow switch
+      - yellow switches
+
+  purple:
+    name: Purple
+    aliases:
+      - purple switch
+      - purple switches
+
+  green:
+    name: Green
+    aliases:
+      - green switch
+      - green switches
+
+  clear:
+    name: Clear
+    aliases:
+      - clear switch
+      - clear switches
+
+  grey:
+    name: Grey
+    aliases:
+      - grey switch
+      - grey switches
+
+  white:
+    name: White
+    aliases:
+      - white switch
+      - white switches
+
+  orange:
+    name: Orange
+    aliases:
+      - orange switch
+      - orange switches
+
+
       
         

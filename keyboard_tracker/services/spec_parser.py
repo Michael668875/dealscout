@@ -36,6 +36,28 @@ def load_specs_yaml():
         return yaml.safe_load(file)
 
 
+def get_specifications_in_yaml_order(category, yaml_category):
+    yaml_data = load_specs_yaml()
+
+    order = list(
+        yaml_data.get(yaml_category, {}).keys()
+    )
+
+    specifications = Specification.objects.filter(
+        category=category
+    )
+
+    specification_map = {
+        specification.slug: specification
+        for specification in specifications
+    }
+
+    return [
+        specification_map[slug]
+        for slug in order
+        if slug in specification_map
+    ]
+
 def normalise(value):
 
     if value is None:

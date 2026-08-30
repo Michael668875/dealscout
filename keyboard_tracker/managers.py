@@ -73,24 +73,6 @@ class CanonBrandManager(models.Manager):
         )
         
 
-FEATURES = {    # I don't need this anymore
-    "hall-effect": ("Hall Effect", "hall_effect"),
-    "hot-swap": ("Hot Swap", "hot_swap"),
-    "wireless": ("Wireless", "wireless"),
-    "bluetooth": ("Bluetooth", "bluetooth"),
-    "rgb": ("RGB", "rgb"),
-    "gasket-mount": ("Gasket Mount", "gasket_mount"),
-    "low-profile": ("Low Profile", "low_profile"),
-    "optical": ("Optical", "optical"),
-    "knob": ("Knob", "knob"),
-    "qmk": ("QMK", "qmk"),
-    "via": ("VIA", "via"),
-    "iso": ("ISO", "iso"),
-    "ansi": ("ANSI", "ansi"),
-    "barebones": ("Barebones", "barebones"),
-}
-
-
 class SpecsManager(models.Manager):
 
     def brand_list(self, slug, country=None):
