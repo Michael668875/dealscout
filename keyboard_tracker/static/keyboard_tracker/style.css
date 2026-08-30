@@ -410,3 +410,27 @@ body {
     flex-wrap: wrap;
     gap: 10px;
 }
+
+.brand-dropdown {
+    background-color: #2b3035 !important;
+    border: 1px solid #495057;
+}
+
+.brand-dropdown .form-check-label {
+    color: #ffffff !important;
+}
+
+.brand-dropdown .form-check-input {
+    background-color: #ffffff !important;
+    border: 1px solid #adb5bd !important;
+}
+
+.brand-dropdown .form-check-input:checked {
+    background-color: #0dcaf0 !important;
+    border-color: #0dcaf0 !important;
+}
+
+.brand-dropdown .form-check:hover {
+    background-color: #343a40;
+    border-radius: 4px;
+}
