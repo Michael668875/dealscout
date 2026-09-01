@@ -94,7 +94,6 @@ class Listing(models.Model):
     status = models.CharField(
         max_length=20,
         default="ACTIVE",
-        db_index=True,
         choices=STATUS_CHOICES,
     )
 
@@ -102,7 +101,7 @@ class Listing(models.Model):
 
     last_seen = models.DateTimeField(default=timezone.now)
 
-    miss_count = models.IntegerField(default=0, blank=True)
+    miss_count = models.IntegerField(default=0)
     ended_at = models.DateTimeField(blank=True, null=True)
 
     last_updated = models.DateTimeField(auto_now=True)
@@ -113,8 +112,8 @@ class Listing(models.Model):
         db_table = "listings"
         indexes = [
             models.Index(
-                fields=["status", "marketplace"],
-                name="ix_listings_marketplace_setnum",
+                fields=["status", "country", "-last_updated"],
+                name="ix_listings_status_country_updated",
             ),
         ]
 

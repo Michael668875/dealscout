@@ -53,6 +53,7 @@ class ListingManager(models.Manager):
     def listings(self, country=None):
         return (
             self.get_queryset()
+            .filter(status="ACTIVE")
             .filter_country(country)
             .order_by("-last_updated")
         )
