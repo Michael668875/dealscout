@@ -113,7 +113,7 @@ class Listing(models.Model):
         indexes = [
             models.Index(
                 fields=["status", "country", "-last_updated"],
-                name="ix_listings_status_country_updated",
+                name="ix_status_country_updated",
             ),
         ]
 
