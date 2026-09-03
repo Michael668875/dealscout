@@ -355,7 +355,9 @@ body {
     background:#111;
     border-radius:8px;
     padding:10px;
-}
+    display: block;
+} 
+
 
 .theme3 .keyboard-card h5{
     color:#c4f1ff;
