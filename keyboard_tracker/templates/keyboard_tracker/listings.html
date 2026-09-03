@@ -27,6 +27,12 @@
                 class="keyboard-image"
                 alt="{{ listing.title }}"
                 loading="lazy">
+        {% else %}
+            <img 
+                src="{% static 'keyboard_tracker/images/place_holder.jpeg' %}" 
+                alt="Mechanical keyboard" 
+                loading="lazy" 
+                class="img-fluid rounded-3">
         {% endif %}
 
         <h5 class="mt-3">
