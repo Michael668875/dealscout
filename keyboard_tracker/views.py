@@ -46,53 +46,6 @@ class SingleBrandView(ListView):
                 country = self.request.GET.get("country", "US"),
             )
 
-# class AdvancedSearchView(TemplateView):
-#     template_name = "keyboard_tracker/advanced_search.html"
-
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-
-#         country = self.request.GET.get("country", "US")
-
-#         context["country"] = country
-
-#         context["brands"] = CanonBrand.objects.all_brands(country=country)
-
-
-#         # Switches
-
-#         context["switches"] = (
-#             Specification.objects
-#             .filter(
-#                 category="switch"
-#             )
-#             .order_by("name")
-#         )
-
-
-#         # Sizes
-
-#         context["sizes"] = (
-#             Specification.objects
-#             .filter(
-#                 category="size"
-#             )
-#             .order_by("name")
-#         )
-
-
-#         # Features
-
-#         context["features"] = (
-#             Specification.objects
-#             .filter(
-#                 category="feature"
-#             )
-#             .order_by("name")
-#         )
-
-#         return context
-
 class AdvancedSearchView(TemplateView):
     template_name = "keyboard_tracker/advanced_search.html"
 
