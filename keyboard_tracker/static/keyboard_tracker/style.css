@@ -436,3 +436,7 @@ body {
     background-color: #343a40;
     border-radius: 4px;
 }
+
+.theme3 a.text-decoration-none {
+    outline: none;
+}
