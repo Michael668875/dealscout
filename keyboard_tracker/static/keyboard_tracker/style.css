@@ -441,3 +441,7 @@ body {
     color: inherit;
     outline: none;
 }
+
+.theme3 a.text-decoration-none:visited {
+    color: inherit;
+}
