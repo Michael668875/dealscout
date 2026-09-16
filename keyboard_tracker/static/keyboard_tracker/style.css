@@ -438,5 +438,6 @@ body {
 }
 
 .theme3 a.text-decoration-none {
+    color: inherit;
     outline: none;
 }
