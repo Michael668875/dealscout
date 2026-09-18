@@ -437,11 +437,12 @@ body {
     border-radius: 4px;
 }
 
-.theme3 a.text-decoration-none {
-    color: inherit;
-    outline: none;
-}
 
+/* fixes for wrong colour in brands page */
+
+.theme3 a.text-decoration-none,
 .theme3 a.text-decoration-none:visited {
-    color: inherit;
+    color: inherit !important;
+    text-decoration: none !important;
+    outline: none !important;
 }
