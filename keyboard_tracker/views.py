@@ -1,5 +1,5 @@
 from django.views.generic import ListView, RedirectView, TemplateView
-from .models import Listing, PriceHistory, CanonBrand, Specs, Specification
+from .models import Listing, PriceHistory, CanonBrand, Specs, Specification, PriceDrop
 from keyboard_tracker.services.spec_parser import (
     get_specifications_in_yaml_order
 )
@@ -22,13 +22,15 @@ class ListingView(ListView):
 class PriceDropsView(ListView):
     template_name = "keyboard_tracker/pricedrops.html"
     paginate_by = 40
-    #context_object_name = "drops"
+    context_object_name = "drops"
 
     def get_queryset(self):
         country = self.request.GET.get("country", "US")
-        return PriceHistory.objects.drops(country)    
-    
-    
+        return PriceDrop.objects.filter(
+            country=country,
+            status="ACTIVE",
+        ).order_by("-discount_percent") 
+   
 class BrandsView(ListView):
     template_name = "keyboard_tracker/brands.html"
 
