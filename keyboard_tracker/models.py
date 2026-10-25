@@ -171,7 +171,6 @@ class PriceDrop(models.Model):
     discount_percent = models.FloatField()
 
     class Meta:
-        managed = False
         db_table = "ds_price_drops"
 
     @property
