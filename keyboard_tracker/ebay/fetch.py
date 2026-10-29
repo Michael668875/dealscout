@@ -148,8 +148,6 @@ def fetch_summaries(
         for item in all_items
     }
 
-    logger.info(
-        f"Fetched {len(unique)} unique listings."
-    )
+    logger.info("Fetched %s unique listings.", len(unique))
 
     return list(unique.values())

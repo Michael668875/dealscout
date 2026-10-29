@@ -193,5 +193,5 @@ def save_temp_summaries(items):
     )
 
     logger.info(
-        f"Inserted {len(new_rows)} rows into temp_summaries."
+        "Inserted %s rows into temp_summaries.", len(new_rows)
     )

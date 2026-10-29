@@ -1,5 +1,8 @@
 from django.db import connection
 
+import logging
+
+logger = logging.getLogger(__name__)
 
 def insert_listings():
     with connection.cursor() as cursor:
@@ -47,6 +50,8 @@ def insert_listings():
             DO NOTHING;
         """)
 
+        logger.info("Inserted %s listings.", cursor.rowcount)
+
 
 def update_listing_prices():
     with connection.cursor() as cursor:
@@ -60,6 +65,8 @@ def update_listing_prices():
             AND l.status = 'ACTIVE'
             AND l.price <> ts.price;
         """)
+
+        logger.info("Updated %s listing prices.", cursor.rowcount)
 
 
 def mark_sold_listings():
@@ -76,7 +83,7 @@ def mark_sold_listings():
             AND l.status <> 'ENDED';
         """)
 
-        print(f"Marked {cursor.rowcount} listings as sold.")
+        logger.info("Marked %s listings as sold.", cursor.rowcount)
 
 
 def update_seen_listings():
@@ -92,6 +99,8 @@ def update_seen_listings():
             FROM temp_summaries ts
             WHERE l.ebay_item_id = ts.ebay_item_id;
         """)
+
+        logger.info("Updated %s seen listings.", cursor.rowcount)
 
 
 def increment_miss_count():
@@ -122,7 +131,7 @@ def mark_ended_listings():
             AND miss_count >= 12;
         """)
 
-        print(f"Marked {cursor.rowcount} listings as ended.")
+        logger.info("Marked %s listings as ended.", cursor.rowcount)
 
 
 def insert_price_history():
@@ -159,8 +168,8 @@ def insert_price_history():
                 OR last_ph.currency <> ts.currency;
         """)
 
-        print(
-            f"Inserted {cursor.rowcount} price history rows."
+        logger.info(
+            "Inserted %s price history rows.", cursor.rowcount
         )
 
 
@@ -169,3 +178,6 @@ def truncate_temp_summaries():
         cursor.execute("""
             TRUNCATE TABLE temp_summaries;
         """)
+
+        logger.info("Truncated temp_summaries.")
+

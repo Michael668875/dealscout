@@ -1,6 +1,10 @@
 from keyboard_tracker.models import PriceDrop
 from django.db import connection
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 def create_price_drops():
     with connection.cursor() as cursor:
         cursor.execute("""
@@ -57,5 +61,5 @@ def create_price_drops():
             FROM price_drops
             ORDER BY discount_percent DESC
         """)
-        print("Price_drops created.")
+        logger.info("Created %s price_drops.", cursor.rowcount)
 
