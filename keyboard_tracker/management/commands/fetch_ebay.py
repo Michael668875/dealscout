@@ -18,18 +18,18 @@ class Command(BaseCommand):
         logger.info("Starting eBay import...")
 
         try:
-#            logger.info("Clearing temp tables...")
-#            truncate_temp_summaries()
-#
-#            logger.info("Fetching from eBay...")
-#            items = fetch_summaries()
-#
-#            logger.info(
-#                f"Fetched {len(items)} listings."
-#            )
-#
-#            logger.info("Saving temp summaries...")
-#            save_temp_summaries(items)
+            logger.info("Clearing temp tables...")
+            truncate_temp_summaries()
+
+            logger.info("Fetching from eBay...")
+            items = fetch_summaries()
+
+            logger.info(
+                f"Fetched {len(items)} listings."
+            )
+
+            logger.info("Saving temp summaries...")
+            save_temp_summaries(items)
 
             logger.info("Running pipeline...")
             run_pipeline()
