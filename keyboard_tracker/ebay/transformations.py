@@ -7,6 +7,8 @@ logger = logging.getLogger(__name__)
 
 def create_price_drops():
     with connection.cursor() as cursor:
+        cursor.execute("TRUNCATE TABLE ds_price_drops")
+
         cursor.execute("""
             INSERT INTO ds_price_drops (
                 id,
