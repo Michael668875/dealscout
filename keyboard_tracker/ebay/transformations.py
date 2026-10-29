@@ -59,4 +59,3 @@ def create_price_drops():
         """)
         print("Price_drops created.")
 
-
