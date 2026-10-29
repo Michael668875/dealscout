@@ -224,7 +224,7 @@ def parse_keyboard_specs():
         status="ACTIVE"
     ).filter(
         Q(specs__isnull=True) |
-        ~Q(title= models.F("specs__parsed_title"))
+        ~Q(title=F("specs__parsed_title"))
     ).distinct()
 
     brands = CanonBrand.objects.all()
