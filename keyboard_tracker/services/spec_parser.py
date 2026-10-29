@@ -3,6 +3,7 @@ import yaml
 
 from pathlib import Path
 
+from django.db.models import Q, F
 from keyboard_tracker.models import (
     Listing,
     Specs,
@@ -221,7 +222,10 @@ def parse_keyboard_specs():
 
     listings = Listing.objects.filter(
         status="ACTIVE"
-    )
+    ).filter(
+        Q(specs__isnull=True) |
+        ~Q(title= models.F("specs__parsed_title"))
+    ).distinct()
 
     brands = CanonBrand.objects.all()
 
@@ -242,14 +246,11 @@ def parse_keyboard_specs():
         for brand in brands:
 
             if brand.name.lower() in title_lower:
-
                 specs.brand = brand
-
-                specs.save(
-                    update_fields=["brand"]
-                )
-
                 break
+
+        specs.parsed_title = title
+        specs.save(update_fields=["brand", "parsed_title"])
 
         # -------------------------
         # REMOVE EXISTING VALUES

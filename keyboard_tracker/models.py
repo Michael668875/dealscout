@@ -246,6 +246,8 @@ class Specs(models.Model):
         auto_now=True
     )
 
+    parsed_title = models.TextField(blank=True, default="")
+
     objects = SpecsManager()
     
     class Meta:

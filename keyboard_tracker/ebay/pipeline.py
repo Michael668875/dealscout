@@ -2,6 +2,11 @@ from django.db import transaction
 
 from keyboard_tracker.services.spec_parser import parse_keyboard_specs
 
+import logging
+import time
+
+logger = logging.getLogger(__name__)
+
 from .sql import (
     insert_listings,
     update_listing_prices,
@@ -34,4 +39,9 @@ def run_pipeline():
 
         mark_ended_listings()
 
+        start = time.perf_counter()
         parse_keyboard_specs()
+        logger.info(
+            "Parsed keyboard specs in %.2f seconds",
+            time.perf_counter() - start,
+        )
