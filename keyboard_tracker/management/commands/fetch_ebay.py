@@ -1,3 +1,5 @@
+import logging
+
 from django.core.management.base import BaseCommand, CommandError
 
 from keyboard_tracker.ebay.fetch import fetch_summaries
@@ -6,38 +8,40 @@ from keyboard_tracker.ebay.pipeline import run_pipeline
 from keyboard_tracker.ebay.sql import truncate_temp_summaries
 from keyboard_tracker.ebay.transformations import create_price_drops
 
+logger = logging.getLogger(__name__)
 
 class Command(BaseCommand):
 
     help = "Fetch latest eBay listings"
 
     def handle(self, *args, **options):
+        logger.info("Starting eBay import...")
 
         try:
-            self.stdout.write("Clearing temp tables...")
+            logger.info("Clearing temp tables...")
             truncate_temp_summaries()
 
-            self.stdout.write("Fetching from eBay...")
+            logger.info("Fetching from eBay...")
             items = fetch_summaries()
 
-            self.stdout.write(
+            logger.info(
                 f"Fetched {len(items)} listings."
             )
 
-            self.stdout.write("Saving temp summaries...")
+            logger.info("Saving temp summaries...")
             save_temp_summaries(items)
 
-            self.stdout.write("Running pipeline...")
+            logger.info("Running pipeline...")
             run_pipeline()
 
-            self.stdout.write("Making transformations...")
+            logger.info("Making transformations...")
             create_price_drops()
 
         except Exception as e:
             raise CommandError(str(e))
 
 
-        self.stdout.write(
+        logger.info(
             self.style.SUCCESS(
                 "Import completed successfully."
             )

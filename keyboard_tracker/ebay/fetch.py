@@ -5,6 +5,10 @@ from base64 import b64encode
 import requests
 from dotenv import load_dotenv
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 load_dotenv()
 
 CLIENT_ID = os.getenv("EBAY_CLIENT_ID")
@@ -144,7 +148,7 @@ def fetch_summaries(
         for item in all_items
     }
 
-    print(
+    logger.info(
         f"Fetched {len(unique)} unique listings."
     )
 

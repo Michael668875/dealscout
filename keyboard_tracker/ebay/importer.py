@@ -6,6 +6,10 @@ from django.db import transaction
 
 from keyboard_tracker.models import TempSummary
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 def clean_text(text: str) -> str:
     """Remove emojis and other non-BMP Unicode characters."""
@@ -188,6 +192,6 @@ def save_temp_summaries(items):
         batch_size=500,
     )
 
-    print(
+    logger.info(
         f"Inserted {len(new_rows)} rows into temp_summaries."
     )
