@@ -55,10 +55,10 @@ def fetch_summaries(
     token = get_token()
 
     marketplaces = {
-        "EBAY_US": {"country": "US", "max_items": 100},
-        "EBAY_AU": {"country": "AU", "max_items": 100},
-        "EBAY_GB": {"country": "GB", "max_items": 100},
-        "EBAY_DE": {"country": "DE", "max_items": 60},
+        "EBAY_US": {"country": "US", "max_items": 1000},
+        "EBAY_AU": {"country": "AU", "max_items": 1000},
+        "EBAY_GB": {"country": "GB", "max_items": 1000},
+        "EBAY_DE": {"country": "DE", "max_items": 600},
     }
 
     all_items = []
