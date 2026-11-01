@@ -1,5 +1,6 @@
 from django.views.generic import ListView, RedirectView, TemplateView
-from .models import Listing, PriceHistory, CanonBrand, Specs, Specification, PriceDrop
+from .models import Listing, PriceHistory, CanonBrand, Specs, Specification
+from scrape.models import PriceDrop
 from keyboard_tracker.services.spec_parser import (
     get_specifications_in_yaml_order
 )

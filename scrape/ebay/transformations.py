@@ -1,10 +1,10 @@
-from keyboard_tracker.models import PriceDrop
-from django.db import connection
+from django.db import connection, transaction
 
 import logging
 
 logger = logging.getLogger(__name__)
 
+@transaction.atomic
 def create_price_drops():
     with connection.cursor() as cursor:
         cursor.execute("TRUNCATE TABLE ds_price_drops")

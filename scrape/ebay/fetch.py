@@ -55,10 +55,10 @@ def fetch_summaries(
     token = get_token()
 
     marketplaces = {
-        "EBAY_US": {"country": "US", "max_items": 1000},
-        "EBAY_AU": {"country": "AU", "max_items": 1000},
-        "EBAY_GB": {"country": "GB", "max_items": 1000},
-        "EBAY_DE": {"country": "DE", "max_items": 600},
+        "EBAY_US": {"country": "US", "max_items": 100},
+        "EBAY_AU": {"country": "AU", "max_items": 100},
+        "EBAY_GB": {"country": "GB", "max_items": 100},
+        "EBAY_DE": {"country": "DE", "max_items": 60},
     }
 
     all_items = []
@@ -73,7 +73,7 @@ def fetch_summaries(
 
         while len(market_items) < maximum_items:
 
-            print(f"{market}: page {offset // limit + 1}")
+            logger.info(" %s : page %s", market, offset // limit + 1)
 
             response = requests.get(
                 "https://api.ebay.com/buy/browse/v1/item_summary/search",
@@ -137,9 +137,7 @@ def fetch_summaries(
 
             time.sleep(0.2)
 
-        print(
-            f"{market}: fetched {len(market_items)} items"
-        )
+        logger.info(" %s : fetched %s items", market, len(market_items))
 
         all_items.extend(market_items)
 

@@ -37,6 +37,7 @@ ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "").split(",")
 
 INSTALLED_APPS = [
     'keyboard_tracker.apps.KeyboardTrackerConfig',
+    'scrape.apps.ScrapeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -159,9 +160,14 @@ LOGGING = {
             "encoding": "utf-8",
             "formatter": "standard",
         },
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "INFO",
+            "formatter": "standard",
+        },
     },
     "root": {
-        "handlers": ["scrape_file"],
+        "handlers": ["scrape_file", "console"],
         "level": "INFO",
     },
 }
